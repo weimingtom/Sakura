@@ -1,0 +1,2 @@
+# Sakura
+Sakura=OpenTK+PSSSDK
