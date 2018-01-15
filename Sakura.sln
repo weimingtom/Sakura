@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sakura", "Sakura.csproj", "{21D29DA7-8F6C-4647-95CA-ED40BF47ED24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21D29DA7-8F6C-4647-95CA-ED40BF47ED24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D29DA7-8F6C-4647-95CA-ED40BF47ED24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D29DA7-8F6C-4647-95CA-ED40BF47ED24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D29DA7-8F6C-4647-95CA-ED40BF47ED24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

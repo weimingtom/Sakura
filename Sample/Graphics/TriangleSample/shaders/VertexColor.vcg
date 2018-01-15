@@ -1,0 +1,51 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+
+/*
+void main( float4 in a_Position : POSITION,
+           float4 in a_Color0   : COLOR0,
+           float4 out v_Position : POSITION,
+           float4 out v_Color0   : COLOR0,
+           uniform float4x4 WorldViewProj
+           )
+{
+	v_Position	= mul( a_Position, WorldViewProj );
+    v_Color0 = a_Color0;
+}
+*/
+
+//see https://github.com/ynztlxdeai/GLproject/blob/e262efa7dec6460b22bfa11f3adbfdc96a25e118/app/src/main/assets/vertex.sh
+/*
+attribute vec3 a_Position;
+void main()                  
+{                            
+   gl_Position = vec4(a_Position,1); 
+}                            
+uniform mat4 WorldViewProj;
+*/
+
+/*
+attribute vec3 a_Position;
+attribute vec4 a_Color0;
+varying vec4 v_Color0;
+uniform mat4 WorldViewProj;
+void main()                  
+{  
+   gl_Position = vec4(a_Position,1);
+   v_Color0 = a_Color0;
+} 
+*/
+
+
+attribute vec3 a_Position;
+attribute vec4 a_Color0;
+varying vec4 v_Color0;
+uniform mat4 WorldViewProj;
+void main()                  
+{  
+   gl_Position = WorldViewProj * vec4(a_Position,1);
+   v_Color0 = a_Color0;
+} 
