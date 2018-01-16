@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Sample.TriangleSample</StartupObject>
+    <StartupObject>Sample.SpriteSample</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -251,6 +251,7 @@
     <Compile Include="OpenTK\WindowState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sakura.OpenTK\MyGameWindow.cs" />
+    <Compile Include="Sample\Graphics\SpriteSample\SpriteSample.cs" />
     <Compile Include="Sample\Graphics\TriangleSample\TriangleSample.cs" />
     <Compile Include="Sample\Lib\SampleLib\SampleDraw.cs" />
     <Compile Include="Sample\Lib\SampleLib\SampleSprite.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Sce.Pss.Core\Graphics\ShaderProgram.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\Texture.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\Texture2D.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\TextureWrapMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\VertexBuffer.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\VertexFormat.cs" />
     <Compile Include="Sce.Pss.Core\Imaging\Font.cs" />
@@ -278,6 +280,9 @@
     <Compile Include="Sce.Pss.Core\Imaging\ImageMode.cs" />
     <Compile Include="Sce.Pss.Core\Imaging\ImagePosition.cs" />
     <Compile Include="Sce.Pss.Core\Imaging\ImageSize.cs" />
+    <Compile Include="Sce.Pss.Core\Input\GamePad.cs" />
+    <Compile Include="Sce.Pss.Core\Input\GamePadButtons.cs" />
+    <Compile Include="Sce.Pss.Core\Input\GamePadData.cs" />
     <Compile Include="Sce.Pss.Core\Input\TouchData.cs" />
     <Compile Include="Sce.Pss.Core\Matrix4.cs" />
     <Compile Include="Sce.Pss.Core\Vector3.cs" />
@@ -292,6 +297,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="libGLESv2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LICENSE" />
+    <None Include="README.md" />
+    <None Include="Sample\Graphics\SpriteSample\test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sample\Graphics\TriangleSample\shaders\VertexColor.fcg">
@@ -332,6 +342,7 @@
     <Folder Include="OpenTK\Platform\Egl" />
     <Folder Include="OpenTK\Platform\Windows" />
     <Folder Include="OpenTK\Platform\Windows\Bindings" />
+    <Folder Include="Sample\Graphics\SpriteSample" />
     <Folder Include="Sample\Graphics\TriangleSample\shaders" />
     <Folder Include="Sample\Lib\SampleLib" />
     <Folder Include="Sample\Lib\SampleLib\shaders" />

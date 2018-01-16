@@ -190,9 +190,11 @@ namespace Sce.Pss.Core.Graphics
    		}
 		
 		public void SwapBuffers()
-		{   			
+		{  
+#if true
 			MyGameWindow.OnResize();
-            MyGameWindow.SwapBuffers();
+#endif
+			MyGameWindow.SwapBuffers();
             List<int> akeys = new List<int>(__isUsedProgram.Keys);  
             foreach (int key in akeys)
             {
@@ -224,6 +226,7 @@ namespace Sce.Pss.Core.Graphics
 		   		Debug.Assert(false);
 		   		break;
 		   }
+		   Debug.Assert(((Texture2D)texture).__textureId >= 0);
 		   GL.ActiveTexture(textureUnit);
 		   GL.BindTexture (TextureTarget.Texture2D, ((Texture2D)texture).__textureId); //FIXME:
 		   int samplerLoc = GL.GetUniformLocation(__curProgramObject, "Texture" + index );

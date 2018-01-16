@@ -6,6 +6,45 @@ namespace Sce.Pss.Core.Graphics
 {
 	public class Texture2D : Texture
 	{
+		//https://github.com/PyramidTechnologies/ThermalTalk/blob/40818af6ee73b4514bfedb40623083d0576830bf/ThermalTalk.Imaging/ImageExt.cs
+		public static byte[] __toBuffer(System.Drawing.Bitmap img)
+		{
+            if (img == null || img.Size.IsEmpty)
+            {
+                return new byte[0];
+            }
+
+            System.Drawing.Imaging.BitmapData bitmapData = null;
+
+            // This rectangle selects the entirety of the source bitmap for locking bits into memory
+            var rect = new System.Drawing.Rectangle(0, 0, img.Width, img.Height);
+
+            try
+            {
+                // Acquire a lock on the image data so we can extra into our own byte stream
+                // Note: Currently only supports data as 32bit, 4 channel 8-bit color
+                bitmapData = img.LockBits(
+                    rect,
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                // Create the output buffer
+                int length = Math.Abs(bitmapData.Stride) * bitmapData.Height;
+                byte[] results = new byte[length];
+
+                // Copy from unmanaged to managed memory
+                IntPtr ptr = bitmapData.Scan0;
+                System.Runtime.InteropServices.Marshal.Copy(ptr, results, 0, length);
+
+                return results;
+
+            }
+            finally
+            {
+                if (bitmapData != null)
+                    img.UnlockBits(bitmapData);
+            }
+  		}		
 		public static int __get2(int n)
 		{
 			int result = 2;
@@ -41,6 +80,23 @@ namespace Sce.Pss.Core.Graphics
 			this.__format = format;
 		}
 		
+		public Texture2D(string fileName, bool mipmap)
+		{
+			string imgname = fileName.Replace("/Application/", "./");
+			System.Drawing.Bitmap __img = new System.Drawing.Bitmap(imgname);
+			this.__width = __img.Width;
+			this.__height = __img.Height;
+			System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+			{
+				drawing.DrawImage(__img, 0, 0);
+				drawing.Save();
+			}
+			SetPixels(0, __toBuffer(__img2), 0, 0, __img2.Width, __img2.Height);
+			this.__mipmap = mipmap;
+		}
+		
+		//FIXME:level not used
 		public void SetPixels(int level, byte[] pixels, int dx, int dy, int dw, int dh)
 		{
 			//pixels
@@ -53,9 +109,9 @@ namespace Sce.Pss.Core.Graphics
 				{
 					if ((j + dy) * __width * 4 + (i + dx) * 4 + 3 < __pixels.Length)
 					{
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4] = pixels[j * dw * 4 + i * 4];
+						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 0] = pixels[j * dw * 4 + i * 4 + 2];
 						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 1] = pixels[j * dw * 4 + i * 4 + 1];
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 2] = pixels[j * dw * 4 + i * 4 + 2];
+						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 2] = pixels[j * dw * 4 + i * 4 + 0];
 						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 3] = pixels[j * dw * 4 + i * 4 + 3];
 					}
 				}

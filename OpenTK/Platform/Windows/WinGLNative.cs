@@ -401,10 +401,11 @@ namespace OpenTK.Platform.Windows
         {
             unsafe
             {
+            	
                 Point point = new Point(
-                    (short)((uint)lParam.ToInt32() & 0x0000FFFF),
-                    (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
-
+            		unchecked((short)((uint)lParam.ToInt32() & 0x0000FFFF)),
+            		unchecked((short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16)));
+            		
                 // GetMouseMovePointsEx works with screen coordinates
                 Point screenPoint = point;
                 Functions.ClientToScreen(handle, ref screenPoint);

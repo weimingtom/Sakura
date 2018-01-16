@@ -7,5 +7,10 @@ namespace Sce.Pss.Core.Graphics
 		public Texture()
 		{
 		}
+		
+		public void SetWrap(TextureWrapMode mode)
+		{
+			
+		}
 	}
 }
