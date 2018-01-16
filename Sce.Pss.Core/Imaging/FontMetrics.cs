@@ -1,4 +1,5 @@
 ﻿using System;
+using Sce.Pss.Core.Graphics;
 
 namespace Sce.Pss.Core.Imaging
 {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Sce.Pss.Core.Graphics;
 
 //https://github.com/gwahba/WinToolkit/blob/a239a43011f69f4d0f4b8690736b284157030a66/ImageHelper.cs
 //https://github.com/dtsudo/DT-Sudoku/blob/f08defa3bf79f487ad6971e47e261d9f8074249e/Dependencies/AgateLib/Agate031/Source/Drivers/AgateLib.WinForms/BitmapFontUtil.cs
@@ -85,7 +86,8 @@ namespace Sce.Pss.Core.Imaging
 			{
 				textSize = drawing.MeasureString(text, __font);
 			}
-			return (int)textSize.Width;
+			int w = (int)textSize.Width;
+			return w;
 		}
 		
 		public FontMetrics Metrics
