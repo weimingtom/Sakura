@@ -2,10 +2,13 @@
 
 namespace Sce.Pss.Core.Input
 {
-	public struct TouchData
+	public class TouchData
 	{	
-		public float X;
+		public bool Skip;
+		public int ID;
+		public TouchStatus Status;
 
+		public float X;
 		public float Y;
 	}
 }

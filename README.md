@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-01-17: PrimitiveSample done.  
 * 2018-01-16: SpriteSample done.  
 * 2018-01-15: TriangleSample done.  
 
@@ -20,3 +21,7 @@ https://gitee.com/weimingtom/angle
 
 * Work  
 https://gitee.com/weimingtom/TriangleSample  
+
+## Bug / TODO  
+* SpriteSample: the sprite is not center, larger than original size  
+* SpriteSample: NPOT, see Texture2D.SetPixels  

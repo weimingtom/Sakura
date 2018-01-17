@@ -157,6 +157,18 @@ namespace Sce.Pss.Core.Graphics
 					type = PrimitiveType.TriangleFan;
 					break;
 					
+				case DrawMode.Points:
+					type = PrimitiveType.Points;
+					break;
+					
+				case DrawMode.Lines:
+					type = PrimitiveType.Lines;
+					break;
+					
+				case DrawMode.LineStrip:
+					type = PrimitiveType.LineStrip;
+					break;
+					
 				default:
 					Debug.Assert(false);
 					break;

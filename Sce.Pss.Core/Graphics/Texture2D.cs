@@ -47,6 +47,7 @@ namespace Sce.Pss.Core.Graphics
   		}		
 		public static int __get2(int n)
 		{
+#if false
 			int result = 2;
 			int k = 2;
 			for (int i = 0; i < 32; i++)
@@ -59,9 +60,17 @@ namespace Sce.Pss.Core.Graphics
 				}
 			}
 			return result;
+#else
+			//allow non power of two textures
+			//http://stackoverflow.com/questions/11069441/non-power-of-two-textures-in-ios
+			//http://blog.csdn.net/mvplinchen888/article/details/16946565
+			return n;
+#endif
 		}
 		private int __width = -1;
 		private int __height = -1;
+		private int __widthTex = -1;
+		private int __heightTex = -1;
 		private bool __mipmap;
 		private PixelFormat __format;
 		private byte[] __pixels;
@@ -100,19 +109,23 @@ namespace Sce.Pss.Core.Graphics
 		public void SetPixels(int level, byte[] pixels, int dx, int dy, int dw, int dh)
 		{
 			//pixels
-			this.__width = __get2(Math.Max(dx + dw, this.__width));
-			this.__height = __get2(Math.Max(dy + dh, this.__height));
-			__pixels = new byte[this.__width * this.__height * 4]; //FIXME:
+			this.__widthTex = __get2(Math.Max(dx + dw, this.__width));
+			this.__heightTex = __get2(Math.Max(dy + dh, this.__height));
+#if true
+			this.__width = this.__widthTex;
+			this.__height = this.__heightTex;
+#endif
+			__pixels = new byte[this.__widthTex * this.__heightTex * 4]; //FIXME:
 			for (int j = 0; j < dh; ++j)
 			{
 				for (int i = 0; i < dw; ++i)
 				{
-					if ((j + dy) * __width * 4 + (i + dx) * 4 + 3 < __pixels.Length)
+					if ((j + dy) * __widthTex * 4 + (i + dx) * 4 + 3 < __pixels.Length)
 					{
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 0] = pixels[j * dw * 4 + i * 4 + 2];
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 1] = pixels[j * dw * 4 + i * 4 + 1];
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 2] = pixels[j * dw * 4 + i * 4 + 0];
-						__pixels[(j + dy) * __width * 4 + (i + dx) * 4 + 3] = pixels[j * dw * 4 + i * 4 + 3];
+						__pixels[(j + dy) * __widthTex * 4 + (i + dx) * 4 + 0] = pixels[j * dw * 4 + i * 4 + 2];
+						__pixels[(j + dy) * __widthTex * 4 + (i + dx) * 4 + 1] = pixels[j * dw * 4 + i * 4 + 1];
+						__pixels[(j + dy) * __widthTex * 4 + (i + dx) * 4 + 2] = pixels[j * dw * 4 + i * 4 + 0];
+						__pixels[(j + dy) * __widthTex * 4 + (i + dx) * 4 + 3] = pixels[j * dw * 4 + i * 4 + 3];
 					}
 				}
 			}
@@ -129,12 +142,19 @@ namespace Sce.Pss.Core.Graphics
 			  	GL.GenTextures(1, out __textureId); //glGenTextures ( 1, &textureId );
 			   	GL.BindTexture (TextureTarget.Texture2D, __textureId); //glBindTexture ( GL_TEXTURE_2D, textureId );
 			   	//PixelInternalFormat.Rgba
-			   	GL.TexImage2D<byte>(TextureTarget2d.Texture2D, 0, TextureComponentCount.Rgba, __width, __height, 0, 
+			   	GL.TexImage2D<byte>(TextureTarget2d.Texture2D, 0, TextureComponentCount.Rgba, __widthTex, __heightTex, 0, 
 			                       OpenTK.Graphics.ES20.PixelFormat.Rgba, PixelType.UnsignedByte, __pixels);
 			   	Debug.WriteLine("==============>pixels.Length == " + pixels.Length);
 			  	 //glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels );
 			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);// glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);//glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+#if true
+				//allow non power of two textures
+				//http://stackoverflow.com/questions/11069441/non-power-of-two-textures-in-ios
+				//http://blog.csdn.net/mvplinchen888/article/details/16946565
+			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
+#endif
 			}
 #else
 			{
@@ -152,6 +172,8 @@ namespace Sce.Pss.Core.Graphics
 			   	Debug.WriteLine("==============>pixels2.Length == " + pixels2.Length);
 			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
 			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
+			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
 			}
 #endif
 		}

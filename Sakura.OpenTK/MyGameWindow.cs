@@ -292,7 +292,7 @@ namespace Sakura.OpenTK
         public static void setX(int v) { EnsureUndisposed(); g_ctx.implementation.X = v; }
         public static int getY() { EnsureUndisposed(); return g_ctx.implementation.Y; }
         public static void setY(int v) { EnsureUndisposed(); g_ctx.implementation.Y = v; }
-
+		
         public static void baseDispose()
         {
         	if (!getIsDisposed())

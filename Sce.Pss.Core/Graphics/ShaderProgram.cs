@@ -210,11 +210,23 @@ namespace Sce.Pss.Core.Graphics
 		                 
 		public ShaderProgram(String filename)
 		{
-			if (filename == null || 
-			    (!filename.Equals("/Application/Sample/Lib/SampleLib/shaders/Test.cgx") &&
-			    !filename.Equals("/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx") &&
-			    !filename.Equals("/Application/Sample/Lib/SampleLib/shaders/Simple.cgx") &&
-			    !filename.Equals("/Application/Sample/Lib/SampleLib/shaders/Texture.cgx")))
+			string[] whiteList = new string[] {
+				"/Application/Sample/Lib/SampleLib/shaders/Test.cgx",
+			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",
+			    "/Application/Sample/Lib/SampleLib/shaders/Simple.cgx",
+			    "/Application/Sample/Lib/SampleLib/shaders/Texture.cgx",
+			    "/Application/Sample/Graphics/PrimitiveSample/shaders/VertexColor.cgx"
+			};
+			bool isMatch = false;
+			foreach (string name in whiteList)
+			{
+				if (filename.Equals(name))
+				{
+					isMatch = true;
+					break;
+				}
+			}
+			if (filename == null || !isMatch)
 			{
 				Debug.Assert(false);
 				return;
