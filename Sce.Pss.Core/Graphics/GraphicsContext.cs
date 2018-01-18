@@ -1,15 +1,49 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Collections.Generic;
+
 using OpenTK;
-using Sakura.OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;
-using System.Collections.Generic;
+
+using Sakura.OpenTK;
 
 namespace Sce.Pss.Core.Graphics
 {
 	public class GraphicsContext : IDisposable
 	{
+		//see https://stackoverflow.com/questions/250404/where-does-console-writeline-go-in-debug
+		public class __DebugTextWriter : TextWriter
+	    {
+	        public override Encoding Encoding
+	        {
+	            get { return Encoding.UTF8; }
+	        }
+	
+	        //Required
+	        public override void Write(char value)
+	        {
+	            Debug.Write(value);
+	        }
+	
+	        //Added for efficiency
+	        public override void Write(string value)
+	        {
+	            Debug.Write(value);
+	        }
+	
+	        //Added for efficiency
+	        public override void WriteLine(string value)
+	        {
+	            Debug.WriteLine(value);
+	        }
+	    }
+		
+		
+		
+		
 		//see http://blog.csdn.net/hb707934728/article/details/52044702
 		//http://www.opengl-tutorial.org
 		//https://github.com/opengl-tutorials/ogl
@@ -28,6 +62,8 @@ namespace Sce.Pss.Core.Graphics
 		
 		public GraphicsContext()
 		{
+			Console.SetOut(new __DebugTextWriter());
+			
 			MyGameWindow.Init();
 			
 			Color4 color = Color4.Black;//FIXME:

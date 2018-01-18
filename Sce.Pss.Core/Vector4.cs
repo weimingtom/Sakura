@@ -16,6 +16,17 @@ namespace Sce.Pss.Core
 		public static readonly Vector4 UnitZ = new Vector4(0f, 0f, 1f, 0f);
 		public static readonly Vector4 UnitW = new Vector4(0f, 0f, 0f, 1f);
 		
+		public override string ToString()
+		{
+			return string.Format("({0:F6},{1:F6},{2:F6},{3:F6})", new object[]
+			{
+				this.X,
+				this.Y,
+				this.Z,
+				this.W
+			});
+		}
+		
 		public Vector4(float x, float y, float z, float w)
 		{
 			this.X = x;

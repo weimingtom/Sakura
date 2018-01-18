@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-01-17: MathSample done.  
 * 2018-01-17: PrimitiveSample done.  
 * 2018-01-16: SpriteSample done.  
 * 2018-01-15: TriangleSample done.  

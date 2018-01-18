@@ -24,6 +24,17 @@ namespace Sce.Pss.Core
 		public static readonly Matrix4 Identity = 
 			new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
 
+		public override string ToString()
+		{
+			return string.Format("({0},{1},{2},{3})", new object[]
+			{
+				this.ColumnX,
+				this.ColumnY,
+				this.ColumnZ,
+				this.ColumnW
+			});
+		}
+		
 		public Matrix4(float m11, float m12, float m13, float m14, 
 		               float m21, float m22, float m23, float m24, 
 		               float m31, float m32, float m33, float m34, 
@@ -154,6 +165,25 @@ namespace Sce.Pss.Core
 			result.M42 = -eye.Dot(ref vector3);
 			result.M43 = -eye.Dot(ref vector);
 			result.M44 = 1f;
+		}
+		
+		
+		public static Matrix4 RotationX(float angle)
+		{
+			Matrix4 result;
+			Matrix4.RotationX(angle, out result);
+			return result;
+		}
+
+		public static void RotationX(float angle, out Matrix4 result)
+		{
+			float num = (float)Math.Sin((double)angle);
+			float num2 = (float)Math.Cos((double)angle);
+			result = Matrix4.Identity;
+			result.M22 = num2;
+			result.M23 = num;
+			result.M32 = -num;
+			result.M33 = num2;
 		}
 		
 		
@@ -372,5 +402,398 @@ namespace Sce.Pss.Core
 			result.M21 = -num;
 			result.M22 = num2;
 		}
+		
+		
+
+		public static Matrix4 RotationYxz(float x, float y, float z)
+		{
+			Matrix4 result;
+			Matrix4.RotationYxz(x, y, z, out result);
+			return result;
+		}
+
+		public static void RotationYxz(float x, float y, float z, out Matrix4 result)
+		{
+			Quaternion quaternion;
+			Quaternion.RotationYxz(x, y, z, out quaternion);
+			quaternion.ToMatrix4(out result);
+		}
+
+		public static Matrix4 RotationYxz(Vector3 angles)
+		{
+			Matrix4 result;
+			Matrix4.RotationYxz(angles.X, angles.Y, angles.Z, out result);
+			return result;
+		}
+
+		public static void RotationYxz(ref Vector3 angles, out Matrix4 result)
+		{
+			Matrix4.RotationYxz(angles.X, angles.Y, angles.Z, out result);
+		}
+		
+		public Matrix4 Inverse()
+		{
+			Matrix4 result;
+			this.Inverse(out result);
+			return result;
+		}
+
+		public void Inverse(out Matrix4 result)
+		{
+			if (this.M14 == 0f && this.M24 == 0f && this.M34 == 0f && this.M44 == 1f)
+			{
+				this.InverseAffine(out result);
+			}
+			else
+			{
+				float num = this.M11 * this.M22 - this.M12 * this.M21;
+				float num2 = this.M11 * this.M23 - this.M13 * this.M21;
+				float num3 = this.M11 * this.M24 - this.M14 * this.M21;
+				float num4 = this.M12 * this.M23 - this.M13 * this.M22;
+				float num5 = this.M12 * this.M24 - this.M14 * this.M22;
+				float num6 = this.M13 * this.M24 - this.M14 * this.M23;
+				float num7 = this.M31 * this.M42 - this.M32 * this.M41;
+				float num8 = this.M31 * this.M43 - this.M33 * this.M41;
+				float num9 = this.M31 * this.M44 - this.M34 * this.M41;
+				float num10 = this.M32 * this.M43 - this.M33 * this.M42;
+				float num11 = this.M32 * this.M44 - this.M34 * this.M42;
+				float num12 = this.M33 * this.M44 - this.M34 * this.M43;
+				float num13 = 1f / (num * num12 - num2 * num11 + num3 * num10 + num4 * num9 - num5 * num8 + num6 * num7);
+				result.M11 = (this.M22 * num12 - this.M23 * num11 + this.M24 * num10) * num13;
+				result.M12 = (-this.M12 * num12 + this.M13 * num11 - this.M14 * num10) * num13;
+				result.M13 = (this.M42 * num6 - this.M43 * num5 + this.M44 * num4) * num13;
+				result.M14 = (-this.M32 * num6 + this.M33 * num5 - this.M34 * num4) * num13;
+				result.M21 = (-this.M21 * num12 + this.M23 * num9 - this.M24 * num8) * num13;
+				result.M22 = (this.M11 * num12 - this.M13 * num9 + this.M14 * num8) * num13;
+				result.M23 = (-this.M41 * num6 + this.M43 * num3 - this.M44 * num2) * num13;
+				result.M24 = (this.M31 * num6 - this.M33 * num3 + this.M34 * num2) * num13;
+				result.M31 = (this.M21 * num11 - this.M22 * num9 + this.M24 * num7) * num13;
+				result.M32 = (-this.M11 * num11 + this.M12 * num9 - this.M14 * num7) * num13;
+				result.M33 = (this.M41 * num5 - this.M42 * num3 + this.M44 * num) * num13;
+				result.M34 = (-this.M31 * num5 + this.M32 * num3 - this.M34 * num) * num13;
+				result.M41 = (-this.M21 * num10 + this.M22 * num8 - this.M23 * num7) * num13;
+				result.M42 = (this.M11 * num10 - this.M12 * num8 + this.M13 * num7) * num13;
+				result.M43 = (-this.M41 * num4 + this.M42 * num2 - this.M43 * num) * num13;
+				result.M44 = (this.M31 * num4 - this.M32 * num2 + this.M33 * num) * num13;
+			}
+		}
+		
+		public Matrix4 InverseAffine()
+		{
+			Matrix4 result;
+			this.InverseAffine(out result);
+			return result;
+		}
+
+		public void InverseAffine(out Matrix4 result)
+		{
+			float num = this.M22 * this.M33 - this.M23 * this.M32;
+			float num2 = this.M13 * this.M32 - this.M12 * this.M33;
+			float num3 = this.M12 * this.M23 - this.M13 * this.M22;
+			float num4 = 1f / (this.M11 * num + this.M21 * num2 + this.M31 * num3);
+			result.M11 = num * num4;
+			result.M12 = num2 * num4;
+			result.M13 = num3 * num4;
+			result.M14 = 0f;
+			result.M21 = (this.M23 * this.M31 - this.M21 * this.M33) * num4;
+			result.M22 = (this.M11 * this.M33 - this.M13 * this.M31) * num4;
+			result.M23 = (this.M13 * this.M21 - this.M11 * this.M23) * num4;
+			result.M24 = 0f;
+			result.M31 = (this.M21 * this.M32 - this.M22 * this.M31) * num4;
+			result.M32 = (this.M12 * this.M31 - this.M11 * this.M32) * num4;
+			result.M33 = (this.M11 * this.M22 - this.M12 * this.M21) * num4;
+			result.M34 = 0f;
+			result.M41 = -(result.M11 * this.M41 + result.M21 * this.M42 + result.M31 * this.M43);
+			result.M42 = -(result.M12 * this.M41 + result.M22 * this.M42 + result.M32 * this.M43);
+			result.M43 = -(result.M13 * this.M41 + result.M23 * this.M42 + result.M33 * this.M43);
+			result.M44 = 1f;
+		}
+				
+		public static Matrix4 Inverse(Matrix4 m)
+		{
+			Matrix4 result;
+			m.Inverse(out result);
+			return result;
+		}
+
+		public static void Inverse(ref Matrix4 m, out Matrix4 result)
+		{
+			m.Inverse(out result);
+		}
+		
+		public Matrix4 Transpose()
+		{
+			Matrix4 result;
+			this.Transpose(out result);
+			return result;
+		}
+
+		public void Transpose(out Matrix4 result)
+		{
+			result.M11 = this.M11;
+			result.M12 = this.M21;
+			result.M13 = this.M31;
+			result.M14 = this.M41;
+			result.M21 = this.M12;
+			result.M22 = this.M22;
+			result.M23 = this.M32;
+			result.M24 = this.M42;
+			result.M31 = this.M13;
+			result.M32 = this.M23;
+			result.M33 = this.M33;
+			result.M34 = this.M43;
+			result.M41 = this.M14;
+			result.M42 = this.M24;
+			result.M43 = this.M34;
+			result.M44 = this.M44;
+		}
+		
+		public static Matrix4 Transpose(Matrix4 m)
+		{
+			Matrix4 result;
+			m.Transpose(out result);
+			return result;
+		}
+
+		public static void Transpose(ref Matrix4 m, out Matrix4 result)
+		{
+			m.Transpose(out result);
+		}
+		
+
+		public Vector3 TransformPoint(Vector3 v)
+		{
+			Vector3 result;
+			this.TransformPoint(ref v, out result);
+			return result;
+		}
+
+		public void TransformPoint(ref Vector3 v, out Vector3 result)
+		{
+			result.X = this.M11 * v.X + this.M21 * v.Y + this.M31 * v.Z + this.M41;
+			result.Y = this.M12 * v.X + this.M22 * v.Y + this.M32 * v.Z + this.M42;
+			result.Z = this.M13 * v.X + this.M23 * v.Y + this.M33 * v.Z + this.M43;
+		}
+
+		public Vector2 TransformPoint(Vector2 v)
+		{
+			Vector2 result;
+			this.TransformPoint(ref v, out result);
+			return result;
+		}
+
+		public void TransformPoint(ref Vector2 v, out Vector2 result)
+		{
+			result.X = this.M11 * v.X + this.M21 * v.Y + this.M41;
+			result.Y = this.M12 * v.X + this.M22 * v.Y + this.M42;
+		}
+
+		public Vector3 TransformVector(Vector3 v)
+		{
+			Vector3 result;
+			this.TransformVector(ref v, out result);
+			return result;
+		}
+
+		public void TransformVector(ref Vector3 v, out Vector3 result)
+		{
+			result.X = this.M11 * v.X + this.M21 * v.Y + this.M31 * v.Z;
+			result.Y = this.M12 * v.X + this.M22 * v.Y + this.M32 * v.Z;
+			result.Z = this.M13 * v.X + this.M23 * v.Y + this.M33 * v.Z;
+		}
+
+		public Vector2 TransformVector(Vector2 v)
+		{
+			Vector2 result;
+			this.TransformVector(ref v, out result);
+			return result;
+		}
+
+		public void TransformVector(ref Vector2 v, out Vector2 result)
+		{
+			result.X = this.M11 * v.X + this.M21 * v.Y;
+			result.Y = this.M12 * v.X + this.M22 * v.Y;
+		}
+				
+		public static Vector3 TransformPoint(Matrix4 m, Vector3 v)
+		{
+			Vector3 result;
+			m.TransformPoint(ref v, out result);
+			return result;
+		}
+
+		public static void TransformPoint(ref Matrix4 m, ref Vector3 v, out Vector3 result)
+		{
+			m.TransformPoint(ref v, out result);
+		}
+
+		public static Vector2 TransformPoint(Matrix4 m, Vector2 v)
+		{
+			Vector2 result;
+			m.TransformPoint(ref v, out result);
+			return result;
+		}
+
+		public static void TransformPoint(ref Matrix4 m, ref Vector2 v, out Vector2 result)
+		{
+			m.TransformPoint(ref v, out result);
+		}
+
+		public static Vector3 TransformVector(Matrix4 m, Vector3 v)
+		{
+			Vector3 result;
+			m.TransformVector(ref v, out result);
+			return result;
+		}
+
+		public static void TransformVector(ref Matrix4 m, ref Vector3 v, out Vector3 result)
+		{
+			m.TransformVector(ref v, out result);
+		}
+
+		public static Vector2 TransformVector(Matrix4 m, Vector2 v)
+		{
+			Vector2 result;
+			m.TransformVector(ref v, out result);
+			return result;
+		}
+
+		public static void TransformVector(ref Matrix4 m, ref Vector2 v, out Vector2 result)
+		{
+			m.TransformVector(ref v, out result);
+		}
+		
+		public Vector3 AxisX
+		{
+			get
+			{
+				return new Vector3(this.M11, this.M12, this.M13);
+			}
+			set
+			{
+				this.M11 = value.X;
+				this.M12 = value.Y;
+				this.M13 = value.Z;
+			}
+		}
+
+		public Vector3 AxisY
+		{
+			get
+			{
+				return new Vector3(this.M21, this.M22, this.M23);
+			}
+			set
+			{
+				this.M21 = value.X;
+				this.M22 = value.Y;
+				this.M23 = value.Z;
+			}
+		}
+
+		public Vector3 AxisZ
+		{
+			get
+			{
+				return new Vector3(this.M31, this.M32, this.M33);
+			}
+			set
+			{
+				this.M31 = value.X;
+				this.M32 = value.Y;
+				this.M33 = value.Z;
+			}
+		}
+
+		public Vector3 AxisW
+		{
+			get
+			{
+				return new Vector3(this.M41, this.M42, this.M43);
+			}
+			set
+			{
+				this.M41 = value.X;
+				this.M42 = value.Y;
+				this.M43 = value.Z;
+			}
+		}
+		
+		public static Matrix4 RotationAxis(Vector3 axis, float angle)
+		{
+			Matrix4 result;
+			Matrix4.RotationAxis(ref axis, angle, out result);
+			return result;
+		}
+
+		public static void RotationAxis(ref Vector3 axis, float angle, out Matrix4 result)
+		{
+			Quaternion quaternion;
+			Quaternion.RotationAxis(ref axis, angle, out quaternion);
+			quaternion.ToMatrix4(out result);
+		}
+		
+		
+		public Vector4 ColumnX
+		{
+			get
+			{
+				return new Vector4(this.M11, this.M12, this.M13, this.M14);
+			}
+			set
+			{
+				this.M11 = value.X;
+				this.M12 = value.Y;
+				this.M13 = value.Z;
+				this.M14 = value.W;
+			}
+		}
+
+		public Vector4 ColumnY
+		{
+			get
+			{
+				return new Vector4(this.M21, this.M22, this.M23, this.M24);
+			}
+			set
+			{
+				this.M21 = value.X;
+				this.M22 = value.Y;
+				this.M23 = value.Z;
+				this.M24 = value.W;
+			}
+		}
+
+		public Vector4 ColumnZ
+		{
+			get
+			{
+				return new Vector4(this.M31, this.M32, this.M33, this.M34);
+			}
+			set
+			{
+				this.M31 = value.X;
+				this.M32 = value.Y;
+				this.M33 = value.Z;
+				this.M34 = value.W;
+			}
+		}
+
+		public Vector4 ColumnW
+		{
+			get
+			{
+				return new Vector4(this.M41, this.M42, this.M43, this.M44);
+			}
+			set
+			{
+				this.M41 = value.X;
+				this.M42 = value.Y;
+				this.M43 = value.Z;
+				this.M44 = value.W;
+			}
+		}
+		
+		
 	}
 }
