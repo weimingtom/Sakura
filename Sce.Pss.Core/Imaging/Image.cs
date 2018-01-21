@@ -30,6 +30,8 @@ namespace Sce.Pss.Core.Imaging
 			{
 				Debug.WriteLine("==============>DrawText: " + text);
 				//drawing.Clear(_backColor);
+				//http://bbs.csdn.net/topics/350255409
+				drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 				drawing.DrawString(text, font.__font, textBrush, position.X, position.Y);
 				drawing.Save();
 			}

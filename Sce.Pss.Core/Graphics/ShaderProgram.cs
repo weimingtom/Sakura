@@ -215,7 +215,9 @@ namespace Sce.Pss.Core.Graphics
 			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",
 			    "/Application/Sample/Lib/SampleLib/shaders/Simple.cgx",
 			    "/Application/Sample/Lib/SampleLib/shaders/Texture.cgx",
-			    "/Application/Sample/Graphics/PrimitiveSample/shaders/VertexColor.cgx"
+			    "/Application/Sample/Graphics/PrimitiveSample/shaders/VertexColor.cgx",
+			    "/Application/Sample/Graphics/PixelBufferSample/shaders/VertexColor.cgx",
+			    "/Application/Sample/Graphics/PixelBufferSample/shaders/Texture.cgx"
 			};
 			bool isMatch = false;
 			foreach (string name in whiteList)

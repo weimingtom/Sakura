@@ -69,13 +69,14 @@ namespace Sce.Pss.Core.Graphics
 		}
 		private int __width = -1;
 		private int __height = -1;
-		private int __widthTex = -1;
-		private int __heightTex = -1;
+		public int __widthTex = -1;
+		public int __heightTex = -1;
 		private bool __mipmap;
 		private PixelFormat __format;
-		private byte[] __pixels;
+		public byte[] __pixels;
 		public int __textureId = -1;
 		public int __dx, __dy, __dw, __dh;
+		private PixelBufferOption __option;
 		
 //		public Texture2D()
 //		{
@@ -87,6 +88,30 @@ namespace Sce.Pss.Core.Graphics
 			this.__height = height;
 			this.__mipmap = mipmap;
 			this.__format = format;
+			this.__option = PixelBufferOption.None; //FIXME:???
+			System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+			{
+				drawing.Clear(System.Drawing.Color.White);
+				drawing.Save();
+			}
+			SetPixels(0, __toBuffer(__img2), 0, 0, __img2.Width, __img2.Height);
+		}
+		
+		public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option)
+		{
+			this.__width = width;
+			this.__height = height;
+			this.__mipmap = mipmap;
+			this.__format = format;
+			this.__option = option;
+			System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+			{
+				drawing.Clear(System.Drawing.Color.Red);
+				drawing.Save();
+			}
+			SetPixels(0, __toBuffer(__img2), 0, 0, __img2.Width, __img2.Height);
 		}
 		
 		public Texture2D(string fileName, bool mipmap)

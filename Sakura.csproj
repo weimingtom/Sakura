@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Sample.MathSample</StartupObject>
+    <StartupObject>Sample.PixelBufferSample</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -252,6 +252,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sakura.OpenTK\MyGameWindow.cs" />
     <Compile Include="Sample\Core\MathSample\MathSample.cs" />
+    <Compile Include="Sample\Graphics\PixelBufferSample\PixelBufferSample.cs" />
     <Compile Include="Sample\Graphics\PrimitiveSample\PrimitiveSample.cs" />
     <Compile Include="Sample\Graphics\SpriteSample\SpriteSample.cs" />
     <Compile Include="Sample\Graphics\TriangleSample\TriangleSample.cs" />
@@ -261,11 +262,15 @@
     <Compile Include="Sce.Pss.Core\FMath.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncFactor.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncMode.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\CullFaceDirection.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\CullFaceMode.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\DepthBuffer.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\DrawMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\EnableMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\FrameBuffer.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\GraphicsContext.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\PixelBuffer.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\PixelBufferOption.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\PixelFormat.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\ShaderProgram.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\Texture.cs" />
@@ -307,6 +312,24 @@
     </None>
     <None Include="LICENSE" />
     <None Include="README.md" />
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\Simple.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\Simple.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\Texture.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\Texture.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\VertexColor.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\Graphics\PixelBufferSample\shaders\VertexColor.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sample\Graphics\PrimitiveSample\shaders\VertexColor.fcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -355,6 +378,8 @@
     <Folder Include="OpenTK\Platform\Windows" />
     <Folder Include="OpenTK\Platform\Windows\Bindings" />
     <Folder Include="Sample\Core\MathSample" />
+    <Folder Include="Sample\Graphics\PixelBufferSample" />
+    <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />
     <Folder Include="Sample\Graphics\PrimitiveSample" />
     <Folder Include="Sample\Graphics\PrimitiveSample\shaders" />
     <Folder Include="Sample\Graphics\SpriteSample" />

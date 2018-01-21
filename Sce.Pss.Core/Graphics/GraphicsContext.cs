@@ -52,8 +52,8 @@ namespace Sce.Pss.Core.Graphics
 		
 		public static Dictionary<int, bool> __isUsedProgram = new Dictionary<int, bool>();
 		public static Dictionary<int, VertexBuffer> __vertexBuffer = new Dictionary<int, VertexBuffer>();
-		private FrameBuffer __frameBuffer = new FrameBuffer();
-		private FrameBuffer __screen = new FrameBuffer();
+		private FrameBuffer __frameBuffer;
+		private FrameBuffer __screen;
 	    private static readonly float[] __vVertices = {  
         	0.0f,  0.5f, 0.0f,
 	        -0.5f, -0.5f, 0.0f,
@@ -70,6 +70,9 @@ namespace Sce.Pss.Core.Graphics
             color = Color4.MidnightBlue;
             GL.ClearColor(color.R, color.G, color.B, color.A);
             GL.Enable(EnableCap.DepthTest);
+            
+            this.__screen = FrameBuffer.__getScreen();
+            this.__frameBuffer = this.__screen;
 		}
 		
 		public void Dispose ()
@@ -87,7 +90,7 @@ namespace Sce.Pss.Core.Graphics
 
 		public void SetViewport(int x, int y, int w, int h)
 		{
-			GL.Viewport(0, 0, MyGameWindow.getWidth(), MyGameWindow.getHeight());
+			GL.Viewport(0, 0, w, h);
         }
 		
 		public void SetClearColor(float r, float g, float b, float a)
@@ -174,46 +177,51 @@ namespace Sce.Pss.Core.Graphics
 					{
 						Debug.Assert(false);
 					}
-				}			
-			}
-			
-			//DrawArrays
-			PrimitiveType type = PrimitiveType.Triangles;
-			switch (mode)
-			{
-				case DrawMode.TriangleStrip:
-					type = PrimitiveType.TriangleStrip;
-					break;
-					
-				case DrawMode.Triangles:
-					type = PrimitiveType.Triangles;
-					break;
-					
-				case DrawMode.TriangleFan:
-					type = PrimitiveType.TriangleFan;
-					break;
-					
-				case DrawMode.Points:
-					type = PrimitiveType.Points;
-					break;
-					
-				case DrawMode.Lines:
-					type = PrimitiveType.Lines;
-					break;
-					
-				case DrawMode.LineStrip:
-					type = PrimitiveType.LineStrip;
-					break;
-					
-				default:
-					Debug.Assert(false);
-					break;
-			}
-			GL.DrawArrays(type, first, count);
-			
-			//DisableVertexAttribArray
-			foreach (VertexBuffer buffer in __vertexBuffer.Values)
-			{
+				}
+				
+				//DrawArrays
+				PrimitiveType type = PrimitiveType.Triangles;
+				switch (mode)
+				{
+					case DrawMode.TriangleStrip:
+						type = PrimitiveType.TriangleStrip;
+						break;
+						
+					case DrawMode.Triangles:
+						type = PrimitiveType.Triangles;
+						break;
+						
+					case DrawMode.TriangleFan:
+						type = PrimitiveType.TriangleFan;
+						break;
+						
+					case DrawMode.Points:
+						type = PrimitiveType.Points;
+						break;
+						
+					case DrawMode.Lines:
+						type = PrimitiveType.Lines;
+						break;
+						
+					case DrawMode.LineStrip:
+						type = PrimitiveType.LineStrip;
+						break;
+						
+					default:
+						Debug.Assert(false);
+						break;
+				}
+				ushort[] indics = buffer.__indices;
+				int indexCount = buffer.__indexCount;
+				if (indexCount <= 0)
+				{
+					GL.DrawArrays(type, first, count);
+				}
+				else
+				{
+					GL.DrawElements(type, count, DrawElementsType.UnsignedShort, indics);
+				}
+				
 				if (buffer != null)
 				{
 					for (int i = 0; i < buffer.__verticesArr.Length; ++i)
@@ -290,9 +298,45 @@ namespace Sce.Pss.Core.Graphics
 					GL.Enable(EnableCap.Blend);
 					break;
 					
+				case EnableMode.DepthTest:
+					GL.Enable(EnableCap.DepthTest);
+					break;
+				
+				case EnableMode.CullFace:
+					GL.Enable(EnableCap.CullFace);
+					break;
+					
 				default:
 					Debug.Assert(false);
 					break;
+			}
+		}
+		
+		public void Enable (EnableMode mode, bool status)
+		{
+			//Debug.Assert(false);
+			EnableCap mode_ = EnableCap.AlphaTest; //FIXME:
+			switch (mode)
+			{
+				case EnableMode.CullFace:
+					mode_ = EnableCap.CullFace;
+					break;
+					
+				case EnableMode.DepthTest:
+					mode_ = EnableCap.DepthTest;
+					break;
+				
+				default:
+					Debug.Assert(false);
+					break;
+			}
+			if (status)
+			{
+				GL.Enable(mode_);
+			}
+			else
+			{
+				GL.Disable(mode_);
 			}
 		}
 		
@@ -341,6 +385,35 @@ namespace Sce.Pss.Core.Graphics
 			}
 			GL.BlendEquation(_mode);
 			GL.BlendFunc(_src, _dst);
+		}
+		
+		public void SetFrameBuffer (FrameBuffer buffer)
+		{
+			//Debug.Assert(false);
+			Debug.Assert(buffer.__framebufferId >= 0);
+			this.__frameBuffer = buffer;
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, buffer.__framebufferId);
+		}
+		
+		public void SetCullFace (CullFaceMode mode, CullFaceDirection direction)
+		{
+			OpenTK.Graphics.ES20.CullFaceMode mode_ = 0;
+			OpenTK.Graphics.ES20.FrontFaceDirection mode2_ = 0;
+			switch (mode)
+			{
+				case CullFaceMode.Back:
+					mode_ = OpenTK.Graphics.ES20.CullFaceMode.Back;
+					break;
+			}
+			switch (direction)
+			{
+				case CullFaceDirection.Ccw:
+					mode2_ = OpenTK.Graphics.ES20.FrontFaceDirection.Ccw;	
+					break;
+			}
+			GL.CullFace(mode_);
+			GL.FrontFace(mode2_);
+			//Debug.Assert(false);
 		}
 	}
 }

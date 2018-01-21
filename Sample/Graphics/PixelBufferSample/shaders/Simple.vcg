@@ -1,0 +1,25 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( float4 in a_Position  : POSITION,
+		   float4 out v_Position : POSITION,
+		   uniform float4x4 WorldViewProj
+           )
+{
+	v_Position = mul( a_Position, WorldViewProj );
+}
+*/
+attribute vec4 a_Position;
+attribute vec4 MaterialColor;
+uniform mat4 WorldViewProj;
+varying vec4 v_Position;
+varying vec4 v_MaterialColor;
+void main()                  
+{  
+   gl_Position = WorldViewProj * a_Position;
+   v_Position = WorldViewProj * a_Position;
+   v_MaterialColor = MaterialColor;
+} 
