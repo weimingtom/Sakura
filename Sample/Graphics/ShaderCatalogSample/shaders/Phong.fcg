@@ -1,0 +1,116 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( 
+          float3 in  v_Normal  : TEXCOORD0,
+          float3 in  v_Eye     : TEXCOORD1,
+          float4 out Color     : COLOR,
+          uniform float3 LocalLightDirection,
+          uniform float4 IAmbient,
+          uniform float4 IDiffuse,
+          uniform float4 KAmbient,
+          uniform float4 KDiffuse,
+          uniform float4 KSpecular,
+          uniform float Shininess
+           )
+{
+	float3 L = -LocalLightDirection;
+	float3 N = normalize(v_Normal);
+    float3 E = normalize(v_Eye);
+	float3 R = -E + 2.0f * dot(N, E) * N;
+
+    float diffuseL = max(0, dot(N, L));
+    float specularL = pow( max( dot(L, R), 0 ), Shininess);
+    float4 ambient = IAmbient * KAmbient;
+    float4 diffuse = IDiffuse * KDiffuse * diffuseL;
+
+    if( diffuseL <= 0.0f ){
+        Color = ambient;
+    }else{
+        Color = ambient + diffuse + KSpecular * specularL;
+    }
+}
+*/
+
+
+// glslf output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslf
+// source file: input_f.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslf
+//program main
+//semantic main.LocalLightDirection
+//semantic main.IAmbient
+//semantic main.IDiffuse
+//semantic main.KAmbient
+//semantic main.KDiffuse
+//semantic main.KSpecular
+//semantic main.Shininess
+//var float3 LocalLightDirection :  : _LocalLightDirection1 : 3 : 1
+//var float4 IAmbient :  : _IAmbient1 : 4 : 1
+//var float4 IDiffuse :  : _IDiffuse1 : 5 : 1
+//var float4 KAmbient :  : _KAmbient1 : 6 : 1
+//var float4 KDiffuse :  : _KDiffuse1 : 7 : 1
+//var float4 KSpecular :  : _KSpecular1 : 8 : 1
+//var float Shininess :  : _Shininess1 : 9 : 1
+//var float3 v_Normal : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float3 v_Eye : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float4 Color : $vout.COLOR : COLOR : 2 : 1
+
+precision highp float;
+precision highp int;
+varying vec3 v_Normal;
+varying vec3 v_Eye;
+uniform vec3 LocalLightDirection;
+uniform vec4 IAmbient;
+uniform vec4 IDiffuse;
+uniform vec4 KAmbient;
+uniform vec4 KDiffuse;
+uniform vec4 KSpecular;
+uniform float Shininess;
+vec3 _TMP7;
+float _x0012;
+vec3 _TMP13;
+float _x0018;
+float _b0024;
+float _a0028;
+float _x0030;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _Color;
+    vec3 _L;
+    vec3 _R;
+    float _diffuseL;
+    float _specularL;
+    vec4 _ambient;
+    vec4 _diffuse;
+
+    _L = -LocalLightDirection;
+    _x0012 = dot(v_Normal.xyz, v_Normal.xyz);
+    _TMP7 = inversesqrt(_x0012)*v_Normal.xyz;
+    _x0018 = dot(v_Eye.xyz, v_Eye.xyz);
+    _TMP13 = inversesqrt(_x0018)*v_Eye.xyz;
+    _R = -_TMP13 + (2.00000000E+000*dot(_TMP7, _TMP13))*_TMP7;
+    _b0024 = dot(_TMP7, _L);
+    _diffuseL = max(0.00000000E+000, _b0024);
+    _a0028 = dot(_L, _R);
+    _x0030 = max(_a0028, 0.00000000E+000);
+    _specularL = pow(_x0030, Shininess);
+    _ambient = IAmbient*KAmbient;
+    _diffuse = (IDiffuse*KDiffuse)*_diffuseL;
+    if (_diffuseL <= 0.00000000E+000) { // if begin
+        _Color = _ambient;
+    } else {
+        _Color = _ambient + _diffuse + KSpecular*_specularL;
+    } // end if
+    gl_FragColor = _Color;
+} // main end
+

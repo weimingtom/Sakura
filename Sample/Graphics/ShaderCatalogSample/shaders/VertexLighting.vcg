@@ -1,0 +1,85 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main(	float4 in a_Position  : POSITION,
+			float3 in a_Normal    : NORMAL,
+			float4 out v_Position : POSITION,
+			float4 out v_Color	  : COLOR0,
+			
+			uniform float4   IAmbient,
+			uniform float4   IDiffuse,
+			
+			uniform float4   KAmbient,
+			uniform float4   KDiffuse,
+						
+			uniform float3   LocalLightDirection,
+			uniform float4x4 WorldViewProj
+		   )
+{
+	v_Position	= mul( a_Position, WorldViewProj );
+	v_Color     = IAmbient * KAmbient + IDiffuse * KDiffuse * max(0, dot(a_Normal, -LocalLightDirection));
+}
+*/
+
+
+// glslv output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslv
+// source file: input_v.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslv
+//program main
+//semantic main.IAmbient
+//semantic main.IDiffuse
+//semantic main.KAmbient
+//semantic main.KDiffuse
+//semantic main.LocalLightDirection
+//semantic main.WorldViewProj
+//var float4 IAmbient :  : _IAmbient1 : 4 : 1
+//var float4 IDiffuse :  : _IDiffuse1 : 5 : 1
+//var float4 KAmbient :  : _KAmbient1 : 6 : 1
+//var float4 KDiffuse :  : _KDiffuse1 : 7 : 1
+//var float3 LocalLightDirection :  : _LocalLightDirection1 : 8 : 1
+//var float4x4 WorldViewProj :  : _WorldViewProj1[0], 4 : 9 : 1
+//var float4 a_Position : $vin.POSITION : POSITION : 0 : 1
+//var float3 a_Normal : $vin.NORMAL : NORMAL : 1 : 1
+//var float4 v_Position : $vout.POSITION : POSITION : 2 : 1
+//var float4 v_Color : $vout.COLOR0 : COLOR0 : 3 : 1
+
+attribute vec4 a_Position;
+attribute vec3 a_Normal;
+varying vec4 v_Position;
+varying vec4 v_Color;
+uniform vec4 IAmbient;
+uniform vec4 IDiffuse;
+uniform vec4 KAmbient;
+uniform vec4 KDiffuse;
+uniform vec3 LocalLightDirection;
+uniform mat4 WorldViewProj;
+vec4 _r0007;
+vec3 _b0009;
+float _b0011;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _v_Position;
+    vec4 _v_Color;
+
+    _r0007 = a_Position.x*WorldViewProj[0];
+    _r0007 = _r0007 + a_Position.y*WorldViewProj[1];
+    _r0007 = _r0007 + a_Position.z*WorldViewProj[2];
+    _r0007 = _r0007 + a_Position.w*WorldViewProj[3];
+    _v_Position = _r0007;
+    _b0009 = -LocalLightDirection;
+    _b0011 = dot(a_Normal, _b0009);
+    _v_Color = IAmbient*KAmbient + (IDiffuse*KDiffuse)*max(0.00000000E+000, _b0011);
+    v_Color = _v_Color;
+    gl_Position = _r0007;
+} // main end
+

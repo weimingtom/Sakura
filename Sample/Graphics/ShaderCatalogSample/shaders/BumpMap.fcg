@@ -1,0 +1,75 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( 
+          float2 in v_TexCoord0           : TEXCOORD0,
+          float3 in v_LocalLightDirection : TEXCOORD1,
+
+          float4 out Color             : COLOR,
+          uniform sampler2D NormalMap  : TEXUNIT0,
+          uniform sampler2D ColorMap   : TEXUNIT1
+           )
+{
+    float3 L = normalize( v_LocalLightDirection );
+    float3 N = normalize( tex2D( NormalMap, v_TexCoord0 ).xyz * 2.0f - 0.5f );
+
+    float diffuse = max( 0, dot( L, N ) );
+    float3 color = tex2D( ColorMap, v_TexCoord0 ).xyz;
+    //    float3 color = float3( 1.0f, 1.0f, 1.0f );
+    Color.xyz = color * diffuse;
+    Color.w = 1.0f;
+
+}
+*/
+// glslf output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslf
+// source file: input_f.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslf
+//program main
+//semantic main.NormalMap : TEXUNIT0
+//semantic main.ColorMap : TEXUNIT1
+//var sampler2D NormalMap : TEXUNIT0 : _NormalMap1 0 : 3 : 1
+//var sampler2D ColorMap : TEXUNIT1 : _ColorMap1 1 : 4 : 1
+//var float2 v_TexCoord0 : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float3 v_LocalLightDirection : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float4 Color : $vout.COLOR : COLOR : 2 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 v_TexCoord0;
+varying vec3 v_LocalLightDirection;
+uniform sampler2D Texture0;//NormalMap;
+uniform sampler2D Texture1;//ColorMap;
+vec3 _TMP2;
+float _x0007;
+vec3 _TMP10;
+vec3 _v0011;
+float _x0015;
+float _b0019;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _Color;
+    float _diffuse;
+    vec3 _color;
+
+    _x0007 = dot(v_LocalLightDirection.xyz, v_LocalLightDirection.xyz);
+    _TMP2 = inversesqrt(_x0007)*v_LocalLightDirection.xyz;
+    _v0011 = texture2D(Texture0/*NormalMap*/, v_TexCoord0.xy).xyz*2.00000000E+000 - 5.00000000E-001;
+    _x0015 = dot(_v0011, _v0011);
+    _TMP10 = inversesqrt(_x0015)*_v0011;
+    _b0019 = dot(_TMP2, _TMP10);
+    _diffuse = max(0.00000000E+000, _b0019);
+    _color = texture2D(Texture1/*ColorMap*/, v_TexCoord0.xy).xyz;
+    _Color.xyz = _color*_diffuse;
+    _Color.w = 1.00000000E+000;
+    gl_FragColor = _Color;
+} // main end

@@ -4,12 +4,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-    
+
 namespace Sce.Pss.Core.Imaging
 {
 	public class Image
 	{
-		private System.Drawing.Bitmap __img;
+		public System.Drawing.Bitmap __img;
 		
 		public Image(ImageMode mode, ImageSize size, ImageColor color)
 		{
@@ -18,7 +18,15 @@ namespace Sce.Pss.Core.Imaging
 				Debug.Assert(false);
 			}
 			//PixelFormat.
-			__img = new System.Drawing.Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb);
+			__img = new System.Drawing.Bitmap(size.Width, 
+			                                  size.Height, 
+			                                  PixelFormat.Format32bppArgb);
+			System.Drawing.Color _backColor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img))
+			{
+				drawing.Clear(_backColor);
+				drawing.Save();
+			}
 		}
 		
 		public void DrawText(string text, ImageColor color, Font font, ImagePosition position)

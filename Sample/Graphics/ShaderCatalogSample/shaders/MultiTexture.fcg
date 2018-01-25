@@ -1,0 +1,60 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( 
+          float2 in  v_TexCoord0     : TEXCOORD0,
+          float2 in  v_TexCoord1     : TEXCOORD1,
+          float4 out Color	  	   : COLOR,
+          uniform sampler2D Texture0 : TEXUNIT0,
+          uniform sampler2D Texture1 : TEXUNIT1
+           )
+{
+    float4 dist = tex2D(Texture0, v_TexCoord0);
+    float4 src = tex2D(Texture1, v_TexCoord1);
+
+    Color = (dist * (1.0f - src.w)) + (src * src.w);
+}
+*/
+
+
+// glslf output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslf
+// source file: input_f.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslf
+//program main
+//semantic main.Texture0 : TEXUNIT0
+//semantic main.Texture1 : TEXUNIT1
+//var sampler2D Texture0 : TEXUNIT0 : _Texture01 0 : 3 : 1
+//var sampler2D Texture1 : TEXUNIT1 : _Texture11 1 : 4 : 1
+//var float2 v_TexCoord0 : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float2 v_TexCoord1 : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float4 Color : $vout.COLOR : COLOR : 2 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 v_TexCoord0;
+varying vec2 v_TexCoord1;
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _Color;
+    vec4 _dist;
+    vec4 _src;
+
+    _dist = texture2D(Texture0, v_TexCoord0.xy);
+    _src = texture2D(Texture1, v_TexCoord1.xy);
+    _Color = _dist*(1.00000000E+000 - _src.w) + _src*_src.w;
+    gl_FragColor = _Color;
+} // main end
+
+

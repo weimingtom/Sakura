@@ -1,0 +1,78 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( float4 in a_Position  : POSITION,
+           float3 in a_Normal    : NORMAL,
+           float2 in a_TexCoord  : TEXCOORD0,
+           float4 out v_Position : POSITION,
+           float3 out v_Normal	 : TEXCOORD0,
+           float3 out v_Eye	     : TEXCOORD1,
+           float2 out v_TexCoord : TEXCOORD2,
+           uniform float3 EyePosition,
+           uniform float4x4 WorldViewProj
+		   )
+{
+	v_Position	= mul( a_Position, WorldViewProj );
+	v_Normal	= a_Normal;
+	v_Eye		= EyePosition - a_Position.xyz;
+	v_TexCoord  = a_TexCoord;
+}
+*/
+
+// glslv output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslv
+// source file: input_v.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslv
+//program main
+//semantic main.EyePosition
+//semantic main.WorldViewProj
+//var float3 EyePosition :  : _EyePosition1 : 7 : 1
+//var float4x4 WorldViewProj :  : _WorldViewProj1[0], 4 : 8 : 1
+//var float4 a_Position : $vin.POSITION : POSITION : 0 : 1
+//var float3 a_Normal : $vin.NORMAL : NORMAL : 1 : 1
+//var float2 a_TexCoord : $vin.TEXCOORD0 : TEXCOORD0 : 2 : 1
+//var float4 v_Position : $vout.POSITION : POSITION : 3 : 1
+//var float3 v_Normal : $vout.TEXCOORD0 : TEXCOORD0 : 4 : 1
+//var float3 v_Eye : $vout.TEXCOORD1 : TEXCOORD1 : 5 : 1
+//var float2 v_TexCoord : $vout.TEXCOORD2 : TEXCOORD2 : 6 : 1
+
+attribute vec4 a_Position;
+attribute vec3 a_Normal;
+attribute vec2 a_TexCoord;
+varying vec4 v_Position;
+varying vec3 v_Normal;
+varying vec3 v_Eye;
+varying vec2 v_TexCoord;
+uniform vec3 EyePosition;
+uniform mat4 WorldViewProj;
+vec4 _r0003;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _v_Position;
+    vec3 _v_Normal;
+    vec3 _v_Eye;
+    vec2 _v_TexCoord;
+
+    _r0003 = a_Position.x*WorldViewProj[0];
+    _r0003 = _r0003 + a_Position.y*WorldViewProj[1];
+    _r0003 = _r0003 + a_Position.z*WorldViewProj[2];
+    _r0003 = _r0003 + a_Position.w*WorldViewProj[3];
+    _v_Position = _r0003;
+    _v_Normal = a_Normal;
+    _v_Eye = EyePosition - a_Position.xyz;
+    _v_TexCoord = a_TexCoord.xy;
+    v_Eye.xyz = _v_Eye;
+    gl_Position = _r0003;
+    v_TexCoord.xy = a_TexCoord.xy;
+    v_Normal.xyz = a_Normal;
+} // main end
+

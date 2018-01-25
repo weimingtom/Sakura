@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
 
-using Sakura.OpenTK;
-
 using Sce.Pss.Core;
 using Sce.Pss.Core.Graphics;
 using Sce.Pss.Core.Environment;

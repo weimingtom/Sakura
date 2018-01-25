@@ -1,0 +1,67 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main(	float4 in a_Position  : POSITION,
+			float2 in a_TexCoord0  : TEXCOORD0,
+            float2 in a_TexCoord1  : TEXCOORD1,
+			float4 out v_Position  : POSITION,
+			float2 out v_TexCoord0 : TEXCOORD0,
+            float2 out v_TexCoord1 : TEXCOORD1,
+			uniform float4x4 WorldViewProj
+		   )
+{
+	v_Position	= mul( a_Position, WorldViewProj );
+    v_TexCoord0  = a_TexCoord0;
+    v_TexCoord1  = a_TexCoord1;
+}
+*/
+
+// glslv output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslv
+// source file: input_v.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslv
+//program main
+//semantic main.WorldViewProj
+//var float4x4 WorldViewProj :  : _WorldViewProj1[0], 4 : 6 : 1
+//var float4 a_Position : $vin.POSITION : POSITION : 0 : 1
+//var float2 a_TexCoord0 : $vin.TEXCOORD0 : TEXCOORD0 : 1 : 1
+//var float2 a_TexCoord1 : $vin.TEXCOORD1 : TEXCOORD1 : 2 : 1
+//var float4 v_Position : $vout.POSITION : POSITION : 3 : 1
+//var float2 v_TexCoord0 : $vout.TEXCOORD0 : TEXCOORD0 : 4 : 1
+//var float2 v_TexCoord1 : $vout.TEXCOORD1 : TEXCOORD1 : 5 : 1
+
+attribute vec4 a_Position;
+attribute vec2 a_TexCoord0;
+attribute vec2 a_TexCoord1;
+varying vec4 v_Position;
+varying vec2 v_TexCoord0;
+varying vec2 v_TexCoord1;
+uniform mat4 WorldViewProj;
+vec4 _r0002;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _v_Position;
+    vec2 _v_TexCoord0;
+    vec2 _v_TexCoord1;
+
+    _r0002 = a_Position.x*WorldViewProj[0];
+    _r0002 = _r0002 + a_Position.y*WorldViewProj[1];
+    _r0002 = _r0002 + a_Position.z*WorldViewProj[2];
+    _r0002 = _r0002 + a_Position.w*WorldViewProj[3];
+    _v_Position = _r0002;
+    _v_TexCoord0 = a_TexCoord0.xy;
+    _v_TexCoord1 = a_TexCoord1.xy;
+    v_TexCoord1.xy = a_TexCoord1.xy;
+    gl_Position = _r0002;
+    v_TexCoord0.xy = a_TexCoord0.xy;
+} // main end
+

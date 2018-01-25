@@ -8,7 +8,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;
 
-using Sakura.OpenTK;
+using Sakura;
 
 namespace Sce.Pss.Core.Graphics
 {
@@ -51,7 +51,9 @@ namespace Sce.Pss.Core.Graphics
 		//http://doc.qt.io/qt-5/qtgui-openglwindow-example.html
 		
 		public static Dictionary<int, bool> __isUsedProgram = new Dictionary<int, bool>();
+		public static Dictionary<int, ShaderProgram> __programDic = new Dictionary<int, ShaderProgram>();
 		public static Dictionary<int, VertexBuffer> __vertexBuffer = new Dictionary<int, VertexBuffer>();
+		public static Dictionary<int, Texture> __textureDic = new Dictionary<int, Texture>();
 		private FrameBuffer __frameBuffer;
 		private FrameBuffer __screen;
 	    private static readonly float[] __vVertices = {  
@@ -64,7 +66,7 @@ namespace Sce.Pss.Core.Graphics
 		{
 			Console.SetOut(new __DebugTextWriter());
 			
-			MyGameWindow.Init();
+			SakuraGameWindow.Init();
 			
 			Color4 color = Color4.Black;//FIXME:
             color = Color4.MidnightBlue;
@@ -73,6 +75,17 @@ namespace Sce.Pss.Core.Graphics
             
             this.__screen = FrameBuffer.__getScreen();
             this.__frameBuffer = this.__screen;
+            
+            string extensions = GL.GetString(StringName.Extensions);
+            Debug.WriteLine(">>>extensions = " + extensions);
+            if (extensions.Contains("GL_OES_texture_npot"))
+            {
+            	Debug.WriteLine(">>>Support NPOT");
+            }
+            else
+            {
+            	Debug.WriteLine(">>>Not support NPOT");            	
+            }
 		}
 		
 		public void Dispose ()
@@ -104,20 +117,43 @@ namespace Sce.Pss.Core.Graphics
 		}
 		
 		private int __curProgramObject = 0;
+		private ShaderProgram __curProgram = null;
 		public void SetShaderProgram(ShaderProgram program)
 		{
 			program.__linkProgram();
 			__curProgramObject = program.__programObject;
+			__curProgram = program;
 			if (program.__programObject != 0)
 			{
 				__isUsedProgram[program.__programObject] = true;
-				__vertexBuffer.Clear();
-				GL.Clear(ClearBufferMask.DepthBufferBit); //FIXME:???
-	        	GL.UseProgram(program.__programObject);
+				__programDic[program.__programObject] = program;
+				__vertexBuffer.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
+				//__textureDic.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
+				//GL.Clear(ClearBufferMask.DepthBufferBit); //FIXME:???
+				GL.UseProgram(program.__programObject);
 	        	foreach (int location in program.__uniformMatrix4.Keys)
 	        	{
 	        		OpenTK.Matrix4 v = program.__uniformMatrix4[location];
 	        		GL.UniformMatrix4 (location, false, ref v);
+//	        		if (program.__filename.Equals("/Application/Sample/Graphics/ShaderCatalogSample/shaders/Simple.cgx"))
+//	    			{
+//	        			Debug.WriteLine("======================location2:" + location + " : " + v.ToString());
+//	        		}
+	        	}
+	        	foreach (int location in program.__uniform4.Keys)
+	        	{
+	        		OpenTK.Vector4 v = program.__uniform4[location];
+	        		GL.Uniform4 (location, v.X, v.Y, v.Z, v.W);
+	        	}
+	        	foreach (int location in program.__uniform3.Keys)
+	        	{
+	        		OpenTK.Vector3 v = program.__uniform3[location];
+	        		GL.Uniform3 (location, v.X, v.Y, v.Z);
+	        	}
+	        	foreach (int location in program.__uniform1.Keys)
+	        	{
+	        		float v = program.__uniform1[location];
+	        		GL.Uniform1 (location, v);
 	        	}
 	        	program.__afterUseProgram();
 			}
@@ -135,6 +171,12 @@ namespace Sce.Pss.Core.Graphics
 		
 		public void DrawArrays(DrawMode mode, int first, int count)
 		{
+			foreach (int index in __textureDic.Keys)
+			{
+				Texture texture = __textureDic[index];
+				this.__SetTexture(index, texture);
+			}
+			
 			//VertexAttribPointer
 			//EnableVertexAttribArray
 			foreach (VertexBuffer buffer in __vertexBuffer.Values)
@@ -243,19 +285,37 @@ namespace Sce.Pss.Core.Graphics
 					}
 				}
 			}
+			
+			if (__disableBlend)
+			{
+				GL.Enable(EnableCap.DepthTest); //FIXME:???
+				__disableBlend = false;
+			}
    		}
 		
 		public void SwapBuffers()
 		{  
 #if true
-			MyGameWindow.OnResize();
+			SakuraGameWindow.OnResize();
 #endif
-			MyGameWindow.SwapBuffers();
+			SakuraGameWindow.SwapBuffers();
             List<int> akeys = new List<int>(__isUsedProgram.Keys);  
             foreach (int key in akeys)
             {
             	__isUsedProgram[key] = false;
             }
+//            foreach (ShaderProgram pro in __programDic)
+//            {
+//            	pro.__uniform1.Clear();
+//            	pro.__uniform2.Clear();
+//            	pro.__uniform3.Clear();
+//            	pro.__uniform4.Clear();
+//            	pro.__uniformMatrix4.Clear();
+//            	pro.__uniformDic.Clear();
+//            }
+            __programDic.Clear();
+            //__useProgramBeforeSetTexture = false;
+            __textureDic.Clear();
 		}
 		
 		public FrameBuffer GetFrameBuffer()
@@ -263,8 +323,28 @@ namespace Sce.Pss.Core.Graphics
 			return __frameBuffer;
 		}
 		
+		//private bool __useProgramBeforeSetTexture = false; //FIXME:???
 		public void SetTexture(int index, Texture texture)
 		{
+//			if (index == 1)
+//			{
+//				Debug.WriteLine("====================1");
+//			}
+			__textureDic[index] = texture;
+		}
+
+		private void __SetTexture(int index, Texture texture)
+		{
+			//FIXME:???SetShaderProgram
+//			if (__useProgramBeforeSetTexture == false)
+//			{
+//				if (__curProgram != null)
+//				{
+//					SetShaderProgram(__curProgram);
+//				}
+//				__useProgramBeforeSetTexture = true;
+//			}
+			
 			//FIXME:tex
 		   //glActiveTexture ( GL_TEXTURE0 );
 		   //glBindTexture ( GL_TEXTURE_2D, userData->textureId );
@@ -278,6 +358,10 @@ namespace Sce.Pss.Core.Graphics
 		   		textureUnit = TextureUnit.Texture0;
 		   		break;
 		   
+		   	case 1:
+		   		textureUnit = TextureUnit.Texture1;
+		   		break;
+		   		
 		   	default:
 		   		Debug.Assert(false);
 		   		break;
@@ -285,9 +369,37 @@ namespace Sce.Pss.Core.Graphics
 		   Debug.Assert(((Texture2D)texture).__textureId >= 0);
 		   GL.ActiveTexture(textureUnit);
 		   GL.BindTexture (TextureTarget.Texture2D, ((Texture2D)texture).__textureId); //FIXME:
+		   switch (texture.__wrap)
+		   {
+				case TextureWrapMode.ClampToEdge:
+					//FIXME:???
+				   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
+					GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);							
+					break;
+					
+				case TextureWrapMode.Repeat:
+					//FIXME:???
+					if (true)
+					{
+						GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Repeat);
+						GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Repeat);	
+					}
+//					GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+//					GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);					
+					break;
+					
+				default:
+					Debug.Assert(false);
+					break;
+		   }
+		   
 		   int samplerLoc = GL.GetUniformLocation(__curProgramObject, "Texture" + index );
-		   //Debug.WriteLine("uniform['" + "Texture0" + "':].location == " + samplerLoc);
-		   GL.Uniform1(samplerLoc, 0);
+//		   Debug.WriteLine("program: " + __curProgramObject + ", SetTexture:uniform['" + "Texture" + index + "':].location == " + samplerLoc);
+//		   if (index == 1)
+//		   {
+//		   		Debug.WriteLine("=============1");
+//		   }
+		   GL.Uniform1(samplerLoc, index);
 		}
 		
 		public void Enable(EnableMode mode)
@@ -296,6 +408,10 @@ namespace Sce.Pss.Core.Graphics
 			{
 				case EnableMode.Blend:
 					GL.Enable(EnableCap.Blend);
+					//FIXME:???for sprite black bg problem
+					//TODO:removed, not safe
+//					GL.Disable(EnableCap.DepthTest); //FIXME:???
+//					__disableBlend = true;
 					break;
 					
 				case EnableMode.DepthTest:
@@ -312,10 +428,11 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
+		private bool __disableBlend = false;
 		public void Enable (EnableMode mode, bool status)
 		{
 			//Debug.Assert(false);
-			EnableCap mode_ = EnableCap.AlphaTest; //FIXME:
+			EnableCap mode_ = 0; //FIXME:
 			switch (mode)
 			{
 				case EnableMode.CullFace:
@@ -324,6 +441,17 @@ namespace Sce.Pss.Core.Graphics
 					
 				case EnableMode.DepthTest:
 					mode_ = EnableCap.DepthTest;
+					break;
+					
+				case EnableMode.Blend:
+					mode_ = EnableCap.Blend;
+					//FIXME:??????for sprite black bg problem
+					//TODO:removed, not safe
+//					if (status == true)
+//					{
+//						GL.Disable(EnableCap.DepthTest); //FIXME:???
+//						__disableBlend = true;
+//					}
 					break;
 				
 				default:
@@ -383,6 +511,9 @@ namespace Sce.Pss.Core.Graphics
 					Debug.Assert(false);
 					break;
 			}
+			//FIXME:??????in SpriteSample, for sprite black bg problem
+			//GL.DepthMask(false); //not good
+			GL.Clear(ClearBufferMask.DepthBufferBit);
 			GL.BlendEquation(_mode);
 			GL.BlendFunc(_src, _dst);
 		}
@@ -414,6 +545,30 @@ namespace Sce.Pss.Core.Graphics
 			GL.CullFace(mode_);
 			GL.FrontFace(mode2_);
 			//Debug.Assert(false);
+		}
+		
+		public bool IsEnabled(EnableMode mode)
+		{
+			EnableCap mode_ = 0; //FIXME:
+			switch (mode)
+			{
+				case EnableMode.CullFace:
+					mode_ = EnableCap.CullFace;
+					break;
+					
+				case EnableMode.DepthTest:
+					mode_ = EnableCap.DepthTest;
+					break;
+					
+				case EnableMode.Blend:
+					mode_ = EnableCap.Blend;
+					break;
+				
+				default:
+					Debug.Assert(false);
+					break;
+			}
+			return GL.IsEnabled(mode_);
 		}
 	}
 }

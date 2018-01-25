@@ -1,0 +1,58 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main(	float4 in a_Position  : POSITION,
+			float2 in a_TexCoord  : TEXCOORD0,
+			float4 out v_Position : POSITION,
+			float2 out v_TexCoord : TEXCOORD0,
+			uniform float4x4 WorldViewProj
+		   )
+{
+	v_Position	= mul( a_Position, WorldViewProj );
+	v_TexCoord  = a_TexCoord;
+}
+*/
+
+// glslv output by Cg compiler
+// cgc version 3.1.0013, build date Apr 18 2012
+// command line args: -profile glslv
+// source file: input_v.txt
+//vendor NVIDIA Corporation
+//version 3.1.0.13
+//profile glslv
+//program main
+//semantic main.WorldViewProj
+//var float4x4 WorldViewProj :  : _WorldViewProj1[0], 4 : 4 : 1
+//var float4 a_Position : $vin.POSITION : ATTR0 : 0 : 1
+//var float2 a_TexCoord : $vin.TEXCOORD0 : ATTR8 : 1 : 1
+//var float4 v_Position : $vout.POSITION : HPOS : 2 : 1
+//var float2 v_TexCoord : $vout.TEXCOORD0 : TEX0 : 3 : 1
+
+attribute vec4 a_Position;
+attribute vec2 a_TexCoord;
+varying vec4 v_Position;
+varying vec2 v_TexCoord;
+//#version 110
+
+vec4 _v_Position1;
+varying vec2 _v_TexCoord1;
+uniform mat4 WorldViewProj;
+vec4 _r0002;
+
+ // main procedure, the original name was main
+void main()
+{
+
+
+    _r0002 = a_Position.x*WorldViewProj[0];
+    _r0002 = _r0002 + a_Position.y*WorldViewProj[1];
+    _r0002 = _r0002 + a_Position.z*WorldViewProj[2];
+    _r0002 = _r0002 + a_Position.w*WorldViewProj[3];
+    _v_Position1 = _r0002;
+    _v_TexCoord1 = a_TexCoord.xy;
+    //gl_TexCoord[0].xy = a_TexCoord.xy;
+    gl_Position = _r0002;
+} // main end

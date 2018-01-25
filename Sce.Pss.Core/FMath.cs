@@ -32,5 +32,20 @@ namespace Sce.Pss.Core
 		{
 			return (x2 - x1) * f + x1;
 		}
+		
+		public static float Sqrt(float x)
+		{
+			return (float)Math.Sqrt((double)x);
+		}
+		
+		public static float Exp(float x)
+		{
+			return (float)Math.Exp((double)x);
+		}
+		
+		public static float Abs(float x)
+		{
+			return Math.Abs(x);
+		}
 	}
 }

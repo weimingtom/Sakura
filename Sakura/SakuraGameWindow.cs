@@ -13,9 +13,9 @@ using OpenTK.Graphics.ES20;
 //OnResize
 //OnUpdateFrame
 //OnRenderFrame
-namespace Sakura.OpenTK
+namespace Sakura
 {
-	public class MyGameWindowContext : IDisposable
+	public class SakuraGameWindowContext : IDisposable
 	{
         public IGraphicsContext glContext;
         public bool isExiting = false;
@@ -62,7 +62,7 @@ namespace Sakura.OpenTK
 		public bool isLoopFirst = true;
 	}
 
-	public class MyGameWindow
+	public class SakuraGameWindow
     {
        public static void Init()
         {
@@ -136,7 +136,7 @@ namespace Sakura.OpenTK
 		
 		//-------------------------------------------------------------------------
         
-       	private static MyGameWindowContext g_ctx = new MyGameWindowContext();
+       	private static SakuraGameWindowContext g_ctx = new SakuraGameWindowContext();
 		
         public static void Dispose()
         {
@@ -292,7 +292,8 @@ namespace Sakura.OpenTK
         public static void setX(int v) { EnsureUndisposed(); g_ctx.implementation.X = v; }
         public static int getY() { EnsureUndisposed(); return g_ctx.implementation.Y; }
         public static void setY(int v) { EnsureUndisposed(); g_ctx.implementation.Y = v; }
-		
+        public static Point PointToClient(Point pt) { EnsureUndisposed(); return g_ctx.implementation.PointToClient(pt); }
+        
         public static void baseDispose()
         {
         	if (!getIsDisposed())

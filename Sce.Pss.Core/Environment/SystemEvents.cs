@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using Sakura.OpenTK;
+using Sakura;
 using Sce.Pss.Core.Graphics;
 using Sce.Pss.Core.Input;
 
@@ -39,10 +39,10 @@ namespace Sce.Pss.Core.Environment
 		
 		public static void CheckEvents ()
 		{
-			MyGameWindow.ProcessEvents();
+			SakuraGameWindow.ProcessEvents();
 			
 			
-			bool __isWinFocused = MyGameWindow.getFocused();
+			bool __isWinFocused = SakuraGameWindow.getFocused();
             OpenTK.Input.KeyboardState keyboard = OpenTK.Input.Keyboard.GetState();
 			GamePadData gamePadData = GamePad.__gamePadData;
 			gamePadData.ButtonsPrev = gamePadData.Buttons;
@@ -143,42 +143,66 @@ namespace Sce.Pss.Core.Environment
 	            
 	           	if (keyboard.IsKeyUp(OpenTK.Input.Key.Left))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Left;
-	            	__isKeyLeftDown = false;
+	           		if (__isKeyLeftDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Left;
+	           		}
+	           		__isKeyLeftDown = false;
 	            }
 				if (keyboard.IsKeyUp(OpenTK.Input.Key.Right))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Right;
+	            	if (__isKeyRightDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Right;
+	            	}
 	            	__isKeyRightDown = false;
 	            }
 				if (keyboard.IsKeyUp(OpenTK.Input.Key.Up))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Up;
+	            	if (__isKeyUpDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Up;
+	            	}
 	            	__isKeyUpDown = false;
 	            }
 				if (keyboard.IsKeyUp(OpenTK.Input.Key.Down))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Down;
+	            	if (__isKeyDownDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Down;
+	            	}
 	            	__isKeyDownDown = false;
 	            }
 	            if (keyboard.IsKeyUp(OpenTK.Input.Key.A))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Square;
+	            	if (__isKeyADown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Square;
+	            	}
 	            	__isKeyADown = false;
 	            }
 	            if (keyboard.IsKeyUp(OpenTK.Input.Key.W))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Triangle;
+	            	if (__isKeyWDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Triangle;
+	            	}
 	            	__isKeyWDown = false;
 	            }
 	            if (keyboard.IsKeyUp(OpenTK.Input.Key.D))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Circle;
+	            	if (__isKeyDDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Circle;
+	            	}
 	            	__isKeyDDown = false;
 	            }
 	            if (keyboard.IsKeyUp(OpenTK.Input.Key.S))
 	            {
-	            	gamePadData.ButtonsUp |= GamePadButtons.Cross;
+	            	if (__isKeySDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Cross;
+	            	}
 	            	__isKeySDown = false;
 	            }  
 			}
@@ -198,22 +222,47 @@ namespace Sce.Pss.Core.Environment
             Touch.__data.Clear();
             if (__isWinFocused)
 			{
-	            OpenTK.Input.MouseState mouse = OpenTK.Input.Mouse.GetState();
-	            if (mouse.IsButtonUp(OpenTK.Input.MouseButton.Left))
+	            //OpenTK.Input.MouseState mouse = OpenTK.Input.Mouse.GetState();
+	            OpenTK.Input.MouseState mouse = OpenTK.Input.Mouse.GetCursorState();
+	            OpenTK.Point pt = SakuraGameWindow.PointToClient(new OpenTK.Point(mouse.X, mouse.Y));
+	            float winW = SakuraGameWindow.getWidth();
+				float winH = SakuraGameWindow.getHeight();
+		        if (mouse.IsButtonUp(OpenTK.Input.MouseButton.Left))
 	            {
+	            	if (__isMouseLeftDown == true)
+	            	{
+		            	TouchData touchData = new TouchData();
+		            	touchData.ID = 0;
+		            	touchData.Status = TouchStatus.Up;
+		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
+		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	Touch.__data.Add(touchData);	
+		            	//Debug.WriteLine("down:" + pt.X + "," + pt.Y);
+	            	}
 	            	__isMouseLeftDown = false;          	
 	            }
 	            //OpenTK.WindowState wState = MyGameWindow.getWindowState();
 	            //wState != OpenTK.WindowState.Minimized
-	            if (__isMouseLeftDown == false && mouse.IsButtonDown(OpenTK.Input.MouseButton.Left))
+	            if (mouse.IsButtonDown(OpenTK.Input.MouseButton.Left))
 	            {
-	            	__isMouseLeftDown = true;
-	            	TouchData touchData = new TouchData();
-	            	touchData.Status = TouchStatus.Down;
-	            	touchData.X = mouse.X;
-	            	touchData.Y = mouse.Y;
-	            	Touch.__data.Add(touchData);
-	            }
+		            if (__isMouseLeftDown == false)
+		            {
+		            	TouchData touchData = new TouchData();
+		            	touchData.ID = 0;
+		            	touchData.Status = TouchStatus.Down;
+		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
+		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	Touch.__data.Add(touchData);
+		            } else {
+		            	TouchData touchData = new TouchData();
+		            	touchData.ID = 0;
+		            	touchData.Status = TouchStatus.Move;
+		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
+		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	Touch.__data.Add(touchData);
+		            }
+		            __isMouseLeftDown = true;
+		        }
             }
             else
             {

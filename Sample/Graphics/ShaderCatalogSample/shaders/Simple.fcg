@@ -1,0 +1,40 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( float4 out Color : COLOR,
+           uniform float4 MaterialColor )
+{
+	Color = MaterialColor;
+}
+*/
+
+// glslf output by Cg compiler
+// cgc version 3.1.0013, build date Apr 18 2012
+// command line args: -profile glslf
+// source file: Simple.fcg.txt
+//vendor NVIDIA Corporation
+//version 3.1.0.13
+//profile glslf
+//program main
+//semantic main.MaterialColor
+//var float4 MaterialColor :  : _MaterialColor1 : 1 : 1
+//var float4 Color : $vout.COLOR : COL : 0 : 1
+
+precision highp float;
+precision highp int;
+//#version 110
+
+vec4 _Color1;
+uniform vec4 MaterialColor;
+
+ // main procedure, the original name was main
+void main()
+{
+
+
+    _Color1 = MaterialColor;
+    gl_FragColor = MaterialColor;
+} // main end

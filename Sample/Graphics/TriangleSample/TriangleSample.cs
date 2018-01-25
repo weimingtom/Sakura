@@ -9,8 +9,6 @@ using System.Diagnostics;
 using Sce.Pss.Core;
 using Sce.Pss.Core.Graphics;
 using Sce.Pss.Core.Environment;
-using Sakura.OpenTK;
-using OpenTK.Graphics.ES20;
 
 namespace Sample
 {

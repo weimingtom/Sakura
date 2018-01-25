@@ -30,6 +30,10 @@ namespace Sce.Pss.Core.Graphics
 		public Dictionary<int, __uniform_data> __uniformDic = new Dictionary<int, __uniform_data>();
 		public Dictionary<int, string> __attribDic = new Dictionary<int, string>();
 		public Dictionary<int, OpenTK.Matrix4> __uniformMatrix4 = new Dictionary<int, OpenTK.Matrix4>();
+		public Dictionary<int, OpenTK.Vector4> __uniform4 = new Dictionary<int, OpenTK.Vector4>();
+		public Dictionary<int, OpenTK.Vector3> __uniform3 = new Dictionary<int, OpenTK.Vector3>();
+		public Dictionary<int, OpenTK.Vector2> __uniform2 = new Dictionary<int, OpenTK.Vector2>();
+		public Dictionary<int, float> __uniform1 = new Dictionary<int, float>();
 		public string __filename = null;
         public int __programObject = 0;
         public bool __isLinked = false;
@@ -101,8 +105,10 @@ namespace Sce.Pss.Core.Graphics
 			int vertexShader, fragmentShader;
 
 			// Load the vertex/fragment shaders
+			Debug.WriteLine("=============begin load shader : " + cgname);
 			vertexShader = __LoadShader ( ShaderType.VertexShader, vShaderStr );
 			fragmentShader = __LoadShader ( ShaderType.FragmentShader, fShaderStr );			
+			Debug.WriteLine("=============end load shader : " + cgname);
 			
 			// Create shader program.
 			__programObject = GL.CreateProgram ();
@@ -197,7 +203,7 @@ namespace Sce.Pss.Core.Graphics
 					int location = GL.GetUniformLocation(__programObject, name);
 					if (location >= 0)
 					{
-						Debug.WriteLine(">texture.uniform['" + name + "'].location == " + location);	
+						Debug.WriteLine(">__programObject=" + __programObject + ", texture.uniform['" + name + "'].location == " + location);	
 					}
 				}
 			}  
@@ -217,12 +223,13 @@ namespace Sce.Pss.Core.Graphics
 			    "/Application/Sample/Lib/SampleLib/shaders/Texture.cgx",
 			    "/Application/Sample/Graphics/PrimitiveSample/shaders/VertexColor.cgx",
 			    "/Application/Sample/Graphics/PixelBufferSample/shaders/VertexColor.cgx",
-			    "/Application/Sample/Graphics/PixelBufferSample/shaders/Texture.cgx"
+			    "/Application/Sample/Graphics/PixelBufferSample/shaders/Texture.cgx",
+			    "/Application/Sample/Graphics/ShaderCatalogSample/shaders/"
 			};
 			bool isMatch = false;
 			foreach (string name in whiteList)
 			{
-				if (filename.Equals(name))
+				if (filename.Equals(name) || filename.StartsWith(name))
 				{
 					isMatch = true;
 					break;
@@ -272,6 +279,8 @@ namespace Sce.Pss.Core.Graphics
 		
 		public void SetUniformValue(int index, ref Matrix4 value)
 		{
+			//FIXME:???
+			this.__linkProgram();
 			OpenTK.Matrix4 v = new OpenTK.Matrix4(
 				value.M11, value.M12, value.M13, value.M14,
 				value.M21, value.M22, value.M23, value.M24,
@@ -279,7 +288,10 @@ namespace Sce.Pss.Core.Graphics
 				value.M41, value.M42, value.M43, value.M44);
 			int location = __uniformDic[index].location;
 			__uniformMatrix4[location] = v;
-				
+//			if (__filename.Equals("/Application/Sample/Graphics/ShaderCatalogSample/shaders/Simple.cgx"))
+//			{
+//				Debug.WriteLine("======================location:" + location + " : " + v.ToString());
+//			}
 			if (__programObject != 0)
 			{				
 				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
@@ -292,15 +304,115 @@ namespace Sce.Pss.Core.Graphics
 		
 		public void SetUniformValue(int index, ref Vector4 value)
 		{
+			this.__linkProgram();
 			//TODO:
-			Debug.Assert(false);
+			//Debug.Assert(false);
+			OpenTK.Vector4 v = new OpenTK.Vector4(value.X, value.Y, value.Z, value.W);
+			int location = __uniformDic[index].location;
+			__uniform4[location] = v;
+			
+			if (__programObject != 0)
+			{				
+				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				    GraphicsContext.__isUsedProgram[__programObject])
+				{
+					GL.Uniform4 (location, v.X, v.Y, v.Z, v.W);	
+				}
+			}
 		}
 		
+		private int __FindUniform_nextId = 1001;
 		public int FindUniform(string name)
 		{
 			//TODO:
+			//Debug.Assert(false);
+			
+			foreach (int index in __uniformDic.Keys)
+			{
+				__uniform_data data = __uniformDic[index];
+				if (data.name.Equals(name))
+				{
+					return index; 
+				}
+			}
+			int newId = __FindUniform_nextId;
+			__FindUniform_nextId++;
+			SetUniformBinding(newId, name);
+			this.__linkProgram();
+			foreach (int index in __uniformDic.Keys)
+			{
+				if (index == newId)
+				{
+					__uniform_data data = __uniformDic[index];
+					data.location = GL.GetUniformLocation(__programObject, data.name);
+					Debug.WriteLine(">>>FindUniform:uniform['" + data.name + "':" + index + "].location == " + data.location);
+					return newId; 
+				}
+			}
+			return -1;
+		}
+		
+		public void SetUniformValue(int index, ref Vector3 value)
+		{
+			this.__linkProgram();
+			//TODO:
+			//Debug.Assert(false);
+			OpenTK.Vector3 v = new OpenTK.Vector3(value.X, value.Y, value.Z);
+			int location = __uniformDic[index].location;
+			__uniform3[location] = v;
+			
+			if (__programObject != 0)
+			{				
+				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				    GraphicsContext.__isUsedProgram[__programObject])
+				{
+					GL.Uniform3 (location, v.X, v.Y, v.Z);	
+				}
+			}
+		}
+		
+		
+		public void SetUniformValue(int index, float value)
+		{
+			this.__linkProgram();
+			//TODO:
+			//Debug.Assert(false);
+			float v = value;
+			int location = __uniformDic[index].location;
+			__uniform1[location] = v;
+			
+			if (__programObject != 0)
+			{				
+				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				    GraphicsContext.__isUsedProgram[__programObject])
+				{
+					GL.Uniform1 (location, v);	
+				}
+			}
+		}
+		
+		public void SetUniformValue(int index, int offset, float[] value)
+		{
 			Debug.Assert(false);
-			return 0;
+		}
+		
+		public void SetUniformValue(int index, ref Vector2 value)
+		{
+			this.__linkProgram();
+			//TODO:
+			//Debug.Assert(false);
+			OpenTK.Vector2 v = new OpenTK.Vector2(value.X, value.Y);
+			int location = __uniformDic[index].location;
+			__uniform2[location] = v;
+			
+			if (__programObject != 0)
+			{				
+				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				    GraphicsContext.__isUsedProgram[__programObject])
+				{
+					GL.Uniform2 (location, v.X, v.Y);	
+				}
+			}
 		}
 	}
 }

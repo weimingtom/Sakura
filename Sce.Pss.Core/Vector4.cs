@@ -35,6 +35,14 @@ namespace Sce.Pss.Core
 			this.W = w;
 		}
 		
+		public Vector4(Vector3 xyz, float w)
+		{
+			this.X = xyz.X;
+			this.Y = xyz.Y;
+			this.Z = xyz.Z;
+			this.W = w;
+		}
+		
 		public bool Equals(Vector4 v)
 		{
 			return this.X == v.X && this.Y == v.Y && this.Z == v.Z && this.W == v.W;

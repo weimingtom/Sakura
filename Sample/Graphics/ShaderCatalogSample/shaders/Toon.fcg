@@ -1,0 +1,67 @@
+/* SCE CONFIDENTIAL
+ * PlayStation(R)Suite SDK 0.98.2
+ * Copyright (C) 2012 Sony Computer Entertainment Inc.
+ * All Rights Reserved.
+ */
+/*
+void main( 
+          float4 in  v_Color	  : COLOR0,
+          float3 in  v_Normal	  : TEXCOORD0,
+          float3 in  v_Eye      : TEXCOORD1,
+          float4 out Color	  : COLOR,
+          uniform sampler2D Texture0 : TEXUNIT0)
+{
+	float3 N = normalize(v_Normal);
+	float2 texcoord;
+
+	texcoord.x = v_Color.x;
+    texcoord.y = max(0, dot(N, normalize(v_Eye)));
+	Color = tex2D(Texture0, texcoord);
+}
+*/
+
+// glslf output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslf
+// source file: input_f.txt
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslf
+//program main
+//semantic main.Texture0 : TEXUNIT0
+//var sampler2D Texture0 : TEXUNIT0 : _Texture01 0 : 4 : 1
+//var float4 v_Color : $vin.COLOR0 : COLOR0 : 0 : 1
+//var float3 v_Normal : $vin.TEXCOORD0 : TEXCOORD0 : 1 : 1
+//var float3 v_Eye : $vin.TEXCOORD1 : TEXCOORD1 : 2 : 1
+//var float4 Color : $vout.COLOR : COLOR : 3 : 1
+
+precision highp float;
+precision highp int;
+varying vec4 v_Color;
+varying vec3 v_Normal;
+varying vec3 v_Eye;
+uniform sampler2D Texture0;
+vec3 _TMP1;
+float _x0006;
+vec3 _TMP7;
+float _b0012;
+float _x0016;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _Color;
+    vec2 _texcoord;
+
+    _x0006 = dot(v_Normal.xyz, v_Normal.xyz);
+    _TMP1 = inversesqrt(_x0006)*v_Normal.xyz;
+    _texcoord.x = v_Color.x;
+    _x0016 = dot(v_Eye.xyz, v_Eye.xyz);
+    _TMP7 = inversesqrt(_x0016)*v_Eye.xyz;
+    _b0012 = dot(_TMP1, _TMP7);
+    _texcoord.y = max(0.00000000E+000, _b0012);
+    _Color = texture2D(Texture0, _texcoord);
+    gl_FragColor = _Color;
+} // main end
+

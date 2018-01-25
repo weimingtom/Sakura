@@ -4,7 +4,7 @@ using System.Diagnostics;
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;
 
-using Sakura.OpenTK;
+using Sakura;
 
 namespace Sce.Pss.Core.Graphics
 {
@@ -31,8 +31,8 @@ namespace Sce.Pss.Core.Graphics
 			if (isScreen)
 			{
 				this.__framebufferId = (int)OpenTK.Graphics.ES20.All.None;
-				this.__width = MyGameWindow.getWidth();
-				this.__height = MyGameWindow.getHeight();
+				this.__width = SakuraGameWindow.getWidth();
+				this.__height = SakuraGameWindow.getHeight();
 			}
 		}
 		
