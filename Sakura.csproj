@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Sample.ImageSample</StartupObject>
+    <StartupObject>Sample.SocketSample</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -355,6 +355,8 @@
     <Compile Include="Sample\Lib\SampleLib\SampleSlider.cs" />
     <Compile Include="Sample\Lib\SampleLib\SampleSprite.cs" />
     <Compile Include="Sample\Lib\SampleLib\SampleWidget.cs" />
+    <Compile Include="Sample\Network\HttpSample\HttpSample.cs" />
+    <Compile Include="Sample\Network\SocketSample\SocketSample.cs" />
     <Compile Include="Sce.Pss.Core\Audio\Bgm.cs" />
     <Compile Include="Sce.Pss.Core\Audio\BgmPlayer.cs" />
     <Compile Include="Sce.Pss.Core\Audio\BgmStatus.cs" />
@@ -651,6 +653,9 @@
     <Folder Include="Sample\Audio" />
     <Folder Include="Sample\Input" />
     <Folder Include="Sample\Imaging" />
+    <Folder Include="Sample\Network" />
+    <Folder Include="Sample\Network\HttpSample" />
+    <Folder Include="Sample\Network\SocketSample" />
     <Folder Include="Sce.Pss.Core" />
     <Folder Include="Sce.Pss.Core\Graphics" />
     <Folder Include="Sce.Pss.Core\Environment" />

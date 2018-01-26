@@ -57,7 +57,13 @@ public class SampleButton : SampleWidget
     {
         get {return label;}
         set {
-            label = value;
+#if true
+			if (label != null && label.Equals(value))
+			{
+				return; //FIXME: for textures overflow
+			}
+#endif
+    		label = value;
 
             int textW = SampleDraw.CurrentFont.GetTextWidth(label, 0, label.Length);
             int textH = SampleDraw.CurrentFont.Metrics.Height;
