@@ -107,7 +107,7 @@ class TriangleSample
 
 
         SampleDraw.DrawText("Triangle Sample", 0xffffffff, 0, 0);
-        
+
         graphics.SwapBuffers();
         return true;
     }

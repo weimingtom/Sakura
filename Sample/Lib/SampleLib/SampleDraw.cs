@@ -160,6 +160,7 @@ public static class SampleDraw
     public static void AddSprite(string key, string text, uint argb, Font font, int positionX, int positionY)
     {
         if (spriteDict.ContainsKey(text) == false) {
+    		//Debug.WriteLine("=======AddSprite======>" + text + ", spriteDict.Count == " + spriteDict.Count);
             AddSprite(key, new SampleSprite(text, argb, font, positionX, positionY));
         }
     }
@@ -235,6 +236,10 @@ public static class SampleDraw
     	graphics.SetShaderProgram(__testShaderProgram2);
         graphics.SetVertexBuffer(0, __testVertices2);
         graphics.DrawArrays(DrawMode.TriangleStrip, 0, 3);
+    }
+    public static void __setblend()
+    {
+    	graphics.__setblend();
     }
     
     public static Font CurrentFont

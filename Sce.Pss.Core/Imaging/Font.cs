@@ -44,7 +44,7 @@ namespace Sce.Pss.Core.Imaging
 					_style = System.Drawing.FontStyle.Italic;
 					break;
 			}
-			this.__font = new System.Drawing.Font("Arial", (int)(__size * 0.75), _style); //FIXME:???0.8
+			this.__font = new System.Drawing.Font("Arial", (int)(__size * 0.70f), _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font("Arial", __size, _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font(/*"宋体"*/FontFamily.GenericSansSerif, __size, _style);
 			

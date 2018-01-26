@@ -36,6 +36,10 @@ namespace Sce.Pss.Core.Environment
 		private static bool __isKeyWDown = false;
 		private static bool __isKeyDDown = false;
 		private static bool __isKeySDown = false;
+		private static bool __isKeyXDown = false;
+		private static bool __isKeyZDown = false;
+		private static bool __isKeyQDown = false;
+		private static bool __isKeyEDown = false;
 		
 		public static void CheckEvents ()
 		{
@@ -116,20 +120,59 @@ namespace Sce.Pss.Core.Environment
 	            	if (!__isKeyDDown)
 					{
 						gamePadData.ButtonsDown |= GamePadButtons.Circle;
+						gamePadData.ButtonsDown |= GamePadButtons.Back;
 					}
 					__isKeyDDown = true;
 	            	gamePadData.Buttons |= GamePadButtons.Circle;
+	            	gamePadData.Buttons |= GamePadButtons.Back;
 	            }
 	            if (keyboard.IsKeyDown(OpenTK.Input.Key.S))
 	            {
 	            	if (!__isKeySDown)
 					{
 						gamePadData.ButtonsDown |= GamePadButtons.Cross;
+						gamePadData.ButtonsDown |= GamePadButtons.Enter;
 					}
 					__isKeySDown = true;
 	            	gamePadData.Buttons |= GamePadButtons.Cross;
+	            	gamePadData.Buttons |= GamePadButtons.Enter;
 	            } 
-	            
+	            if (keyboard.IsKeyDown(OpenTK.Input.Key.X))
+	            {
+	            	if (!__isKeyXDown)
+					{
+						gamePadData.ButtonsDown |= GamePadButtons.Start;
+					}
+					__isKeyXDown = true;
+	            	gamePadData.Buttons |= GamePadButtons.Start;
+	            }
+	            if (keyboard.IsKeyDown(OpenTK.Input.Key.Z))
+	            {
+	            	if (!__isKeyZDown)
+					{
+						gamePadData.ButtonsDown |= GamePadButtons.Select;
+					}
+					__isKeyZDown = true;
+	            	gamePadData.Buttons |= GamePadButtons.Select;
+	            } 	            
+	            if (keyboard.IsKeyDown(OpenTK.Input.Key.Q))
+	            {
+	            	if (!__isKeyQDown)
+					{
+						gamePadData.ButtonsDown |= GamePadButtons.L;
+					}
+					__isKeyQDown = true;
+	            	gamePadData.Buttons |= GamePadButtons.L;
+	            }
+	            if (keyboard.IsKeyDown(OpenTK.Input.Key.E))
+	            {
+	            	if (!__isKeyEDown)
+					{
+						gamePadData.ButtonsDown |= GamePadButtons.R;
+					}
+					__isKeyEDown = true;
+	            	gamePadData.Buttons |= GamePadButtons.R;
+	            } 	            
 	            
 	            
 	            
@@ -194,6 +237,7 @@ namespace Sce.Pss.Core.Environment
 	            	if (__isKeyDDown)
 	           		{
 	            		gamePadData.ButtonsUp |= GamePadButtons.Circle;
+	            		gamePadData.ButtonsUp |= GamePadButtons.Back;
 	            	}
 	            	__isKeyDDown = false;
 	            }
@@ -202,8 +246,41 @@ namespace Sce.Pss.Core.Environment
 	            	if (__isKeySDown)
 	           		{
 	            		gamePadData.ButtonsUp |= GamePadButtons.Cross;
+	            		gamePadData.ButtonsUp |= GamePadButtons.Enter;
 	            	}
 	            	__isKeySDown = false;
+	            }  
+	            if (keyboard.IsKeyUp(OpenTK.Input.Key.X))
+	            {
+	            	if (__isKeyXDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Start;
+	            	}
+	            	__isKeyXDown = false;
+	            }
+	            if (keyboard.IsKeyUp(OpenTK.Input.Key.Z))
+	            {
+	            	if (__isKeyZDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.Select;
+	            	}
+	            	__isKeyZDown = false;
+	            }  
+	            if (keyboard.IsKeyUp(OpenTK.Input.Key.Q))
+	            {
+	            	if (__isKeyQDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.L;
+	            	}
+	            	__isKeyQDown = false;
+	            }
+	            if (keyboard.IsKeyUp(OpenTK.Input.Key.E))
+	            {
+	            	if (__isKeyEDown)
+	           		{
+	            		gamePadData.ButtonsUp |= GamePadButtons.R;
+	            	}
+	            	__isKeyEDown = false;
 	            }  
 			}
 			else
@@ -216,6 +293,10 @@ namespace Sce.Pss.Core.Environment
 				__isKeyWDown = false;
 				__isKeyDDown = false;
 				__isKeySDown = false;
+				__isKeyXDown = false;
+				__isKeyZDown = false;
+				__isKeyQDown = false;
+				__isKeyEDown = false;
 			}
             
             
@@ -234,8 +315,8 @@ namespace Sce.Pss.Core.Environment
 		            	TouchData touchData = new TouchData();
 		            	touchData.ID = 0;
 		            	touchData.Status = TouchStatus.Up;
-		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
-		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	touchData.X = (winW > 0 ? (float)pt.X / winW : 0) - 0.5f;
+		            	touchData.Y = (winH > 0 ? (float)pt.Y / winH : 0) - 0.5f;
 		            	Touch.__data.Add(touchData);	
 		            	//Debug.WriteLine("down:" + pt.X + "," + pt.Y);
 	            	}
@@ -250,15 +331,15 @@ namespace Sce.Pss.Core.Environment
 		            	TouchData touchData = new TouchData();
 		            	touchData.ID = 0;
 		            	touchData.Status = TouchStatus.Down;
-		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
-		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	touchData.X = (winW > 0 ? (float)pt.X / winW : 0) - 0.5f;
+		            	touchData.Y = (winH > 0 ? (float)pt.Y / winH : 0) - 0.5f;
 		            	Touch.__data.Add(touchData);
 		            } else {
 		            	TouchData touchData = new TouchData();
 		            	touchData.ID = 0;
 		            	touchData.Status = TouchStatus.Move;
-		            	touchData.X = winW > 0 ? (float)pt.X / winW : 0;
-		            	touchData.Y = winH > 0 ? (float)pt.Y / winH : 0;
+		            	touchData.X = (winW > 0 ? (float)pt.X / winW : 0) - 0.5f;
+		            	touchData.Y = (winH > 0 ? (float)pt.Y / winH : 0) - 0.5f;
 		            	Touch.__data.Add(touchData);
 		            }
 		            __isMouseLeftDown = true;

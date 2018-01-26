@@ -2,6 +2,13 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-01-26: ImageSample done.  
+* 2018-01-26: FontSample done.  
+* 2018-01-26: TouchSample done.  
+* 2018-01-26: MotionSample done.  
+* 2018-01-26: GamePadSample done.  
+* 2018-01-26: SoundPlayerSample done.  
+* 2018-01-26: BgmPlayerSample done.  
 * 2018-01-25: ShaderCatalogSample done.  
 * 2018-01-21: PixelBufferSample done.  
 * 2018-01-17: MathSample done.  
@@ -22,6 +29,10 @@ https://github.com/opentk/opentk
 https://github.com/CoherentLabs/angle  
 https://gitee.com/weimingtom/angle    
 
+* NAudio  
+NAudio-NAudio\_1.7.2\_Release  
+https://github.com/naudio/NAudio  
+
 * Work  
 https://gitee.com/weimingtom/TriangleSample  
 
@@ -37,6 +48,14 @@ http://developer.download.nvidia.com/cg/cgc.html
 * ShaderCatalogSample : in GraphicsContext, global textureDic is clear in SwapBuffers(), but global vertexBuffer is clear in SetShaderProgram()  
 * SpriteSample: GL.Clear(ClearBufferMask.DepthBufferBit);  //FIXME:??????in SpriteSample, for sprite black bg problem  
 * SpriteSample: __supportNPOT can be set true if REPEAT wrap mode not used  
+* Data files not found error.  
+* BgmPlayerSample: if (Status == BgmStatus.Stopped || Status == BgmStatus.Paused) //FIXME: Can restart???   
+* GamePadSample: //SampleDraw.ClearSprite(); //FIXME:modified, for preventing memory overflow  
+* GamePadSample: AnalogLeftX, AnalogLeftY, AnalogRightX, AnalogRightY not implemented  
+* in Texture2D, public void SetPixels(...) { __supportNPOT = true; //NOTE:bug for repeat wrap mode //FIXME: for SampleDraw.DrawText()  
+* in Font, * 0.70f), _style); //FIXME:???0.8  
+* Render() memory leak  
+* MotionSample: MotionData not set  
 
 ## cgc  
 cgc.exe "BlinnPhong.fcg" -profile glslf -o "BlinnPhong.glslf"  

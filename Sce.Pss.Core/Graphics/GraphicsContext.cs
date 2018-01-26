@@ -67,12 +67,19 @@ namespace Sce.Pss.Core.Graphics
 			Console.SetOut(new __DebugTextWriter());
 			
 			SakuraGameWindow.Init();
-			
-			Color4 color = Color4.Black;//FIXME:
-            color = Color4.MidnightBlue;
+			Color4 color = Color4.Black;//FIXME:background
+            //color = Color4.MidnightBlue;
             GL.ClearColor(color.R, color.G, color.B, color.A);
-            GL.Enable(EnableCap.DepthTest);
-            
+            GL.Enable(EnableCap.DepthTest); //FIXME:
+            //see http://tiankefeng0520.iteye.com/blog/2008008
+            GL.DepthFunc(DepthFunction.Lequal);
+            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest); 
+            Clear();
+			SwapBuffers();
+			
+			//For a little long time, so do it after SwapBuffers for showing black background at once
+            SakuraSoundManager.Initialize();
+			
             this.__screen = FrameBuffer.__getScreen();
             this.__frameBuffer = this.__screen;
             
@@ -86,11 +93,11 @@ namespace Sce.Pss.Core.Graphics
             {
             	Debug.WriteLine(">>>Not support NPOT");            	
             }
-		}
+        }
 		
 		public void Dispose ()
 		{
-			
+			SakuraSoundManager.Shutdown();
 		}
 		
 		public FrameBuffer Screen
@@ -156,7 +163,7 @@ namespace Sce.Pss.Core.Graphics
 	        		GL.Uniform1 (location, v);
 	        	}
 	        	program.__afterUseProgram();
-			}
+	        }
 			else
 			{
 				//FIXME:
@@ -286,11 +293,11 @@ namespace Sce.Pss.Core.Graphics
 				}
 			}
 			
-			if (__disableBlend)
-			{
-				GL.Enable(EnableCap.DepthTest); //FIXME:???
-				__disableBlend = false;
-			}
+//			if (__disableBlend)
+//			{
+//				GL.Enable(EnableCap.DepthTest); //FIXME:???
+//				__disableBlend = false;
+//			}
    		}
 		
 		public void SwapBuffers()
@@ -428,7 +435,7 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
-		private bool __disableBlend = false;
+		//private bool __disableBlend = false;
 		public void Enable (EnableMode mode, bool status)
 		{
 			//Debug.Assert(false);
@@ -516,6 +523,12 @@ namespace Sce.Pss.Core.Graphics
 			GL.Clear(ClearBufferMask.DepthBufferBit);
 			GL.BlendEquation(_mode);
 			GL.BlendFunc(_src, _dst);
+		}
+		
+		public void __setblend()
+		{
+	        this.Enable(EnableMode.Blend);
+	        this.SetBlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);
 		}
 		
 		public void SetFrameBuffer (FrameBuffer buffer)

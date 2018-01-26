@@ -2,7 +2,7 @@
 
 namespace Sce.Pss.Core.Graphics
 {
-	public class PixelBuffer
+	public class PixelBuffer : IDisposable
 	{
 		public PixelBuffer()
 		{
@@ -24,7 +24,7 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			
 		}

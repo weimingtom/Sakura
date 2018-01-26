@@ -9,14 +9,22 @@ namespace Sce.Pss.Core.Imaging
 {
 	public class Image
 	{
+		private string __filename = null;
 		public System.Drawing.Bitmap __img;
+		
+		private Image(System.Drawing.Bitmap img)
+		{
+			this.__img = img;
+		}
+		
+		public Image(string filename)
+		{
+			this.__filename = filename.Replace("/Application/", "./");
+		}
 		
 		public Image(ImageMode mode, ImageSize size, ImageColor color)
 		{
-			if (mode != ImageMode.Rgba)
-			{
-				Debug.Assert(false);
-			}
+			Debug.Assert(mode == ImageMode.Rgba); //FIXME:???
 			//PixelFormat.
 			__img = new System.Drawing.Bitmap(size.Width, 
 			                                  size.Height, 
@@ -36,7 +44,7 @@ namespace Sce.Pss.Core.Imaging
 			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img))
 			using (Brush textBrush = new SolidBrush(_color))
 			{
-				Debug.WriteLine("==============>DrawText: " + text);
+				//Debug.WriteLine("==============>DrawText: " + text);
 				//drawing.Clear(_backColor);
 				//http://bbs.csdn.net/topics/350255409
 				drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -87,7 +95,64 @@ namespace Sce.Pss.Core.Imaging
 		
 		public void Dispose()
 		{
-			
+			if (__img != null)
+			{
+				__img.Dispose();
+				__img = null;
+			}
+		}
+		
+		public void Decode()
+		{
+			//Debug.Assert(false);
+			using (Bitmap bmp = new System.Drawing.Bitmap(this.__filename))
+			{
+				this.__img = new System.Drawing.Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(this.__img))
+				{
+					drawing.DrawImage(bmp, 0, 0);
+					drawing.Save();
+				}
+			}
+		}
+		
+		public ImageSize Size
+		{
+			get
+			{
+				if (this.__filename != null && this.__img == null)
+				{
+					Decode();
+				}
+				return new ImageSize(this.__img.Width, this.__img.Height);
+			}
+		}
+		
+		public void DrawImage(Image source, ImagePosition position)
+		{
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(this.__img))
+			{
+				drawing.DrawImage(source.__img, position.X, position.Y);
+				drawing.Save();
+			}
+		}
+		
+		public Image Crop(ImageRect rect)
+		{
+			System.Drawing.Rectangle rect2 = new System.Drawing.Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+			Bitmap img2 = this.__img.Clone(rect2, this.__img.PixelFormat);
+			return new Image(img2);
+		}
+		
+		public Image Resize(ImageSize size)
+		{
+			System.Drawing.Bitmap img = new System.Drawing.Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb);
+			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(img))
+			{
+				drawing.DrawImage(this.__img, 0, 0, size.Width, size.Height);
+				drawing.Save();
+			}
+			return new Image(img);
 		}
 	}
 }

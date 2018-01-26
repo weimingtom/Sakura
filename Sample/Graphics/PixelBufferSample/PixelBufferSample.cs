@@ -5,9 +5,9 @@
  */
 using System;
 using System.Collections.Generic;
+
 using System.Threading;
 using System.Diagnostics;
-
 using Sce.Pss.Core;
 using Sce.Pss.Core.Graphics;
 using Sce.Pss.Core.Environment;

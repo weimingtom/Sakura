@@ -89,6 +89,8 @@ namespace Sce.Pss.Core.Graphics
 		public int __dx, __dy, __dw, __dh;
 		private PixelBufferOption __option;
 		
+		private static int __maxtextureId = 0;
+		
 //		public Texture2D()
 //		{
 //		}
@@ -100,13 +102,15 @@ namespace Sce.Pss.Core.Graphics
 			this.__mipmap = mipmap;
 			this.__format = format;
 			this.__option = PixelBufferOption.None; //FIXME:???
-			System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+			using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 			{
-				drawing.Clear(System.Drawing.Color.White);
-				drawing.Save();
+				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				{
+					drawing.Clear(System.Drawing.Color.White);
+					drawing.Save();
+				}
+				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
 			}
-			__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
 		}
 		
 		public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option)
@@ -116,59 +120,74 @@ namespace Sce.Pss.Core.Graphics
 			this.__mipmap = mipmap;
 			this.__format = format;
 			this.__option = option;
-			System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-			using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+			using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 			{
-				drawing.Clear(System.Drawing.Color.White); //FIXME:??????
-				drawing.Save();
+				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				{
+					drawing.Clear(System.Drawing.Color.White); //FIXME:??????
+					drawing.Save();
+				}
+				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
 			}
-			__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
 		}
 		
 		public Texture2D(string fileName, bool mipmap)
 		{
 			string imgname = fileName.Replace("/Application/", "./");
-			System.Drawing.Bitmap __img = new System.Drawing.Bitmap(imgname);
-			//FIXME:??? I don't know why it's right when width 256 is changed to 250,
-			//see here: (in BgModel.cs)
-			//meshGrid = BasicMeshFactory.CreatePlane( width, depth,
-            //                                     divW, divH, 0.25f, 0.25f );
-			if (fileName.Contains("renga.png")) 
+			using (System.Drawing.Bitmap __img = new System.Drawing.Bitmap(imgname))
 			{
-				this.__width = 250;
-				this.__height = 250;
-				System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				//FIXME:??? I don't know why it's right when width 256 is changed to 250,
+				//see here: (in BgModel.cs)
+				//meshGrid = BasicMeshFactory.CreatePlane( width, depth,
+	            //                                     divW, divH, 0.25f, 0.25f );
+				if (fileName.Contains("renga.png")) 
 				{
-					//drawing.DrawImage(__img, 0, 0);
-					drawing.DrawImage(__img, 0, 0, 250, 250);
-//					drawing.DrawImage(__img, new System.Drawing.Rectangle(0, 0, 250, 250), 
-//					                  new System.Drawing.Rectangle(0, 0, 512, 512),
-//					                  System.Drawing.GraphicsUnit.Pixel);
-					drawing.Save();
+					this.__width = 250;
+					this.__height = 250;
+					using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+					{
+						using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+						{
+							//drawing.DrawImage(__img, 0, 0);
+							drawing.DrawImage(__img, 0, 0, 250, 250);
+//							drawing.DrawImage(__img, new System.Drawing.Rectangle(0, 0, 250, 250), 
+//							                  new System.Drawing.Rectangle(0, 0, 512, 512),
+//							                  System.Drawing.GraphicsUnit.Pixel);
+							drawing.Save();
+						}
+						__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
+					}
+					this.__mipmap = mipmap;
 				}
-				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
-				this.__mipmap = mipmap;
-			}
-			else
-			{
-				this.__width = __img.Width;
-				this.__height = __img.Height;
-				System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				else
 				{
-					drawing.DrawImage(__img, 0, 0);
-					drawing.Save();
+					this.__width = __img.Width;
+					this.__height = __img.Height;
+					using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+					{
+						using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+						{
+							drawing.DrawImage(__img, 0, 0);
+							drawing.Save();
+						}
+						__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
+					}
+					this.__mipmap = mipmap;				
 				}
-				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
-				this.__mipmap = mipmap;				
 			}
+		}
+		
+		public void SetPixels(int level, byte[] pixels)
+		{
+			this.SetPixels(level, pixels, 0, 0, this.__width, this.__height);
 		}
 		
 		//FIXME:update not implemented, with glTexSubImage2D
 		//FIXME:level not used
 		public void SetPixels(int level, byte[] pixels, int dx, int dy, int dw, int dh)
 		{
+			//FIXME: for SampleDraw.DrawText()
+			__supportNPOT = true; //NOTE:bug for repeat wrap mode
 			if (__supportNPOT)
 			{
 				this.__SetPixels(level, pixels, dx, dy, dw, dh);
@@ -177,15 +196,17 @@ namespace Sce.Pss.Core.Graphics
 			{
 				//https://github.com/davidhart/PhotoTunesPrototype/blob/2f8e0ef86f9ac6969637a2c1136723d4542e3bee/PhotoTunesDebugApp/PhotoTunesDebugApp/ImageFilter.cs
 	            //Convert byte[] back to Bitmap
-				System.Drawing.Bitmap oriBitmap =
-	            	new System.Drawing.Bitmap(dw, dh, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-	            System.Drawing.Imaging.BitmapData oriBmData = oriBitmap.LockBits(
-	            	new System.Drawing.Rectangle(0, 0, dw, dh), 
-	            	System.Drawing.Imaging.ImageLockMode.WriteOnly, 
-	            	System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-	            System.Runtime.InteropServices.Marshal.Copy(pixels, 0, oriBmData.Scan0, pixels.Length);
-	            oriBitmap.UnlockBits(oriBmData);
-	            this.__SetPixels(level, oriBitmap, dx, dy, dw, dh);
+				using (System.Drawing.Bitmap oriBitmap =
+	                   new System.Drawing.Bitmap(dw, dh, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+	            {
+		            System.Drawing.Imaging.BitmapData oriBmData = oriBitmap.LockBits(
+		            	new System.Drawing.Rectangle(0, 0, dw, dh), 
+		            	System.Drawing.Imaging.ImageLockMode.WriteOnly, 
+		            	System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+		            System.Runtime.InteropServices.Marshal.Copy(pixels, 0, oriBmData.Scan0, pixels.Length);
+		            oriBitmap.UnlockBits(oriBmData);
+		            this.__SetPixels(level, oriBitmap, dx, dy, dw, dh);
+	            }
 			}
 		}
 		
@@ -202,16 +223,18 @@ namespace Sce.Pss.Core.Graphics
 			{
 				int widthTex = __get2(Math.Max(dx + dw, this.__width));
 				int heightTex = __get2(Math.Max(dy + dh, this.__height));
-				System.Drawing.Bitmap img2 = new System.Drawing.Bitmap(widthTex, heightTex, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(img2))
+				using (System.Drawing.Bitmap img2 = new System.Drawing.Bitmap(widthTex, heightTex, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 				{
-					drawing.DrawImage(img, new System.Drawing.Rectangle(0, 0, widthTex, heightTex), 
-					                  new System.Drawing.Rectangle(0, 0, img.Width, img.Height),
-					                  System.Drawing.GraphicsUnit.Pixel);
-					drawing.Save();
+					using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(img2))
+					{
+						drawing.DrawImage(img, new System.Drawing.Rectangle(0, 0, widthTex, heightTex), 
+						                  new System.Drawing.Rectangle(0, 0, img.Width, img.Height),
+						                  System.Drawing.GraphicsUnit.Pixel);
+						drawing.Save();
+					}
+					byte[] pixels = __toBuffer(img2);
+					__SetPixels(level, pixels, dx, dy, widthTex, heightTex);
 				}
-				byte[] pixels = __toBuffer(img2);
-				__SetPixels(level, pixels, dx, dy, widthTex, heightTex);
 			}
 		}
 		
@@ -256,12 +279,20 @@ namespace Sce.Pss.Core.Graphics
 			  	GL.GenTextures(1, out __textureId); //glGenTextures ( 1, &textureId );
 			  	//https://stackoverflow.com/questions/9726793/how-to-load-and-draw-texture-correctly-in-opengles-with-mono-for-android
 			  	//GL.shad
-			   	GL.BindTexture (TextureTarget.Texture2D, __textureId); //glBindTexture ( GL_TEXTURE_2D, textureId );
-			   	//PixelInternalFormat.Rgba
+			  	
+			  	//check textures count overflow
+			  	if (__textureId > __maxtextureId)
+			  	{
+			  		__maxtextureId = __textureId;
+			  		Debug.WriteLine("==========__maxtextureId == " + __maxtextureId);
+			  	}
+			  	
+			  	GL.BindTexture (TextureTarget.Texture2D, __textureId); //glBindTexture ( GL_TEXTURE_2D, textureId );
+			    //PixelInternalFormat.Rgba
 			   	GL.TexImage2D<byte>(TextureTarget2d.Texture2D, 0, TextureComponentCount.Rgba, __widthTex, __heightTex, 0, 
 			                       OpenTK.Graphics.ES20.PixelFormat.Rgba, PixelType.UnsignedByte, __pixels);
 			   	//Bgra
-			   	Debug.WriteLine("==============>pixels.Length == " + pixels.Length);
+			   	//Debug.WriteLine("==============>pixels.Length == " + pixels.Length);
 			  	 //glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels );
 //			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);// glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 //			   	GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);//glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
@@ -319,6 +350,13 @@ namespace Sce.Pss.Core.Graphics
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
 			}
 #endif
+		}
+		
+		public override void Dispose()
+		{
+			//Debug.WriteLine("===================");
+			base.Dispose();
+			GL.DeleteTexture(this.__textureId);
 		}
 		
 		public Texture2D ShallowCopy()

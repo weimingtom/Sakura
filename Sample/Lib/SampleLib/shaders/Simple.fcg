@@ -12,9 +12,8 @@ void main( float4 out Color : COLOR,
 */
 
 precision mediump float;
-varying vec4 v_MaterialColor;
-varying vec4 v_Position;
+uniform vec4 MaterialColor;
 void main()                                  
 {                                            
-  gl_FragColor = v_MaterialColor;
+  gl_FragColor = MaterialColor;
 }   

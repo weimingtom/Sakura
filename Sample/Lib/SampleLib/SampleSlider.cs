@@ -55,7 +55,7 @@ public class SampleSlider : SampleWidget
     public override void Draw()
     {
         base.Draw();
-
+        
         SampleDraw.FillRect(barColor, rectX, rectY, (int)(rectW * rate), rectH);
     }
 }
