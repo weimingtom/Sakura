@@ -87,6 +87,10 @@ namespace Sce.Pss.Core.Imaging
 				textSize = drawing.MeasureString(text, __font);
 			}
 			int w = (int)textSize.Width;
+			if (w == 0)
+			{
+				w = 1;
+			}
 			return w;
 		}
 		

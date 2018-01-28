@@ -60,6 +60,7 @@ namespace Sakura
 		//
 		
 		public bool isLoopFirst = true;
+		public WindowState lastState = WindowState.Normal;
 	}
 
 	public class SakuraGameWindow
@@ -329,8 +330,17 @@ namespace Sakura
         	setWidth(getWidth() + 1);
         	setWidth(getWidth() - 1);
         	//Debug.WriteLine("width:" + getWidth());
+        	WindowState windowState = getWindowState();
+        	//Debug.WriteLine("===============>windowState: " + windowState);
+        	if (g_ctx.lastState == WindowState.Minimized && windowState == WindowState.Normal)
+        	{
+        		//object sender, TEventArgs e
+        		Restore(null, EventArgs.Empty);
+        	}
+        	g_ctx.lastState = windowState;
         }
-
+		public static event EventHandler<EventArgs> Restore;
+        
         private static void setEvents(bool v)
         {
             if (v)

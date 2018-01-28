@@ -362,5 +362,13 @@ namespace Sce.Pss.Core.Environment
 			__timer.Restart();
 #endif
 		}
+		
+		public delegate void RestoredEventHandler (object sender, RestoredEventArgs e);
+		
+		public static event RestoredEventHandler OnRestored;
+		public static void OnRestoredHandle()
+		{
+			OnRestored(null, new RestoredEventArgs());
+		}
 	}
 }

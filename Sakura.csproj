@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Sample.SocketSample</StartupObject>
+    <StartupObject>Sample.StorageSample</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -319,6 +319,13 @@
     <Compile Include="Sample\Audio\BgmPlayerSample\BgmPlayerSample.cs" />
     <Compile Include="Sample\Audio\SoundPlayerSample\SoundPlayerSample.cs" />
     <Compile Include="Sample\Core\MathSample\MathSample.cs" />
+    <Compile Include="Sample\Environment\ClipboardSample\ClipboardSample.cs" />
+    <Compile Include="Sample\Environment\DialogSample\DialogSample.cs" />
+    <Compile Include="Sample\Environment\PersistentMemorySample\PersistentMemorySample.cs" />
+    <Compile Include="Sample\Environment\ShellSample\ShellSample.cs" />
+    <Compile Include="Sample\Environment\StorageSample\StorageSample.cs" />
+    <Compile Include="Sample\Environment\SystemEventsSample\SystemEventsSample.cs" />
+    <Compile Include="Sample\Environment\SystemParametersSample\SystemParametersSample.cs" />
     <Compile Include="Sample\Graphics\PixelBufferSample\PixelBufferSample.cs" />
     <Compile Include="Sample\Graphics\PrimitiveSample\PrimitiveSample.cs" />
     <Compile Include="Sample\Graphics\ShaderCatalogSample\BasicMeshFactory.cs" />
@@ -363,7 +370,17 @@
     <Compile Include="Sce.Pss.Core\Audio\Sound.cs" />
     <Compile Include="Sce.Pss.Core\Audio\SoundPlayer.cs" />
     <Compile Include="Sce.Pss.Core\Audio\SoundStatus.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\Clipboard.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\CommonDialogResult.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\CommonDialogState.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\GamePadButtonMeaning.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\PersistentMemory.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\RestoredEventArgs.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\Shell.cs" />
     <Compile Include="Sce.Pss.Core\Environment\SystemEvents.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\SystemParameters.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\TextInputDialog.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\YesNoLayout.cs" />
     <Compile Include="Sce.Pss.Core\FMath.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncFactor.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncMode.cs" />
@@ -630,6 +647,13 @@
     <Folder Include="Sample\Audio\BgmPlayerSample" />
     <Folder Include="Sample\Audio\SoundPlayerSample" />
     <Folder Include="Sample\Core\MathSample" />
+    <Folder Include="Sample\Environment\ClipboardSample" />
+    <Folder Include="Sample\Environment\DialogSample" />
+    <Folder Include="Sample\Environment\PersistentMemorySample" />
+    <Folder Include="Sample\Environment\StorageSample" />
+    <Folder Include="Sample\Environment\SystemParametersSample" />
+    <Folder Include="Sample\Environment\SystemEventsSample" />
+    <Folder Include="Sample\Environment\ShellSample" />
     <Folder Include="Sample\Graphics\ShaderCatalogSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />
@@ -656,6 +680,7 @@
     <Folder Include="Sample\Network" />
     <Folder Include="Sample\Network\HttpSample" />
     <Folder Include="Sample\Network\SocketSample" />
+    <Folder Include="Sample\Environment" />
     <Folder Include="Sce.Pss.Core" />
     <Folder Include="Sce.Pss.Core\Graphics" />
     <Folder Include="Sce.Pss.Core\Environment" />

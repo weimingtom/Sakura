@@ -65,8 +65,14 @@ namespace Sce.Pss.Core.Graphics
 		public GraphicsContext()
 		{
 			Console.SetOut(new __DebugTextWriter());
+			System.IO.Directory.CreateDirectory("./Documents");
 			
 			SakuraGameWindow.Init();
+			SakuraGameWindow.Restore += delegate(object sender, EventArgs e) { 
+				Sce.Pss.Core.Environment.SystemEvents.OnRestoredHandle();
+				//Debug.WriteLine("=============>");
+			};
+			
 			Color4 color = Color4.Black;//FIXME:background
             //color = Color4.MidnightBlue;
             GL.ClearColor(color.R, color.G, color.B, color.A);

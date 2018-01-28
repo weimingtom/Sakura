@@ -2,6 +2,14 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-01-28: PersistentMemorySample done.  
+* 2018-01-27: StorageSample done.  
+* 2018-01-27: SystemParametersSample done.  
+* 2018-01-27: SystemEventsSample done.  
+* 2018-01-27: ShellSample done.  
+* 2018-01-27: DialogSample done.  
+* 2018-01-27: ClipboardSample done.  
+* 2018-01-27: SocketSample done.  
 * 2018-01-27: SocketSample done.  
 * 2018-01-27: HttpSample done.  
 * 2018-01-26: ImageSample done.  
