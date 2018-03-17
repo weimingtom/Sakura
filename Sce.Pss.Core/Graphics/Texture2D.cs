@@ -162,12 +162,14 @@ namespace Sce.Pss.Core.Graphics
 				else
 				{
 					this.__width = __img.Width;
-					this.__height = __img.Height;
+					this.__height = __img.Height;			
+					
 					using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 					{
 						using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
 						{
-							drawing.DrawImage(__img, 0, 0);
+							//drawing.DrawImage(__img, 0, 0); //FIXME:not good, will scale 1.33
+							drawing.DrawImage(__img, 0, 0, this.__width, this.__height);
 							drawing.Save();
 						}
 						__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
@@ -175,6 +177,20 @@ namespace Sce.Pss.Core.Graphics
 					this.__mipmap = mipmap;				
 				}
 			}
+		}
+		
+		public void SetPixels(int level, uint[] pixels)
+		{
+			//Debug.Assert(false);
+			byte[] pixels2 = new Byte[pixels.Length * 4];
+			for (int i = 0; i < pixels.Length; ++i)
+			{
+				pixels2[i * 4 + 0] = (byte)((pixels[i] >>  0) & 0xff);
+				pixels2[i * 4 + 1] = (byte)((pixels[i] >>  8) & 0xff);
+				pixels2[i * 4 + 2] = (byte)((pixels[i] >> 16) & 0xff);
+				pixels2[i * 4 + 3] = (byte)((pixels[i] >> 24) & 0xff);	
+			}
+			SetPixels(level, pixels2);
 		}
 		
 		public void SetPixels(int level, byte[] pixels)
@@ -385,6 +401,13 @@ namespace Sce.Pss.Core.Graphics
 			{
 				return this.__height;//this.height;
 			}
+		}
+		
+		//Array pixels
+		public void SetPixels(int level, byte[] pixels, PixelFormat format)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("=========================>SetPixels not implemented");
 		}
 	}
 }

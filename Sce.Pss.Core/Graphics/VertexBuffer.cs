@@ -66,5 +66,46 @@ namespace Sce.Pss.Core.Graphics
 				return __indexCount;//FIXME:
 			}
 		}
+		
+		public void SetVertices(Array vertices, int to, int from, int count)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("===================>SetVertices index 0???");
+			if (to == 0 && from == 0)
+			{
+				Vector4[] vertices_ = (vertices as Vector4[]);
+				float[] vertices2 = new float[count * 4];
+				for (int i = 0; i < count; ++i)
+				{
+					vertices2[i * 4 + 0] = vertices_[i].X;
+					vertices2[i * 4 + 1] = vertices_[i].Y;
+					vertices2[i * 4 + 2] = vertices_[i].Z;
+					vertices2[i * 4 + 3] = vertices_[i].W;
+				}
+				SetVertices(0, vertices2);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		public void SetIndices(ushort[] indices, int to, int from, int count)
+		{
+			//Debug.Assert(false);
+			if (to == 0 && from == 0)
+			{
+				ushort[] indices2 = new ushort[count];
+				for (int i = 0; i < count; ++i)
+				{
+					indices2[i] = indices[i];
+				}
+				SetIndices(indices2);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
 	}
 }

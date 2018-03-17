@@ -10,6 +10,8 @@ using OpenTK.Graphics.ES20;
 
 using Sakura;
 
+using Sce.Pss.Core.Imaging;
+
 namespace Sce.Pss.Core.Graphics
 {
 	public class GraphicsContext : IDisposable
@@ -66,6 +68,7 @@ namespace Sce.Pss.Core.Graphics
 		{
 			Console.SetOut(new __DebugTextWriter());
 			System.IO.Directory.CreateDirectory("./Documents");
+			System.IO.Directory.CreateDirectory("./save");
 			
 			SakuraGameWindow.Init();
 			SakuraGameWindow.Restore += delegate(object sender, EventArgs e) { 
@@ -122,6 +125,11 @@ namespace Sce.Pss.Core.Graphics
 		public void SetClearColor(float r, float g, float b, float a)
 		{
 			GL.ClearColor(r, g, b, a);
+		}
+		
+		public void SetClearColor(Vector4 color)
+		{
+			GL.ClearColor(color.X, color.Y, color.Z, color.W);
 		}
 		
 		public void Clear()
@@ -588,6 +596,42 @@ namespace Sce.Pss.Core.Graphics
 					break;
 			}
 			return GL.IsEnabled(mode_);
+		}
+		
+		public void SetLineWidth(float width)
+		{
+			Debug.Assert(false);
+		}
+		
+		public ImageRect GetViewport()
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("======================>GetViewport not implemented");
+			float winW = SakuraGameWindow.getWidth();
+			float winH = SakuraGameWindow.getHeight();
+			return new ImageRect(0, 0, (int)winW, (int)winH);
+		}
+		
+		public void Disable(EnableMode mode)
+		{
+			Debug.Assert(false);
+		}
+		
+		public void SetBlendFunc(BlendFunc func)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("======================>SetBlendFunc not implemented");
+		}
+		
+		public DepthFunc GetDepthFunc()
+		{
+			Debug.Assert(false);
+			return null;
+		}
+		
+		public void SetDepthFunc(DepthFunc func)
+		{
+			Debug.Assert(false);
 		}
 	}
 }

@@ -1,0 +1,15 @@
+﻿???--->		public const float __SCALE = 1.333f;
+		//public const float __SCALE = 1f;
+		
+-----------------------------------------------
+
+* renga.png  
+* king_water_drop.png  
+
+
+							//drawing.DrawImage(__img, 0, 0); //FIXME:not good, will scale 1.33
+--->							drawing.DrawImage(__img, 0, 0, this.__width, this.__height);
+							
+							
+--------------------------------------------
+

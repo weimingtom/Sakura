@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Sample.StorageSample</StartupObject>
+    <StartupObject>HelloSprite</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -326,6 +326,7 @@
     <Compile Include="Sample\Environment\StorageSample\StorageSample.cs" />
     <Compile Include="Sample\Environment\SystemEventsSample\SystemEventsSample.cs" />
     <Compile Include="Sample\Environment\SystemParametersSample\SystemParametersSample.cs" />
+    <Compile Include="Sample\GameEngine2D\HelloSprite\HelloSprite.cs" />
     <Compile Include="Sample\Graphics\PixelBufferSample\PixelBufferSample.cs" />
     <Compile Include="Sample\Graphics\PrimitiveSample\PrimitiveSample.cs" />
     <Compile Include="Sample\Graphics\ShaderCatalogSample\BasicMeshFactory.cs" />
@@ -374,6 +375,7 @@
     <Compile Include="Sce.Pss.Core\Environment\CommonDialogResult.cs" />
     <Compile Include="Sce.Pss.Core\Environment\CommonDialogState.cs" />
     <Compile Include="Sce.Pss.Core\Environment\GamePadButtonMeaning.cs" />
+    <Compile Include="Sce.Pss.Core\Environment\Log.cs" />
     <Compile Include="Sce.Pss.Core\Environment\PersistentMemory.cs" />
     <Compile Include="Sce.Pss.Core\Environment\RestoredEventArgs.cs" />
     <Compile Include="Sce.Pss.Core\Environment\Shell.cs" />
@@ -382,11 +384,13 @@
     <Compile Include="Sce.Pss.Core\Environment\TextInputDialog.cs" />
     <Compile Include="Sce.Pss.Core\Environment\YesNoLayout.cs" />
     <Compile Include="Sce.Pss.Core\FMath.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\BlendFunc.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncFactor.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\CullFaceDirection.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\CullFaceMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\DepthBuffer.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\DepthFunc.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\DrawMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\EnableMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\FrameBuffer.cs" />
@@ -425,6 +429,84 @@
     <Compile Include="Sce.Pss.Core\Vector2.cs" />
     <Compile Include="Sce.Pss.Core\Vector3.cs" />
     <Compile Include="Sce.Pss.Core\Vector4.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionBase.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionManager.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionTweenGeneric.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionTweenGenericVector2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionTweenGenericVector2Rotation.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionTweenGenericVector2Scale.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionTweenGenericVector4.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ActionWithDuration.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\BlendMode.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Bounds2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Camera2D.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Camera3D.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Colors.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Common.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\ConvexPoly2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Curves.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\DrawHelpers.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\EmbeddedDebugFontData.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\FontMap.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Frustum.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\GraphicsContextAlpha.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\ICamera.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\ICollisionBasics.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\ImmediateMode.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\ImmediateModeQuads.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Input2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Math.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Matrix3.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\MatrixStack.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\PitchRoll.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Plane2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Profiler.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\RollPitch.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Sphere2.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\SpriteRenderer.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\TextureInfo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Timer.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\TRS.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Vector2i.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\Vector3i.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Base\VertexBufferPool.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\CallFunc.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\DebugFlags.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\DelayTime.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Director.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\DSchedulerFunc.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\DTween.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Label.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\MoveBy.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\MoveTo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Node.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Particles.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ParticleSystem.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Plane3D.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\RawSpriteTile.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\RawSpriteTileList.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Repeat.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\RepeatForever.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\RotateBy.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\RotateTo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ScaleBy.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\ScaleTo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Scene.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Scheduler.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\Sequence.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SkewBy.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SkewTo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SpriteBase.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SpriteList.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SpriteTile.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\SpriteUV.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TintBy.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TintTo.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TransitionCrossFade.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TransitionDirectionalFade.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TransitionFadeBase.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TransitionScene.cs" />
+    <Compile Include="Sce.Pss.HighLevel\GameEngine2D\TransitionSolidFade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -455,6 +537,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sample\Audio\SoundPlayerSample\SYS_SE_01.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\HelloSprite\king_water_drop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sample\Graphics\PixelBufferSample\shaders\Simple.fcg">
@@ -614,6 +699,25 @@
     <None Include="Sample\Lib\SampleLib\shaders\Texture.vcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\default.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\default.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\font.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\font.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NAudio" />
@@ -654,6 +758,7 @@
     <Folder Include="Sample\Environment\SystemParametersSample" />
     <Folder Include="Sample\Environment\SystemEventsSample" />
     <Folder Include="Sample\Environment\ShellSample" />
+    <Folder Include="Sample\GameEngine2D\HelloSprite" />
     <Folder Include="Sample\Graphics\ShaderCatalogSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />
@@ -681,12 +786,17 @@
     <Folder Include="Sample\Network\HttpSample" />
     <Folder Include="Sample\Network\SocketSample" />
     <Folder Include="Sample\Environment" />
+    <Folder Include="Sample\GameEngine2D" />
     <Folder Include="Sce.Pss.Core" />
     <Folder Include="Sce.Pss.Core\Graphics" />
     <Folder Include="Sce.Pss.Core\Environment" />
     <Folder Include="Sce.Pss.Core\Imaging" />
     <Folder Include="Sce.Pss.Core\Input" />
     <Folder Include="Sce.Pss.Core\Audio" />
+    <Folder Include="Sce.Pss.HighLevel" />
+    <Folder Include="Sce.Pss.HighLevel\GameEngine2D" />
+    <Folder Include="Sce.Pss.HighLevel\GameEngine2D\Base" />
+    <Folder Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

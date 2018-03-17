@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-03-17: HelloSprite done.  
 * 2018-01-28: PersistentMemorySample done.  
 * 2018-01-27: StorageSample done.  
 * 2018-01-27: SystemParametersSample done.  
@@ -69,6 +70,7 @@ http://developer.download.nvidia.com/cg/cgc.html
 * MotionSample: MotionData not set  
 * Check OpenAL dll in Windows XP  
 * SocketSample: in SampleButton, return; //FIXME: for textures overflow  
+* HelloSprite: DebugFlags.Navigate not implemented.  
 
 ## cgc  
 cgc.exe "BlinnPhong.fcg" -profile glslf -o "BlinnPhong.glslf"  

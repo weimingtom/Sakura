@@ -213,10 +213,19 @@ namespace Sce.Pss.Core.Graphics
         {
 
         }
-		                 
+		
+        public ShaderProgram(byte[] fileImage)
+		{
+        	Debug.Assert(false);
+		}
+        
 		public ShaderProgram(String filename)
 		{
 			string[] whiteList = new string[] {
+				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/default.cgx",
+				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/sprite.cgx",
+				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/font.cgx",
+				
 				"/Application/Sample/Lib/SampleLib/shaders/Test.cgx",
 			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",
 			    "/Application/Sample/Lib/SampleLib/shaders/Simple.cgx",

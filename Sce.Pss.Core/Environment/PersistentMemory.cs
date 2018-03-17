@@ -7,7 +7,7 @@ namespace Sce.Pss.Core.Environment
 	public static class PersistentMemory
 	{
 		private const int __maxLength = 64 * 1024; //64KB
-		private const string __filename = "persistent_memory.dat";
+		private const string __filename = "./save/pm.dat";
 		
 		public static void Write(byte[] data)
 		{

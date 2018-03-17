@@ -1,0 +1,30 @@
+﻿
+//var float4x4 MVP :  : _MVP1[0], 4 : 0 : 1
+//var float4 p : $vin.POSITION : POSITION : 1 : 1
+//var float4 vin_color : $vin.COLOR0 : COLOR0 : 2 : 1
+//var float4 vout_color : $vout.TEXCOORD0 : TEXCOORD0 : 3 : 1
+//var float4 pp : $vout.POSITION : POSITION : 4 : 1
+
+attribute vec4 p;
+attribute vec4 vin_color;
+varying vec4 vout_color;
+varying vec4 pp;
+uniform mat4 MVP;
+vec4 _r0002;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _vout_color;
+    vec4 _pp;
+
+    _r0002 = p.x*MVP[0];
+    _r0002 = _r0002 + p.y*MVP[1];
+    _r0002 = _r0002 + p.z*MVP[2];
+    _r0002 = _r0002 + p.w*MVP[3];
+    _pp = _r0002;
+    _vout_color = vin_color;
+    gl_Position = _r0002;
+    vout_color = vin_color;
+} // main end

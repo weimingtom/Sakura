@@ -1,0 +1,16 @@
+﻿//var float4 vout_color : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float4 col : $vout.COLOR : COLOR : 1 : 1
+
+
+ // main procedure, the original name was main
+precision highp float;
+precision highp int;
+varying vec4 vout_color;
+void main()
+{
+
+    vec4 _col;
+
+    _col = vout_color;
+    gl_FragColor = vout_color;
+} // main end

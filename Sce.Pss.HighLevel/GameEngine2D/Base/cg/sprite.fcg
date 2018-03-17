@@ -1,0 +1,20 @@
+﻿//var sampler2D Tex : TEXUNIT0 : _Tex1 0 : 2 : 1
+//var float2 vout_tex : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float4 vout_color : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float4 col : $vout.COLOR : COLOR : 3 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 vout_tex;
+varying vec4 vout_color;
+uniform sampler2D Tex;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _col;
+
+    _col = vout_color*texture2D(Tex, vout_tex.xy); //or texture2D(Tex, vout_tex);
+    gl_FragColor = _col;
+} // main end
