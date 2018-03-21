@@ -131,11 +131,11 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 		{
 			if (!mode.Enabled)
 			{
-				this.Context.Disable((EnableMode)4);
+				this.Context.Disable(EnableMode.Blend);//(EnableMode)4);
 			}
 			else
 			{
-				this.Context.Enable((EnableMode)4);
+				this.Context.Enable(EnableMode.Blend);//(EnableMode)4);
 				this.Context.SetBlendFunc(mode.BlendFunc);
 			}
 		}

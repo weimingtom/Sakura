@@ -1,0 +1,32 @@
+﻿//var float4x4 MVP :  : _MVP1[0], 4 : 0 : 1
+//var float4 Color :  :  : 1 : 0
+//var float4 UVTransform :  : _UVTransform1 : 2 : 1
+//var float4 vin_data : $vin.POSITION : POSITION : 3 : 1
+//var float2 vout_tex : $vout.TEXCOORD0 : TEXCOORD0 : 4 : 1
+//var float4 pp : $vout.POSITION : POSITION : 5 : 1
+
+attribute vec4 vin_data;
+varying vec2 vout_tex;
+varying vec4 pp;
+uniform mat4 MVP;
+uniform vec4 UVTransform;
+vec4 _r0005;
+vec4 _v0005;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec2 _vout_tex;
+    vec4 _pp;
+
+    _v0005 = vec4(vin_data.x, vin_data.y, 0.00000000E+000, 1.00000000E+000);
+    _r0005 = _v0005.x*MVP[0];
+    _r0005 = _r0005 + _v0005.y*MVP[1];
+    _r0005 = _r0005 + _v0005.z*MVP[2];
+    _r0005 = _r0005 + _v0005.w*MVP[3];
+    _pp = _r0005;
+    _vout_tex = UVTransform.xy + vin_data.zw*UVTransform.zw;
+    gl_Position = _r0005;
+    vout_tex.xy = _vout_tex;
+} // main end

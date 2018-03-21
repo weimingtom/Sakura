@@ -1,0 +1,38 @@
+﻿//var sampler2D Tex : TEXUNIT0 : _Tex1 0 : 1 : 1
+//var sampler2D Tex2 : TEXUNIT1 : _Tex21 1 : 2 : 1
+//var float4 Plane :  : _Plane1 : 3 : 1
+//var float OffsetRcp :  : _OffsetRcp1 : 4 : 1
+//var float2 vout_tex : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float4 col : $vout.COLOR : COLOR : 5 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 vout_tex;
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
+uniform vec4 Plane;
+uniform float OffsetRcp;
+float _TMP4;
+vec2 _a0007;
+float _x0009;
+float _TMP10;
+float _b0015;
+vec4 _a0021;
+vec4 _b0021;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _col;
+
+    _a0007 = vout_tex.xy - Plane.xy;
+    _TMP4 = dot(_a0007, Plane.zw);
+    _x0009 = _TMP4*OffsetRcp;
+    _b0015 = min(1.00000000E+000, _x0009);
+    _TMP10 = max(0.00000000E+000, _b0015);
+    _a0021 = texture2D(Texture0, vout_tex.xy);
+    _b0021 = texture2D(Texture1, vout_tex.xy);
+    _col = _a0021 + vec4(_TMP10, _TMP10, _TMP10, _TMP10)*(_b0021 - _a0021);
+    gl_FragColor = _col;
+} // main end

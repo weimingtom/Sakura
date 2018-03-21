@@ -515,9 +515,14 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 				}
 			}
 		}
-
+		public bool __isdebug = false; //FIXME: added
 		public virtual void Draw()
 		{
+			//if (this.Name != null && this.Name.Equals("sprite001"))
+//			if (this.__isdebug)  //FIXME: added
+//			{
+//				
+//			}
 			if (this.AdHocDraw != null)
 			{
 				this.AdHocDraw();
@@ -558,7 +563,10 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 
 		public void StopAllActions()
 		{
-			ActionManager.Instance.RemoveAllActionsFromTarget(this);
+			if (ActionManager.Instance != null) //FIXME:added
+			{
+				ActionManager.Instance.RemoveAllActionsFromTarget(this);
+			}
 		}
 
 		public void StopAction(ActionBase action)
@@ -619,7 +627,10 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 
 		public void UnscheduleAll()
 		{
-			Scheduler.Instance.UnscheduleAll(this);
+			if (Scheduler.Instance != null) //FIXME:added
+			{
+				Scheduler.Instance.UnscheduleAll(this);
+			}
 		}
 
 		public void ResumeSchedulerAndActions()

@@ -15,6 +15,6 @@ void main()
 
     vec4 _col;
 
-    _col = vout_color*texture2D(Texture0, vout_tex.xy); //or texture2D(Tex, vout_tex);
+    _col = vout_color*texture2D(Texture0, vout_tex.xy);
     gl_FragColor = _col;
 } // main end

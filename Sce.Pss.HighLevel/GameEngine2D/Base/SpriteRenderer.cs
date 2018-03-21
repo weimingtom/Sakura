@@ -124,7 +124,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 			}
 		}
 
-		private GraphicsContextAlpha GL;
+		//FIXME:
+		public /*private*/ GraphicsContextAlpha GL;
 
 		private ImmediateModeQuads<Vector4> m_imm_quads;
 
@@ -302,7 +303,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 		public void BeginSprites(TextureInfo texture_info, SpriteRenderer.ISpriteShader shader, int num_sprites)
 		{
 			Matrix4 mVP = this.GL.GetMVP();
-//			mVP = Matrix4.Identity;
+			//mVP = Matrix4.Identity;
+			//mVP = mVP * Matrix4.Scale(new Vector3(0.8f, 0.8f, 1.0f));
 			shader.SetMVP(ref mVP);
 			this.GL.Context.SetShaderProgram(shader.GetShaderProgram());
 			Common.Assert(!texture_info.Disposed, "This TextureInfo oject has been disposed");

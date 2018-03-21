@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-03-21: FeatureCatalog done.  
 * 2018-03-17: HelloSprite done.  
 * 2018-01-28: PersistentMemorySample done.  
 * 2018-01-27: StorageSample done.  
@@ -52,6 +53,9 @@ https://gitee.com/weimingtom/TriangleSample
 http://developer.download.nvidia.com/cg/cgc.html  
 
 ## Bug / TODO  
+* FeatureCatalog: BlendMode.None not work (black bg, not white bg, search '//drawing.Clear(_backColor); //FIXME:???for png file background').  
+* FeatureCatalog: different fonts make some white pixels around the text.   
+* FeatureCatalog: public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option, bool supportNPOT) should be removed
 * SpriteSample: The sprite is not center, larger than original size  
 * SpriteSample: NPOT, see Texture2D.SetPixels, see __supportNPOT  
 * SampleLib : Font size  
@@ -70,7 +74,8 @@ http://developer.download.nvidia.com/cg/cgc.html
 * MotionSample: MotionData not set  
 * Check OpenAL dll in Windows XP  
 * SocketSample: in SampleButton, return; //FIXME: for textures overflow  
-* HelloSprite: DebugFlags.Navigate not implemented.  
+* HelloSprite: DebugFlags.Navigate not implemented (20180318:fixed, Key A and W + drag).  
+* HelloSprite: DebugFlags.DrawGrid not implemented (20180318:fixed).  
 
 ## cgc  
 cgc.exe "BlinnPhong.fcg" -profile glslf -o "BlinnPhong.glslf"  

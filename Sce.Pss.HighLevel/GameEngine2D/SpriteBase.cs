@@ -8,6 +8,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 	
 	public abstract class SpriteBase : Node
 	{
+		public bool __allowAdHocDraw = false;
+		
 		public TRS Quad = TRS.Quad0_1;
 
 		public bool FlipU = false;
@@ -16,8 +18,19 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 
 		public Vector4 Color = Colors.White;
 
-		public BlendMode BlendMode = BlendMode.Normal;
-
+		private BlendMode _BlendMode = BlendMode.Normal;
+		public BlendMode BlendMode
+		{
+			get
+			{
+				return _BlendMode;
+			}
+			set
+			{
+				_BlendMode = value;
+			}
+		}
+		
 		public TextureInfo TextureInfo;
 
 		public SpriteRenderer.ISpriteShader Shader = Director.Instance.SpriteRenderer.DefaultShader;
@@ -43,6 +56,12 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 			Director.Instance.SpriteRenderer.BeginSprites(this.TextureInfo, this.Shader, 1);
 			this.internal_draw();
 			Director.Instance.SpriteRenderer.EndSprites();
+		
+			//FIXME:added, please remove
+			if (__allowAdHocDraw)
+			{
+				base.Draw();
+			}
 		}
 
 		public override bool GetlContentLocalBounds(ref Bounds2 bounds)

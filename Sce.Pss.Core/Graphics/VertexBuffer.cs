@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 
+using Sce.Pss.HighLevel.GameEngine2D.Base;
+using Sce.Pss.HighLevel.GameEngine2D;
+
 namespace Sce.Pss.Core.Graphics
 {
 	public class VertexBuffer : IDisposable
@@ -67,22 +70,84 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
+		//???to and from not used
 		public void SetVertices(Array vertices, int to, int from, int count)
 		{
 			//Debug.Assert(false);
 //			Debug.WriteLine("===================>SetVertices index 0???");
 			if (to == 0 && from == 0)
 			{
-				Vector4[] vertices_ = (vertices as Vector4[]);
-				float[] vertices2 = new float[count * 4];
-				for (int i = 0; i < count; ++i)
+				if (vertices is Vector4[])
 				{
-					vertices2[i * 4 + 0] = vertices_[i].X;
-					vertices2[i * 4 + 1] = vertices_[i].Y;
-					vertices2[i * 4 + 2] = vertices_[i].Z;
-					vertices2[i * 4 + 3] = vertices_[i].W;
+					Vector4[] vertices_ = (vertices as Vector4[]); //FIXME:
+					float[] vertices2 = new float[count * 4];
+					for (int i = 0; i < count; ++i)
+					{
+						vertices2[i * 4 + 0] = vertices_[i].X;
+						vertices2[i * 4 + 1] = vertices_[i].Y;
+						vertices2[i * 4 + 2] = vertices_[i].Z;
+						vertices2[i * 4 + 3] = vertices_[i].W;
+					}
+					SetVertices(0, vertices2);
 				}
-				SetVertices(0, vertices2);
+				else if (vertices is DrawHelpers.Vertex[])
+				{
+					DrawHelpers.Vertex[] vertices_ = (vertices as DrawHelpers.Vertex[]); //FIXME:
+					{
+						float[] vertices2 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices2[i * 4 + 0] = vertices_[i].Position.X;
+							vertices2[i * 4 + 1] = vertices_[i].Position.Y;
+							vertices2[i * 4 + 2] = vertices_[i].Position.Z;
+							vertices2[i * 4 + 3] = vertices_[i].Position.W;
+						}
+						SetVertices(0, vertices2);	
+					}
+					{
+						float[] vertices3 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							//1.0f;//
+							vertices3[i * 4 + 0] = vertices_[i].Color.X;
+							vertices3[i * 4 + 1] = vertices_[i].Color.Y;
+							vertices3[i * 4 + 2] = vertices_[i].Color.Z;
+							vertices3[i * 4 + 3] = vertices_[i].Color.W;
+						}
+						SetVertices(1, vertices3);
+					}
+				}
+				else if (vertices is ParticleSystem.Vertex[])
+				{
+					ParticleSystem.Vertex[] vertices_ = (vertices as ParticleSystem.Vertex[]); //FIXME:
+					{
+						float[] vertices2 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices2[i * 4 + 0] = vertices_[i].XYUV.X;
+							vertices2[i * 4 + 1] = vertices_[i].XYUV.Y;
+							vertices2[i * 4 + 2] = vertices_[i].XYUV.Z;
+							vertices2[i * 4 + 3] = vertices_[i].XYUV.W;
+						}
+						SetVertices(0, vertices2);	
+					}
+					{
+						float[] vertices3 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							//1.0f;//
+							vertices3[i * 4 + 0] = vertices_[i].Color.X;
+							vertices3[i * 4 + 1] = vertices_[i].Color.Y;
+							vertices3[i * 4 + 2] = vertices_[i].Color.Z;
+							vertices3[i * 4 + 3] = vertices_[i].Color.W;
+						}
+						SetVertices(1, vertices3);
+					}
+				}
+				else
+				{
+					Debug.Assert(false);
+				}
 			}
 			else
 			{

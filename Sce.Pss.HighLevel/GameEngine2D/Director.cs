@@ -263,6 +263,10 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 			{
 				bool down = Input2.GamePad0.Triangle.Down;
 				bool down2 = Input2.GamePad0.Square.Down;
+//				if (down || down2) //W, A //FIXME:added
+//				{
+//					this.DebugLog("==================");
+//				}
 				this.CurrentScene.Camera.Navigate(down2 ? 1 : (down ? 2 : 0));
 			}
 			Scheduler.Instance.Update(dt);

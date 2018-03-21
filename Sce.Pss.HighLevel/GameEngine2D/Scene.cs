@@ -61,7 +61,11 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 				float num = this.DrawGridStep;
 				Bounds2 bounds = this.Camera.CalcBounds();
 				float num2 = (bounds.Size.X > bounds.Size.Y) ? bounds.Size.X : bounds.Size.Y;
-				if (num2 == 0f)
+				if (float.IsNaN(num2)) //FIXME added
+				{
+					num = 0f;
+				}
+				else if (num2 == 0f)
 				{
 					num = 0f;
 				}

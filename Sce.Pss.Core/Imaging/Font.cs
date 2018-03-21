@@ -44,7 +44,10 @@ namespace Sce.Pss.Core.Imaging
 					_style = System.Drawing.FontStyle.Italic;
 					break;
 			}
-			this.__font = new System.Drawing.Font("Arial", (int)(__size * 0.70f), _style); //FIXME:???0.8
+			//Arial
+			//Comic Sans MS
+			//MS Gothic
+			this.__font = new System.Drawing.Font("MS Gothic", (int)(__size * 0.75f), _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font("Arial", __size, _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font(/*"宋体"*/FontFamily.GenericSansSerif, __size, _style);
 			
@@ -84,12 +87,16 @@ namespace Sce.Pss.Core.Imaging
 			using (img = new System.Drawing.Bitmap(1, 1))
 			using (drawing = System.Drawing.Graphics.FromImage(img))
 			{
-				textSize = drawing.MeasureString(text, __font);
+				drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+				//textSize = drawing.MeasureString(text, __font); //FIXME: w would be larger 
+				StringFormat sf = StringFormat.GenericTypographic;
+    			sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+				textSize = drawing.MeasureString(text, __font, 1000, sf);
 			}
 			int w = (int)textSize.Width;
-			if (w == 0)
+			if (w == 0)// || text.Equals(" ")) //if (text.Equals(" "))
 			{
-				w = 1;
+				w = 2;//4;//this.__size / 5;
 			}
 			return w;
 		}

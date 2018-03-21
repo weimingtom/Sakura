@@ -24,5 +24,11 @@ namespace Sce.Pss.Core.Graphics
 			//FIXME:not used
 			//Debug.Assert(false);
 		}
+		
+		public void SetFilter(TextureFilterMode mode)
+		{
+			//FIXME:not used
+			//Debug.Assert(false);
+		}
 	}
 }

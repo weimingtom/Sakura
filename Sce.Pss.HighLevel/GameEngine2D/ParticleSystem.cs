@@ -132,7 +132,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 			}
 		}
 
-		private struct Vertex
+		//FIXME:changed
+		public /*private*/ struct Vertex
 		{
 			public Vector4 XYUV;
 

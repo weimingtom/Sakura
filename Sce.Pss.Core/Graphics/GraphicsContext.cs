@@ -233,6 +233,10 @@ namespace Sce.Pss.Core.Graphics
 						}
 						VertexAttribPointerType vType = VertexAttribPointerType.Float;
 						float[] vert = (float[])buffer.__verticesArr[i];
+						if (vert == null)
+						{
+							Debug.Assert(false);
+						}
 						GL.VertexAttribPointer (i, size, vType, false, 0/*size * 4*/, vert);
 						GL.EnableVertexAttribArray ( i );
 					}
@@ -489,8 +493,12 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
+		private BlendFunc __blendFunc;
+		
 		public void SetBlendFunc(BlendFuncMode mode, BlendFuncFactor srcFactor, BlendFuncFactor dstFactor)
 		{
+			__blendFunc = new BlendFunc(mode, srcFactor, dstFactor);
+			
 			BlendEquationMode _mode = BlendEquationMode.FuncAdd;
 			switch (mode)
 			{
@@ -506,6 +514,10 @@ namespace Sce.Pss.Core.Graphics
 			BlendingFactorDest _dst = BlendingFactorDest.OneMinusSrcAlpha;
 			switch (srcFactor)
 			{
+				case BlendFuncFactor.Zero:
+					_src = BlendingFactorSrc.Zero;
+					break;
+					
 				case BlendFuncFactor.SrcAlpha:
 					_src = BlendingFactorSrc.SrcAlpha;
 					break;
@@ -513,6 +525,14 @@ namespace Sce.Pss.Core.Graphics
 				case BlendFuncFactor.OneMinusSrcAlpha:
 					_src = BlendingFactorSrc.OneMinusSrcAlpha;
 				  	break;
+
+				case BlendFuncFactor.One:
+					_src = BlendingFactorSrc.One;
+				  	break;
+				  	
+				case BlendFuncFactor.DstColor:
+					_src = BlendingFactorSrc.DstColor;
+				  	break;				  	
 				  	
 				default:
 					Debug.Assert(false);
@@ -520,6 +540,10 @@ namespace Sce.Pss.Core.Graphics
 			}
 			switch (dstFactor)
 			{
+				case BlendFuncFactor.Zero:
+					_dst = BlendingFactorDest.Zero;
+					break;
+					
 				case BlendFuncFactor.SrcAlpha:
 					_dst = BlendingFactorDest.SrcAlpha;
 					break;
@@ -527,6 +551,14 @@ namespace Sce.Pss.Core.Graphics
 				case BlendFuncFactor.OneMinusSrcAlpha:
 					_dst = BlendingFactorDest.OneMinusSrcAlpha;
 				  	break;
+				  	
+				case BlendFuncFactor.One:
+					_dst = BlendingFactorDest.One;
+				  	break;
+				  	
+				case BlendFuncFactor.DstColor:
+					_dst = BlendingFactorDest.DstColor;
+				  	break;	
 				  	
 				default:
 					Debug.Assert(false);
@@ -548,9 +580,20 @@ namespace Sce.Pss.Core.Graphics
 		public void SetFrameBuffer (FrameBuffer buffer)
 		{
 			//Debug.Assert(false);
-			Debug.Assert(buffer.__framebufferId >= 0);
-			this.__frameBuffer = buffer;
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, buffer.__framebufferId);
+			if (buffer != null)
+			{
+				Debug.Assert(buffer.__framebufferId >= 0);
+				this.__frameBuffer = buffer;
+				GL.BindFramebuffer(FramebufferTarget.Framebuffer, buffer.__framebufferId);
+			}
+			else
+			{
+//				Debug.WriteLine("=================buffer == null");
+//				this.__frameBuffer = buffer;
+//				GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);		
+				this.__frameBuffer = this.__screen;
+				GL.BindFramebuffer(FramebufferTarget.Framebuffer, this.__screen.__framebufferId);
+			}
 		}
 		
 		public void SetCullFace (CullFaceMode mode, CullFaceDirection direction)
@@ -600,7 +643,8 @@ namespace Sce.Pss.Core.Graphics
 		
 		public void SetLineWidth(float width)
 		{
-			Debug.Assert(false);
+			//Debug.Assert(false);
+			GL.LineWidth(width);
 		}
 		
 		public ImageRect GetViewport()
@@ -614,24 +658,45 @@ namespace Sce.Pss.Core.Graphics
 		
 		public void Disable(EnableMode mode)
 		{
-			Debug.Assert(false);
+//			Debug.Assert(false);
+			Enable(mode, false);
 		}
 		
 		public void SetBlendFunc(BlendFunc func)
 		{
 			//Debug.Assert(false);
 //			Debug.WriteLine("======================>SetBlendFunc not implemented");
+			if (func != null)
+			{
+				this.SetBlendFunc(func.mode, func.srcFactor, func.dstFactor);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
 		}
 		
+		private DepthFunc __depthFunc = new DepthFunc();
 		public DepthFunc GetDepthFunc()
 		{
-			Debug.Assert(false);
-			return null;
+			//FIXME:
+			//Debug.Assert(false);
+			return __depthFunc;
 		}
 		
 		public void SetDepthFunc(DepthFunc func)
 		{
-			Debug.Assert(false);
+			//FIXME:
+			//Debug.Assert(false);
+			__depthFunc = func;
+			GL.DepthFunc(func.Mode);
+		}
+		
+		public BlendFunc GetBlendFunc()
+		{
+			//Debug.Assert(false);
+			//return null;
+			return __blendFunc;
 		}
 	}
 }

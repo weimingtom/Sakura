@@ -23,8 +23,12 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 			Vector2i value = new Vector2i(Director.Instance.GL.Context.GetViewport().Width, Director.Instance.GL.Context.GetViewport().Height);
 			if (!TransitionFadeBase.m_graphics_resources_init)
 			{
-				TransitionFadeBase.m_previous_scene_render = new TextureInfo(new Texture2D(value.X, value.Y, false, (PixelFormat)1, (PixelBufferOption)1));
-				TransitionFadeBase.m_next_scene_render = new TextureInfo(new Texture2D(value.X, value.Y, false, (PixelFormat)1, (PixelBufferOption)1));
+				Texture2D t1 = new Texture2D(value.X, value.Y, false, PixelFormat.Rgba, PixelBufferOption.Renderable, true); //FIXME:added???
+				//t1.__supportNPOT = true; //FIXME:added???
+				TransitionFadeBase.m_previous_scene_render = new TextureInfo(t1);
+				Texture2D t2 = new Texture2D(value.X, value.Y, false, PixelFormat.Rgba, PixelBufferOption.Renderable, true); //FIXME:added???
+				//t2.__supportNPOT = true; //FIXME:added???
+				TransitionFadeBase.m_next_scene_render = new TextureInfo(t2);
 				TransitionFadeBase.m_fbuf1 = new FrameBuffer();
 				TransitionFadeBase.m_fbuf2 = new FrameBuffer();
 				TransitionFadeBase.m_fbuf1.SetColorTarget(TransitionFadeBase.m_previous_scene_render.Texture, 0);

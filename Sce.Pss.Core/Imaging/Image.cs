@@ -24,7 +24,7 @@ namespace Sce.Pss.Core.Imaging
 		
 		public Image(ImageMode mode, ImageSize size, ImageColor color)
 		{
-			Debug.Assert(mode == ImageMode.Rgba); //FIXME:???
+			//Debug.Assert(mode == ImageMode.Rgba); //FIXME:???
 			//PixelFormat.
 			__img = new System.Drawing.Bitmap(size.Width, 
 			                                  size.Height, 
@@ -45,10 +45,13 @@ namespace Sce.Pss.Core.Imaging
 			using (Brush textBrush = new SolidBrush(_color))
 			{
 				//Debug.WriteLine("==============>DrawText: " + text);
-				//drawing.Clear(_backColor);
+				//drawing.Clear(_backColor2);
 				//http://bbs.csdn.net/topics/350255409
 				drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-				drawing.DrawString(text, font.__font, textBrush, position.X, position.Y);
+				//drawing.DrawString(text, font.__font, textBrush, position.X, position.Y); //see measureWidth, StringFormat should set same time
+				StringFormat sf = StringFormat.GenericTypographic;
+    			sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+				drawing.DrawString(text, font.__font, textBrush, position.X, position.Y, sf);
 				drawing.Save();
 			}
 		}

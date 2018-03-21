@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>HelloSprite</StartupObject>
+    <StartupObject>FeatureCatalog</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -326,6 +326,9 @@
     <Compile Include="Sample\Environment\StorageSample\StorageSample.cs" />
     <Compile Include="Sample\Environment\SystemEventsSample\SystemEventsSample.cs" />
     <Compile Include="Sample\Environment\SystemParametersSample\SystemParametersSample.cs" />
+    <Compile Include="Sample\GameEngine2D\FeatureCatalog\FeatureCatalog.cs" />
+    <Compile Include="Sample\GameEngine2D\FeatureCatalog\Isometric.cs" />
+    <Compile Include="Sample\GameEngine2D\FeatureCatalog\PlanetCute.cs" />
     <Compile Include="Sample\GameEngine2D\HelloSprite\HelloSprite.cs" />
     <Compile Include="Sample\Graphics\PixelBufferSample\PixelBufferSample.cs" />
     <Compile Include="Sample\Graphics\PrimitiveSample\PrimitiveSample.cs" />
@@ -539,6 +542,36 @@
     <None Include="Sample\Audio\SoundPlayerSample\SYS_SE_01.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\fire.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\iso-64x64-outside-example.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\iso-64x64-outside.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute\Blocks.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute\bluegrad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute\Objects.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute\Shadows.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\slime_green_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\FeatureCatalog\data\water_puddle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sample\GameEngine2D\HelloSprite\king_water_drop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -711,10 +744,22 @@
     <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\font.vcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\particles.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\particles.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite.fcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite_directional_fade.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sce.Pss.HighLevel\GameEngine2D\Base\cg\sprite_directional_fade.vcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="todo.txt" />
@@ -758,7 +803,10 @@
     <Folder Include="Sample\Environment\SystemParametersSample" />
     <Folder Include="Sample\Environment\SystemEventsSample" />
     <Folder Include="Sample\Environment\ShellSample" />
+    <Folder Include="Sample\GameEngine2D\FeatureCatalog\data" />
+    <Folder Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute" />
     <Folder Include="Sample\GameEngine2D\HelloSprite" />
+    <Folder Include="Sample\GameEngine2D\FeatureCatalog" />
     <Folder Include="Sample\Graphics\ShaderCatalogSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />

@@ -280,7 +280,10 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 
 		public void Push()
 		{
-			Common.Assert(this.GetTransform().IsOrthonormal(0.0001f));
+			if (false) //FIXME:added???
+			{
+				Common.Assert(this.GetTransform().IsOrthonormal(0.0001f));
+			}
 			this.m_push_depth++;
 			float num = this.X().Length();
 			float num2 = this.Y().Length();

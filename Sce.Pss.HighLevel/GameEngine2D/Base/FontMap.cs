@@ -106,7 +106,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 				}
 				if (i == 0)
 				{
-					image = new Image((ImageMode)1, new ImageSize(vector2i.X, vector2i.Y), new ImageColor(0, 0, 0, 0));
+					//image = new Image((ImageMode)1, new ImageSize(vector2i.X, vector2i.Y), new ImageColor(0, 0, 0, 0));
+					image = new Image(ImageMode.A, new ImageSize(vector2i.X, vector2i.Y), new ImageColor(0, 0, 0, 0));
 					this.CharSet.Clear();
 				}
 			}

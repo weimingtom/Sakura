@@ -131,6 +131,47 @@ namespace Sce.Pss.Core.Graphics
 			}
 		}
 		
+		//FIXME: this function added
+		public Texture2D(int width, int height, bool mipmap, PixelFormat format, bool supportNPOT) 
+		{
+			this.__supportNPOT = supportNPOT;
+			this.__width = width;
+			this.__height = height;
+			this.__mipmap = mipmap;
+			this.__format = format;
+			this.__option = PixelBufferOption.None; //FIXME:???
+			using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+			{
+				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				{
+					drawing.Clear(System.Drawing.Color.White);
+					drawing.Save();
+				}
+				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
+			}
+		}
+		
+		//FIXME: this function added
+		public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option, bool supportNPOT)
+		{
+			this.__supportNPOT = supportNPOT;
+			this.__width = width;
+			this.__height = height;
+			this.__mipmap = mipmap;
+			this.__format = format;
+			this.__option = option;
+			using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+			{
+				using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
+				{
+					drawing.Clear(System.Drawing.Color.White); //FIXME:??????
+					drawing.Save();
+				}
+				__SetPixels(0, __img2/*__toBuffer(__img2)*/, 0, 0, __img2.Width, __img2.Height);
+			}
+		}
+		
+		
 		public Texture2D(string fileName, bool mipmap)
 		{
 			string imgname = fileName.Replace("/Application/", "./");
@@ -164,10 +205,12 @@ namespace Sce.Pss.Core.Graphics
 					this.__width = __img.Width;
 					this.__height = __img.Height;			
 					
+					System.Drawing.Color _backColor = System.Drawing.Color.FromArgb(255, 255, 255, 255);
 					using (System.Drawing.Bitmap __img2 = new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 					{
 						using (System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(__img2))
 						{
+							//drawing.Clear(_backColor); //FIXME:???for png file background
 							//drawing.DrawImage(__img, 0, 0); //FIXME:not good, will scale 1.33
 							drawing.DrawImage(__img, 0, 0, this.__width, this.__height);
 							drawing.Save();
@@ -408,6 +451,33 @@ namespace Sce.Pss.Core.Graphics
 		{
 			//Debug.Assert(false);
 //			Debug.WriteLine("=========================>SetPixels not implemented");
+			if (format == PixelFormat.Luminance)
+			{
+				byte[] pixels2 = new byte[__width * __height * 4];
+				for (int j = 0; j < __height; ++j)
+				{
+					for (int i = 0; i < __width; ++i)
+					{
+						if ((j) * __width * 1 + (i) * 1 + 0 < pixels.Length)
+						{
+							pixels2[(j) * __width * 4 + (i) * 4 + 0] = pixels[(j) * __width * 1 + (i) * 1 + 0];
+							pixels2[(j) * __width * 4 + (i) * 4 + 1] = pixels[(j) * __width * 1 + (i) * 1 + 0];
+							pixels2[(j) * __width * 4 + (i) * 4 + 2] = pixels[(j) * __width * 1 + (i) * 1 + 0];
+							pixels2[(j) * __width * 4 + (i) * 4 + 3] = 255;
+						}
+						else
+						{
+							//Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>");
+							Debug.Assert(false);
+						}
+					}
+				}
+				__SetPixels(level, pixels2, 0, 0, __width, __height);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
 		}
 	}
 }

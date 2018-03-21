@@ -2,6 +2,8 @@ using Sce.Pss.Core;
 using Sce.Pss.Core.Graphics;
 using System;
 
+using System.Diagnostics;
+
 namespace Sce.Pss.HighLevel.GameEngine2D.Base
 {
 	public class DrawHelpers : IDisposable
@@ -138,6 +140,7 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 
 		public void ShaderPush()
 		{
+			//FIXME:changed
 			if (this.m_view_matrix_tag != this.GL.ViewMatrix.Tag || this.m_model_matrix_tag != this.GL.ModelMatrix.Tag || this.m_projection_matrix_tag != this.GL.ProjectionMatrix.Tag)
 			{
 				this.m_model_matrix_tag = this.GL.ModelMatrix.Tag;
@@ -180,7 +183,7 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 		public void DrawBounds2(Bounds2 bounds)
 		{
 			this.ShaderPush();
-			this.ImmBegin((DrawMode)2, 5u);
+			this.ImmBegin(DrawMode.LineStrip/*(DrawMode)2*/, 5u);
 			this.ImmVertex(new DrawHelpers.Vertex(bounds.Point00.Xy01, this.m_current_color));
 			this.ImmVertex(new DrawHelpers.Vertex(bounds.Point10.Xy01, this.m_current_color));
 			this.ImmVertex(new DrawHelpers.Vertex(bounds.Point11.Xy01, this.m_current_color));
@@ -211,23 +214,37 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 		public void DrawDisk(Vector2 center, float radius, uint n)
 		{
 			this.ShaderPush();
-			this.ImmBegin((DrawMode)5, n);
+			this.ImmBegin(DrawMode.TriangleFan, n);//(DrawMode)5, n);
 			for (uint num = 0u; num < n; num += 1u)
+			//for (int num = (int)n - 1; num >= 0; num -= 1)
 			{
-				Vector2 vector = Vector2.Rotation(num / (n - 1u) * Math.TwicePi);
+				Vector2 vector = Vector2.Rotation((float)num / (n - 1u) * Math.TwicePi);
+//				Vector4 v = (center + vector * radius).Xy01;
+//				Debug.WriteLine(">>>>>>>>>>>>>=DrawDisk: " + num + ":" + v.ToString());
 				this.ImmVertex(new DrawHelpers.Vertex((center + vector * radius).Xy01, this.m_current_color));
 			}
+//			this.ImmVertex(new DrawHelpers.Vertex(center.Add(new Vector2(0, 0)), this.m_current_color));
+//			this.ImmVertex(new DrawHelpers.Vertex(center.Add(new Vector2(1, 0)), this.m_current_color));
+//			this.ImmVertex(new DrawHelpers.Vertex(center.Add(new Vector2(1, 1)), this.m_current_color));
+//			this.ImmVertex(new DrawHelpers.Vertex(center.Add(new Vector2(0, 1)), this.m_current_color));
+//			this.ImmVertex(new DrawHelpers.Vertex(center.Add(new Vector2(0, 0)), this.m_current_color));
+			
 			this.ImmEnd();
 			this.ShaderPop();
 		}
 
 		public void DrawCircle(Vector2 center, float radius, uint n)
 		{
-			this.ShaderPush();
-			this.ImmBegin((DrawMode)2, n);
+			//FIXME:added
+//			this.GL.Context.Enable(EnableMode.Blend);
+//			this.GL.Context.SetBlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);	
+//			this.GL.Context.Disable(EnableMode.Blend);
+			
+			this.ShaderPush();	
+			this.ImmBegin(DrawMode.LineStrip, n);//(DrawMode)2, n);
 			for (uint num = 0u; num < n; num += 1u)
 			{
-				Vector2 vector = Vector2.Rotation(num / (n - 1u) * Math.TwicePi);
+				Vector2 vector = Vector2.Rotation((float)num / (n - 1u) * Math.TwicePi);
 				this.ImmVertex(new DrawHelpers.Vertex((center + vector * radius).Xy01, this.m_current_color));
 			}
 			this.ImmEnd();
@@ -398,7 +415,7 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 			this.ShaderPush();
 			this.SetColor(rulers_color);
 			this.DrawRulers(clipping_bounds, step.X, step.Y);
-			this.GL.Context.Disable((EnableMode)4);
+			this.GL.Context.Disable(EnableMode.Blend);//(EnableMode)4);
 			this.SetColor(axis_color);
 			this.DrawAxis(clipping_bounds, 2f);
 			this.ShaderPop();
@@ -406,8 +423,9 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 
 		public void DrawDefaultGrid(Bounds2 clipping_bounds, float step)
 		{
-			this.GL.Context.Enable((EnableMode)4);
-			this.GL.Context.SetBlendFunc(new BlendFunc((BlendFuncMode)0, (BlendFuncFactor)4, (BlendFuncFactor)1));
+			this.GL.Context.Enable(EnableMode.Blend); //(EnableMode)4);
+			//this.GL.Context.SetBlendFunc(new BlendFunc((BlendFuncMode)0, (BlendFuncFactor)4, (BlendFuncFactor)1));
+			this.GL.Context.SetBlendFunc(new BlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.One));
 			this.DrawDefaultGrid(clipping_bounds, new Vector2(step), Colors.Grey30 * 0.5f, Colors.Black);
 		}
 	}

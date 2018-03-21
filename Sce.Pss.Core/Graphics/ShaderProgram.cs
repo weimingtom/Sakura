@@ -225,6 +225,8 @@ namespace Sce.Pss.Core.Graphics
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/default.cgx",
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/sprite.cgx",
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/font.cgx",
+				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/particles.cgx",
+				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/sprite_directional_fade.cgx",	
 				
 				"/Application/Sample/Lib/SampleLib/shaders/Test.cgx",
 			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",

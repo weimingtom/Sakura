@@ -3,6 +3,8 @@ using Sce.Pss.Core.Input;
 using System;
 using System.Collections.Generic;
 
+using System.Diagnostics;
+
 namespace Sce.Pss.HighLevel.GameEngine2D.Base
 {
 	public static class Input2
@@ -10,6 +12,7 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 		public struct ButtonState
 		{
 			internal byte m_data;
+//			public bool __isSquare; //FIXME:added, for debug
 
 			internal static Input2.ButtonState Default = new Input2.ButtonState
 			{
@@ -50,6 +53,10 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 
 			internal void frame_update(bool down)
 			{
+//				if (__isSquare)
+//				{
+//					Debug.WriteLine("=======================");
+//				}
 				byte b = down ? (byte)1 : (byte)0;
 				if (!this.Down && down)
 				{
@@ -355,6 +362,11 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 				this.Up.frame_update((gamePadData.Buttons & (GamePadButtons)2) != 0 && flag);
 				this.Right.frame_update((gamePadData.Buttons & (GamePadButtons)4) != 0 && flag);
 				this.Down.frame_update((gamePadData.Buttons & (GamePadButtons)8) != 0 && flag);
+//				this.Square.__isSquare = true;
+//				if ((gamePadData.Buttons & (GamePadButtons)16) != 0) //FIXME:added
+//				{
+//					Debug.WriteLine("=====================");
+//				}
 				this.Square.frame_update((gamePadData.Buttons & (GamePadButtons)16) != 0 && flag);
 				this.Triangle.frame_update((gamePadData.Buttons & (GamePadButtons)32) != 0 && flag);
 				this.Circle.frame_update((gamePadData.Buttons & (GamePadButtons)64) != 0 && flag);

@@ -241,8 +241,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 					}
 				}
 			}
-			Texture2D texture2D = new Texture2D(vector2i.X, vector2i.Y, false, (PixelFormat)8);
-			texture2D.SetPixels(0, array2, (PixelFormat)8);
+			Texture2D texture2D = new Texture2D(vector2i.X, vector2i.Y, false, PixelFormat.Luminance, true);//(PixelFormat)8);
+			texture2D.SetPixels(0, array2, PixelFormat.Luminance);
 			texture2D.SetFilter(0, 0, 0);
 			return texture2D;
 		}

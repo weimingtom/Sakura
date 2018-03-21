@@ -1,4 +1,59 @@
-﻿???--->		public const float __SCALE = 1.333f;
+﻿file:///C:/Documents%20and%20Settings/All%20Users/Documents/Pss/doc/en/sample_list_en.html
+
+Package | Sample name | Overview
+Core	MathSample	Math function usage sample.
+Graphics	TriangleSample	Triangle polygon display sample.
+SpriteSample	Sample with sprite expression.
+PrimitiveSample	Display sample of rendered primitives.
+PixelBufferSample	Off-screen rendering sample with FrameBuffer class.
+ShaderCatalogSample	Several basic shader samples.
+Audio	BgmPlayerSample	BGM playback sample.
+SoundPlayerSample	SE playback sample.
+Input	GamePadSample	Gamepad operation sample.
+MotionSample	Acceleration sensor operation sample.
+TouchSample	Touch panel operation sample.
+Imaging	FontSample	Font display sample.
+ImageSample	Image class usage sample.
+Network	HttpSample	HTTP communication sample.
+SocketSample	Socket communication sample.
+Environment	ClipboardSample	Clipboard usage sample.
+DialogSample	Text input dialog usage sample.
+ShellSample	Sample that starts other applications.
+SystemEventsSample	Get system events sample.
+SystemParametersSample	Get system parameters sample.
+StorageSample	File save and deletion sample.
+PersistentMemorySample	Persistent memory usage sample.
+GameEngine2D	HelloSprite	Sample that displays a single sprite on the screen with GameEngine2D.
+FeatureCatalog	Sample that can check various GameEngine2D features.
+ActionGameDemo	Side view action type demo game that uses GameEngine2D.
+PuzzleGameDemo	Puzzle type demo game that uses GameEngine2D.
+UI Toolkit	HelloWorld	Sample displaying character strings on the screen using the UI Toolkit.
+UICatalog	Sample for viewing widgets and animation effects that can be used by the UI Toolkit.
+Overlay	Sample overlaying renderings over 3D graphics using the UI Toolkit.
+UIAnimation	Sample that indicates the usage methods for UIMotion/UIAnimationPlayer.
+UIToolkit_template	Template sample for when using the UI Toolkit.
+DemoClock	Clock application sample. The layout is created using the UI Composer.
+DemoGameUI	Sample showing how to use a game screen and the UI Toolkit together.
+DemoWeather	Sample of an application displaying the weather forecast.
+DemoRssReader	Sample of an RSS reader application.
+DemoCalendarMaker	Application sample that creates wallpaper with an embedded calendar.
+Model	BasicModelSample	Model data load and display sample.
+BasicProgramSample	Basic shader sample.
+Physics2D	Physics2DSample	This is a 2D physical simulation sample.
+Demo	ShootingDemo	Horizontal scroll shooting demo game.
+FlightDemo	Demo game for operating a plane using the motion sensor.
+RpgDemo	Action RPG-type demo game.
+BallMazeDemo	Demo game using the motion sensor in which the user rolls a ball, leading it to the goal.
+BrickSmashDemo	Demo game in which blocks positioned in a circle are knocked down.
+SpaceRocksDemo	Demo game in which the user evades and destroys meteors.
+Physics2dDemo	2D physical simulation demo game.
+DefenseDemo	Simulation demo game in which a tower is placed and the base is defended.
+lib	SampleLib	This code is shared among the samples and is not directly related to the main features of the samples.
+
+-----------------------------------------------
+
+
+???--->		public const float __SCALE = 1.333f;
 		//public const float __SCALE = 1f;
 		
 -----------------------------------------------
@@ -13,3 +68,216 @@
 							
 --------------------------------------------
 
+Camera2D
+
+public void Push()
+		{
+--->			if (true) //FIXME:added???
+			{
+				Common.Assert(this.GetTransform().IsOrthonormal(0.0001f));
+			}
+
+somethimes crash
+
+--------------------------------------------
+VertexBuffer:
+
+not sure: (vertices as Vector4[] != null), may be DrawHelpers.Vertex
+
+???to and from not used
+
+
+		public void SetVertices(Array vertices, int to, int from, int count)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("===================>SetVertices index 0???");
+			if (to == 0 && from == 0)
+			{
+-------->				Vector4[] vertices_ = (vertices as Vector4[]); //FIXME:
+				
+------------------------------------------
+
+		public void SetBlendFunc(BlendFunc func)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("======================>SetBlendFunc not implemented");
+		}
+		
+-----------------------------------------
+
+		public void SetBlendFunc(BlendFunc func)
+		{
+			//Debug.Assert(false);
+//			Debug.WriteLine("======================>SetBlendFunc not implemented");
+		}
+		
+
+-----------------------------------------
+Texture
+
+		public void SetFilter(TextureFilterMode mag, TextureFilterMode min, TextureFilterMode mip)
+		{
+			//FIXME:not used
+----->			//Debug.Assert(false);
+		}
+		
+		public void SetFilter(TextureFilterMode mode)
+		{
+			Debug.Assert(false);
+		}
+		
+---------------------------------------------
+FontMap
+
+				if (i == 0)
+				{
+					//image = new Image((ImageMode)1, new ImageSize(vector2i.X, vector2i.Y), new ImageColor(0, 0, 0, 0));
+----->					image = new Image(ImageMode.A, new ImageSize(vector2i.X, vector2i.Y), new ImageColor(0, 0, 0, 0));
+					this.CharSet.Clear();
+				}
+				
+---------------------------------------------
+
+		public void SetFilter(TextureFilterMode mag, TextureFilterMode min, TextureFilterMode mip)
+		{
+			//FIXME:not used
+			//Debug.Assert(false);
+		}
+		
+		public void SetFilter(TextureFilterMode mode)
+		{
+			//FIXME:not used
+---->			//Debug.Assert(false);
+		}
+		
+		
+		public DepthFunc GetDepthFunc()
+		{
+			//FIXME:
+------->			//Debug.Assert(false);
+			return null;
+		}
+		
+		public void SetDepthFunc(DepthFunc func)
+		{
+			//FIXME:
+------->			//Debug.Assert(false);
+		}
+		
+		
+using System;
+using System.Diagnostics;
+
+namespace Sce.Pss.Core.Graphics
+{
+	public class DepthFunc
+	{
+		private bool __writeMask;
+		
+		public bool WriteMask
+		{
+			get
+			{
+//				Debug.Assert(false);
+				return __writeMask;
+			}
+			set
+			{
+//				Debug.Assert(false);
+				__writeMask = value;
+			}
+		}		
+		
+		public DepthFunc()
+		{
+			//Debug.Assert(false);
+		}
+	}
+}
+
+
+
+		public void SetFrameBuffer (FrameBuffer buffer)
+		{
+			//Debug.Assert(false);
+			if (buffer != null)
+			{
+				Debug.Assert(buffer.__framebufferId >= 0);
+				this.__frameBuffer = buffer;
+				GL.BindFramebuffer(FramebufferTarget.Framebuffer, buffer.__framebufferId);
+			}
+			else
+			{
+				Debug.WriteLine("=================buffer == null");
+----------->				this.__frameBuffer = buffer;
+				GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);				
+			}
+		}
+		
+		
+		
+				Texture2D t1 = new Texture2D(value.X, value.Y, false, (PixelFormat)1, (PixelBufferOption)1);
+				t1.__supportNPOT = true; //FIXME:added???
+				TransitionFadeBase.m_previous_scene_render = new TextureInfo(t1);
+				Texture2D t2 = new Texture2D(value.X, value.Y, false, (PixelFormat)1, (PixelBufferOption)1);
+				t2.__supportNPOT = true; //FIXME:added???
+
+----------------------------------------------
+
+		//FIXME: this function added
+		public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option, bool supportNPOT)
+
+
+for render texture
+should removed
+
+----------------------------------------------
+
+From: http://plplum.blog.163.com/blog/static/310324002009814105634/
+
+windows下的等宽字体：
+
+
+BatangChe
+Courier
+Courier New
+DotumChe
+Fixedsys
+GulimChe
+GungsuhChe
+Lucida Console
+Lucida Sans Typewriter
+MingLiU
+MS Gothic
+MS Mincho
+Terminal
+仿宋_GB2312
+楷体_GB2312
+隶书
+宋体-方正超大字符集
+新宋体
+幼圆
+
+		public Font(FontAlias alias, int size, FontStyle style)
+		{
+----------------------------------------------
+
+		public void Push()
+		{
+			if (false) //FIXME:added???
+			{
+				Common.Assert(this.GetTransform().IsOrthonormal(0.0001f));
+			}
+			
+----------------------------------------------
+Texture disable blend not same
+
+
+set white bg for png texture---->//drawing.Clear(_backColor); //FIXME:???for png file background
+
+
+
+----------------------------------------------
+Shader
+Tex -> Texture0
+Tex2 -> Texture1

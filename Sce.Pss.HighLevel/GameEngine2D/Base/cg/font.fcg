@@ -7,7 +7,7 @@ precision highp float;
 precision highp int;
 varying vec2 vout_tex;
 varying vec4 vout_color;
-uniform sampler2D Tex;
+uniform sampler2D Texture0;
 
  // main procedure, the original name was main
 void main()
@@ -16,7 +16,7 @@ void main()
     vec4 _col;
     float _value;
 
-    _value = texture2D(Tex, vout_tex.xy).x;
+    _value = texture2D(Texture0, vout_tex.xy).x;
     _col = vout_color;
     _col.w = vout_color.w*_value;
     gl_FragColor = _col;

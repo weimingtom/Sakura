@@ -2,6 +2,8 @@ using Sce.Pss.Core;
 using Sce.Pss.HighLevel.GameEngine2D.Base;
 using System;
 
+using System.Diagnostics;
+
 namespace Sce.Pss.HighLevel.GameEngine2D
 {
 	using Math = Sce.Pss.HighLevel.GameEngine2D.Base.Math;
@@ -12,12 +14,15 @@ namespace Sce.Pss.HighLevel.GameEngine2D
 
 		public TransitionCrossFade(Scene next_scene) : base(next_scene)
 		{
+//			Debug.WriteLine("===============TransitionCrossFade");
 		}
 
 		public override void Draw()
 		{
 			base.Draw();
 			float num = this.Tween(base.FadeCompletion);
+			//FIXME:added
+//			Debug.WriteLine(">>>>>>TransitionCrossFade>>>>>>>>>>>> " + num);
 			TRS tRS = new TRS(Director.Instance.CurrentScene.Camera.CalcBounds());
 			TRS quad0_ = TRS.Quad0_1;
 			Director.Instance.SpriteRenderer.DefaultShader.SetUVTransform(ref Math.UV_TransformIdentity);
