@@ -1,0 +1,43 @@
+/*
+void main(
+	in float2 oUV : TEXCOORD0,
+	in float4 oColor : TEXCOORD1,
+	out float4 result : COLOR,
+	uniform sampler2D uTexture : TEXUNIT0
+)
+{
+	result = oColor.rgba * tex2D(uTexture, oUV);
+}
+
+*/
+
+// glslf output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslf
+// source file: input.fcg
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslf
+//program main
+//semantic main.uTexture : TEXUNIT0
+//var sampler2D uTexture : TEXUNIT0 : _uTexture1 0 : 3 : 1
+//var float2 oUV : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float4 oColor : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float4 result : $vout.COLOR : COLOR : 2 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 oUV;
+varying vec4 oColor;
+uniform sampler2D uTexture;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _result;
+
+    _result = oColor.xyzw*texture2D(uTexture, oUV.xy);
+    gl_FragColor = _result;
+} // main end
+

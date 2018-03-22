@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-03-22: ActionGameDemo done.  
 * 2018-03-21: FeatureCatalog done.  
 * 2018-03-17: HelloSprite done.  
 * 2018-01-28: PersistentMemorySample done.  
@@ -53,6 +54,7 @@ https://gitee.com/weimingtom/TriangleSample
 http://developer.download.nvidia.com/cg/cgc.html  
 
 ## Bug / TODO  
+* ActionGameDemo: ColorBuffer and SetColorTarget(ColorBuffer buffer) not implemented  
 * FeatureCatalog: BlendMode.None not work (black bg, not white bg, search '//drawing.Clear(_backColor); //FIXME:???for png file background').  
 * FeatureCatalog: different fonts make some white pixels around the text.   
 * FeatureCatalog: public Texture2D (int width, int height, bool mipmap, PixelFormat format, PixelBufferOption option, bool supportNPOT) should be removed

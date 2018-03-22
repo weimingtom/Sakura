@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Sce.Pss.Core.Graphics;
 
+using System.Diagnostics;
+using System.Drawing.Text;
+
 //https://github.com/gwahba/WinToolkit/blob/a239a43011f69f4d0f4b8690736b284157030a66/ImageHelper.cs
 //https://github.com/dtsudo/DT-Sudoku/blob/f08defa3bf79f487ad6971e47e261d9f8074249e/Dependencies/AgateLib/Agate031/Source/Drivers/AgateLib.WinForms/BitmapFontUtil.cs
 //https://github.com/fpawel/Mil82/blob/c675d6545c8dc231ccf2238a405395082803fc44/SysText/Metrics.cs
@@ -48,6 +51,61 @@ namespace Sce.Pss.Core.Imaging
 			//Comic Sans MS
 			//MS Gothic
 			this.__font = new System.Drawing.Font("MS Gothic", (int)(__size * 0.75f), _style); //FIXME:???0.8
+			//this.__font = new System.Drawing.Font("Arial", __size, _style); //FIXME:???0.8
+			//this.__font = new System.Drawing.Font(/*"宋体"*/FontFamily.GenericSansSerif, __size, _style);
+			
+			this.__metrics = new FontMetrics();
+			
+			
+			IntPtr hdc = GetDC(IntPtr.Zero);
+			IntPtr handle = __font.ToHfont();
+
+			try
+			{
+				IntPtr handle2 = SelectObject(hdc, handle);
+				TEXTMETRIC tEXTMETRIC = new TEXTMETRIC();
+				GetTextMetrics(hdc, ref tEXTMETRIC);
+				__metrics.Ascent = tEXTMETRIC.tmAscent;
+				__metrics.Descent = tEXTMETRIC.tmDescent;
+				__metrics.Leading = tEXTMETRIC.tmHeight - tEXTMETRIC.tmAscent - tEXTMETRIC.tmDescent;
+				SelectObject(hdc, handle2);
+			}
+			finally
+			{
+				DeleteObject(handle);
+				ReleaseDC(IntPtr.Zero, hdc);
+			}
+		}
+		
+		public Font(string filename, int size, FontStyle style)
+		{
+//			Debug.Assert(false);
+			string fontname = filename.Replace("/Application/", "./");
+			
+			this.__size = size;
+			this.__style = style;
+			System.Drawing.FontStyle _style = System.Drawing.FontStyle.Regular;
+			switch (style)
+			{
+				case FontStyle.Regular:
+					_style = System.Drawing.FontStyle.Regular;
+					break;
+					
+				case FontStyle.Bold:
+					_style = System.Drawing.FontStyle.Bold;
+					break;
+					
+				case FontStyle.Italic:
+					_style = System.Drawing.FontStyle.Italic;
+					break;
+			}
+			PrivateFontCollection privateFonts = new PrivateFontCollection();
+			privateFonts.AddFontFile(fontname);
+			
+			//Arial
+			//Comic Sans MS
+			//MS Gothic
+			this.__font = new System.Drawing.Font(privateFonts.Families[0], (int)(__size * 0.75f), _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font("Arial", __size, _style); //FIXME:???0.8
 			//this.__font = new System.Drawing.Font(/*"宋体"*/FontFamily.GenericSansSerif, __size, _style);
 			
@@ -144,6 +202,6 @@ namespace Sce.Pss.Core.Imaging
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetDC(IntPtr hWnd);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static private extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);        
+        static private extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);            
 	}
 }

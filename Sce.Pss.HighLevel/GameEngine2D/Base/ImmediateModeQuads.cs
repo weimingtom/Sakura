@@ -53,7 +53,8 @@ namespace Sce.Pss.HighLevel.GameEngine2D.Base
 				Common.Assert(num2 + 6 <= array.Length);
 				for (int j = 0; j < 6; j++)
 				{
-					array[num2++] = (ushort)(i * 4 + (int)array2[j]);
+					//array[num2++] = (ushort)(i * 4 + (int)array2[j]); //FIXME: overflow
+					array[num2++] = (ushort)((i * 4 + (int)array2[j]) & 0xffff);
 				}
 				i++;
 			}

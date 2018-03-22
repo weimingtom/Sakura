@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>FeatureCatalog</StartupObject>
+    <StartupObject>Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -326,6 +326,7 @@
     <Compile Include="Sample\Environment\StorageSample\StorageSample.cs" />
     <Compile Include="Sample\Environment\SystemEventsSample\SystemEventsSample.cs" />
     <Compile Include="Sample\Environment\SystemParametersSample\SystemParametersSample.cs" />
+    <Compile Include="Sample\GameEngine2D\ActionGameDemo\ActionGameDemo.cs" />
     <Compile Include="Sample\GameEngine2D\FeatureCatalog\FeatureCatalog.cs" />
     <Compile Include="Sample\GameEngine2D\FeatureCatalog\Isometric.cs" />
     <Compile Include="Sample\GameEngine2D\FeatureCatalog\PlanetCute.cs" />
@@ -390,6 +391,7 @@
     <Compile Include="Sce.Pss.Core\Graphics\BlendFunc.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncFactor.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\BlendFuncMode.cs" />
+    <Compile Include="Sce.Pss.Core\Graphics\ColorBuffer.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\CullFaceDirection.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\CullFaceMode.cs" />
     <Compile Include="Sce.Pss.Core\Graphics\DepthBuffer.cs" />
@@ -540,6 +542,168 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sample\Audio\SoundPlayerSample\SYS_SE_01.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\background_back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\background_front.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\background_light_shafts.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\background_test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\bat_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\coins.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\curtain.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\dead_sword.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\fonts\IndieFlower.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\fonts\MedievalSharp.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\fonts\TheGirlNextDoor.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\glass_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\item_health.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\offscreen.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\offscreen.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\particle_dot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\pfx.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\pfx.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sir_awesome_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\slime_green_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\slime_red_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\bat_die.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\bat_fly.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\bat_take_damage.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\beer_splash.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\beer_throw.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\coin_collect.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\coin_spawn.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\game_game_music.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\game_game_over.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\game_press_start.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\game_title_screen.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\green_slime_die.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\green_slime_jump.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\green_slime_take_damage.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\heart_collect.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_jump.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_land.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_sword_attack.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_sword_hit_enemy.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_take_damage.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\player_walk.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\red_slime_explode.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\red_slime_roll.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\zombie_die.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\zombie_shuffle.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds\zombie_take_damage.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\sparkle_frames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\ui_gauge_fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\ui_panels.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\World.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\ActionGameDemo\assets\zombie_frames.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Sample\GameEngine2D\FeatureCatalog\data\arrow.png">
@@ -803,10 +967,14 @@
     <Folder Include="Sample\Environment\SystemParametersSample" />
     <Folder Include="Sample\Environment\SystemEventsSample" />
     <Folder Include="Sample\Environment\ShellSample" />
+    <Folder Include="Sample\GameEngine2D\ActionGameDemo\assets" />
+    <Folder Include="Sample\GameEngine2D\ActionGameDemo\assets\fonts" />
+    <Folder Include="Sample\GameEngine2D\ActionGameDemo\assets\sounds" />
     <Folder Include="Sample\GameEngine2D\FeatureCatalog\data" />
     <Folder Include="Sample\GameEngine2D\FeatureCatalog\data\PlanetCute" />
     <Folder Include="Sample\GameEngine2D\HelloSprite" />
     <Folder Include="Sample\GameEngine2D\FeatureCatalog" />
+    <Folder Include="Sample\GameEngine2D\ActionGameDemo" />
     <Folder Include="Sample\Graphics\ShaderCatalogSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />

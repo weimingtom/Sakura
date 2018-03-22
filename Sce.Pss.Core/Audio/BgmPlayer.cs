@@ -7,7 +7,7 @@ using Sakura;
 
 namespace Sce.Pss.Core.Audio
 {
-	public class BgmPlayer
+	public class BgmPlayer : IDisposable
 	{
 		public string __filename;
 		private int __soundId = -1;
@@ -52,7 +52,7 @@ namespace Sce.Pss.Core.Audio
 				SakuraSoundManager.StopSound(this.__soundId);
 				SakuraSoundManager.RewindSound(this.__soundId);
 				SakuraSoundManager.PlaySound(this.__soundId);
-				Debug.WriteLine("=============play");
+//				Debug.WriteLine("=============play");
 			}
 		}
 		
@@ -61,7 +61,7 @@ namespace Sce.Pss.Core.Audio
 			if (Status == BgmStatus.Playing)
 			{
 				SakuraSoundManager.StopSound(this.__soundId);
-				Debug.WriteLine("=============stop");
+//				Debug.WriteLine("=============stop");
 			}
 		}
 		
@@ -95,6 +95,12 @@ namespace Sce.Pss.Core.Audio
 			{
 				SakuraSoundManager.SetVolume(this.__soundId, value);
 			}
+		}
+		
+		public void Dispose()
+		{
+//			this.Dispose(true);
+//			GC.SuppressFinalize(this);
 		}
 	}
 }

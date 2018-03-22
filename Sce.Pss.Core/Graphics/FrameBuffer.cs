@@ -112,5 +112,12 @@ namespace Sce.Pss.Core.Graphics
 //			                          GL_RENDERBUFFER,     // 3. rbo target: GL_RENDERBUFFER  
 //			                          rboId);              // 4. rbo ID  
 		}
+		
+		public void SetColorTarget(ColorBuffer buffer)
+		{
+//			this.SetColorTarget(new RenderTarget(buffer));
+//			Debug.Assert(false);
+			Debug.WriteLine("===========================>SetColorTarget(ColorBuffer buffer) not implemented");
+		}
 	}
 }

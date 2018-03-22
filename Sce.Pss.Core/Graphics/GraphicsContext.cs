@@ -141,46 +141,54 @@ namespace Sce.Pss.Core.Graphics
 		private ShaderProgram __curProgram = null;
 		public void SetShaderProgram(ShaderProgram program)
 		{
-			program.__linkProgram();
-			__curProgramObject = program.__programObject;
-			__curProgram = program;
-			if (program.__programObject != 0)
+			if (program != null)
 			{
-				__isUsedProgram[program.__programObject] = true;
-				__programDic[program.__programObject] = program;
-				__vertexBuffer.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
-				//__textureDic.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
-				//GL.Clear(ClearBufferMask.DepthBufferBit); //FIXME:???
-				GL.UseProgram(program.__programObject);
-	        	foreach (int location in program.__uniformMatrix4.Keys)
-	        	{
-	        		OpenTK.Matrix4 v = program.__uniformMatrix4[location];
-	        		GL.UniformMatrix4 (location, false, ref v);
-//	        		if (program.__filename.Equals("/Application/Sample/Graphics/ShaderCatalogSample/shaders/Simple.cgx"))
-//	    			{
-//	        			Debug.WriteLine("======================location2:" + location + " : " + v.ToString());
-//	        		}
-	        	}
-	        	foreach (int location in program.__uniform4.Keys)
-	        	{
-	        		OpenTK.Vector4 v = program.__uniform4[location];
-	        		GL.Uniform4 (location, v.X, v.Y, v.Z, v.W);
-	        	}
-	        	foreach (int location in program.__uniform3.Keys)
-	        	{
-	        		OpenTK.Vector3 v = program.__uniform3[location];
-	        		GL.Uniform3 (location, v.X, v.Y, v.Z);
-	        	}
-	        	foreach (int location in program.__uniform1.Keys)
-	        	{
-	        		float v = program.__uniform1[location];
-	        		GL.Uniform1 (location, v);
-	        	}
-	        	program.__afterUseProgram();
-	        }
+				program.__linkProgram();
+				__curProgramObject = program.__programObject;
+				__curProgram = program;
+				if (program.__programObject != 0)
+				{
+					__isUsedProgram[program.__programObject] = true;
+					__programDic[program.__programObject] = program;
+					__vertexBuffer.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
+					//__textureDic.Clear(); //FIXME:?????? clear, because __programObject in UseProgram(program.__programObject) is changed
+					//GL.Clear(ClearBufferMask.DepthBufferBit); //FIXME:???
+					GL.UseProgram(program.__programObject);
+		        	foreach (int location in program.__uniformMatrix4.Keys)
+		        	{
+		        		OpenTK.Matrix4 v = program.__uniformMatrix4[location];
+		        		GL.UniformMatrix4 (location, false, ref v);
+	//	        		if (program.__filename.Equals("/Application/Sample/Graphics/ShaderCatalogSample/shaders/Simple.cgx"))
+	//	    			{
+	//	        			Debug.WriteLine("======================location2:" + location + " : " + v.ToString());
+	//	        		}
+		        	}
+		        	foreach (int location in program.__uniform4.Keys)
+		        	{
+		        		OpenTK.Vector4 v = program.__uniform4[location];
+		        		GL.Uniform4 (location, v.X, v.Y, v.Z, v.W);
+		        	}
+		        	foreach (int location in program.__uniform3.Keys)
+		        	{
+		        		OpenTK.Vector3 v = program.__uniform3[location];
+		        		GL.Uniform3 (location, v.X, v.Y, v.Z);
+		        	}
+		        	foreach (int location in program.__uniform1.Keys)
+		        	{
+		        		float v = program.__uniform1[location];
+		        		GL.Uniform1 (location, v);
+		        	}
+		        	program.__afterUseProgram();
+		        }
+				else
+				{
+					//FIXME:
+				}
+			}
 			else
 			{
-				//FIXME:
+				__curProgramObject = 0; //FIXME:
+				__curProgram = null;
 			}
 		}
 		
@@ -697,6 +705,45 @@ namespace Sce.Pss.Core.Graphics
 			//Debug.Assert(false);
 			//return null;
 			return __blendFunc;
+		}
+		
+		private ImageRect __scissorRect = new ImageRect(0, 0, 0, 0); //FIXME:???
+		public ImageRect GetScissor() 
+		{
+//			Debug.Assert(false);
+			return __scissorRect;
+		}
+		
+		public void SetScissor(int x, int y, int w, int h)
+		{
+//			Debug.Assert(false);
+			__scissorRect = new ImageRect(x, y, w, h);
+			GL.Scissor(x, y, w, h);
+		}
+		
+		public void ReadPixels(byte[] pixels, PixelFormat format, int sx, int sy, int sw, int sh)
+		{
+//			Debug.Assert(false);
+			if (format == PixelFormat.Rgba)
+			{
+				GL.ReadPixels<byte>(sx, sy, sw, sh, OpenTK.Graphics.ES20.PixelFormat.Rgba, PixelType.Byte, pixels);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		public void SetScissor(ImageRect rectangle)
+		{
+//			Debug.Assert(false);
+			this.SetScissor(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+		}
+		
+		public void SetViewport(ImageRect rectangle)
+		{
+//			Debug.Assert(false);
+			this.SetViewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
 		}
 	}
 }

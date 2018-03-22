@@ -281,3 +281,77 @@ set white bg for png texture---->//drawing.Clear(_backColor); //FIXME:???for png
 Shader
 Tex -> Texture0
 Tex2 -> Texture1
+
+----------------------------------------------
+
+@set path=C:\Program Files\SCE\Pss\tools\ShaderConverter\cg2.2\bin;%path%
+@set path=C:\Program Files\SCE\Pss\tools\ShaderConverter;%path%
+@set path=C:\Python27;%path%
+
+cgc input.fcg -profile glslf -o a.txt  
+python cg_glsl_to_es20_glsl.py a.txt > output_f.txt  
+cgc input.vcg -profile glslv -o a.txt  
+python cg_glsl_to_es20_glsl.py a.txt > output_v.txt  
+
+@pause
+
+-----------------------------------------------
+
+!!!FIXME:only pass----------->
+namespace Sce.Pss.Core.Graphics
+{
+	public class ColorBuffer : PixelBuffer
+	{
+		public ColorBuffer(int width, int height, PixelFormat format) //: base(PixelBufferType.ColorBuffer, width, height, false, format, PixelBufferOption.None)
+		{
+//			Debug.Assert(false);
+		}
+
+//		protected ColorBuffer(ColorBuffer buffer) : base(buffer)
+//		{
+//			
+//		}
+	}
+}
+
+!!!FIXME:only pass----------->
+public void SetColorTarget(ColorBuffer buffer)
+		{
+//			this.SetColorTarget(new RenderTarget(buffer));
+//			Debug.Assert(false);
+		}
+		
+
+
+
+
+
+
+
+		
+		public void SetShaderProgram(ShaderProgram program)
+		...
+			}
+			else
+			{
+not sure if program is null----->				__curProgramObject = 0; //FIXME:
+				__curProgram = null;
+			}
+			
+			
+			
+		public void SetAttributeBinding (int index, string name)
+		{
+			__attribDic[index] = name;
+			if (__programObject != 0)
+			{	
+				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				    GraphicsContext.__isUsedProgram[__programObject])
+				{
+not sure, but work----------->					Debug.Assert(false);
+				}
+			}
+		}
+		
+		
+------------------------------------

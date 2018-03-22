@@ -1,0 +1,44 @@
+/*
+void main(
+	in float2 iPosition : POSITION,
+	in float2 iUV : TEXCOORD0,
+	out float4 oPosition : POSITION,
+	out float2 oUV : TEXCOORD0
+)
+{
+	oPosition = float4(iPosition, 0.0f, 1.0f);
+	oUV = iUV;
+}
+*/
+
+// glslv output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslv
+// source file: input.vcg
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslv
+//program main
+//var float2 iPosition : $vin.POSITION : POSITION : 0 : 1
+//var float2 iUV : $vin.TEXCOORD0 : TEXCOORD0 : 1 : 1
+//var float4 oPosition : $vout.POSITION : POSITION : 2 : 1
+//var float2 oUV : $vout.TEXCOORD0 : TEXCOORD0 : 3 : 1
+
+
+ // main procedure, the original name was main
+attribute vec2 iPosition;
+attribute vec2 iUV;
+varying vec4 oPosition;
+varying vec2 oUV;
+void main()
+{
+
+    vec4 _oPosition;
+    vec2 _oUV;
+
+    _oPosition = vec4(iPosition.x, iPosition.y, 0.00000000E+000, 1.00000000E+000);
+    _oUV = iUV.xy;
+    gl_Position = _oPosition;
+    oUV.xy = iUV.xy;
+} // main end
+

@@ -228,6 +228,8 @@ namespace Sce.Pss.Core.Graphics
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/particles.cgx",
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/sprite_directional_fade.cgx",	
 				
+				"/Application/Sample/GameEngine2D/ActionGameDemo/assets/",
+				
 				"/Application/Sample/Lib/SampleLib/shaders/Test.cgx",
 			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",
 			    "/Application/Sample/Lib/SampleLib/shaders/Simple.cgx",
@@ -278,7 +280,10 @@ namespace Sce.Pss.Core.Graphics
 				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
 				    GraphicsContext.__isUsedProgram[__programObject])
 				{
-					Debug.Assert(false);
+					//Debug.Assert(false);
+					string name2 = __attribDic[index];
+					GL.BindAttribLocation ( __programObject, index, name2);
+					Debug.WriteLine("attrib['" + name2 + "':" + index + "].index == " + index);
 				}
 			}
 		}
