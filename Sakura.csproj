@@ -19,7 +19,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWarn>3021,3014</NoWarn>
-    <StartupObject>Program</StartupObject>
+    <StartupObject>PuzzleGameDemo.AppMain</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -331,6 +331,7 @@
     <Compile Include="Sample\GameEngine2D\FeatureCatalog\Isometric.cs" />
     <Compile Include="Sample\GameEngine2D\FeatureCatalog\PlanetCute.cs" />
     <Compile Include="Sample\GameEngine2D\HelloSprite\HelloSprite.cs" />
+    <Compile Include="Sample\GameEngine2D\PuzzleGameDemo\AppMain.cs" />
     <Compile Include="Sample\Graphics\PixelBufferSample\PixelBufferSample.cs" />
     <Compile Include="Sample\Graphics\PrimitiveSample\PrimitiveSample.cs" />
     <Compile Include="Sample\Graphics\ShaderCatalogSample\BasicMeshFactory.cs" />
@@ -739,6 +740,135 @@
     <None Include="Sample\GameEngine2D\HelloSprite\king_water_drop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\board.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\cannotmatch.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\crystals.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\crystal_highlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\crystal_hint.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\crystal_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\gameover.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\IndieFlower.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_chillin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_chillin_blink.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_empty1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_empty2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_game_over.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_watering1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_watering2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\king_water_drop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\match1.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\match2.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\match3.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\match4.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\match5.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\music_ingame.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\particle_dot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\selectedcrystal.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\sprinklewater.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\startgame.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\swapcrystals.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\title.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\veggie_land.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\veggie_royale_title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\veggie_upgrade.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\watering_can.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\watermode.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\watermode.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\water_drop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\water_meter_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\assets\water_puddle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\pfx.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\pfx.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\Simple.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\Simple.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\Texture.fcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\GameEngine2D\PuzzleGameDemo\shaders\Texture.vcg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sample\Graphics\PixelBufferSample\shaders\Simple.fcg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -975,6 +1105,9 @@
     <Folder Include="Sample\GameEngine2D\HelloSprite" />
     <Folder Include="Sample\GameEngine2D\FeatureCatalog" />
     <Folder Include="Sample\GameEngine2D\ActionGameDemo" />
+    <Folder Include="Sample\GameEngine2D\PuzzleGameDemo" />
+    <Folder Include="Sample\GameEngine2D\PuzzleGameDemo\assets" />
+    <Folder Include="Sample\GameEngine2D\PuzzleGameDemo\shaders" />
     <Folder Include="Sample\Graphics\ShaderCatalogSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample" />
     <Folder Include="Sample\Graphics\PixelBufferSample\shaders" />

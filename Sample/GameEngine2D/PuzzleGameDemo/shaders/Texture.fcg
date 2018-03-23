@@ -1,0 +1,19 @@
+/*
+void main( 
+			float2 in  v_TexCoord     : TEXCOORD0,
+			float4 out Color	  	  : COLOR,
+			uniform sampler2D Texture0 : TEXUNIT0)
+{
+	Color = tex2D(Texture0, v_TexCoord);
+}
+*/
+
+precision mediump float;
+varying vec2 v_TexCoord;
+uniform sampler2D Texture0;
+void main()                                  
+{                                            
+  gl_FragColor = texture2D(Texture0 , v_TexCoord);
+}   
+
+

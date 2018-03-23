@@ -1,0 +1,14 @@
+/*
+void main( float4 out Color : COLOR,
+           uniform float4 MaterialColor )
+{
+	Color = MaterialColor;
+}
+*/
+
+precision mediump float;
+uniform vec4 MaterialColor;
+void main()                                  
+{                                            
+  gl_FragColor = MaterialColor;
+}   

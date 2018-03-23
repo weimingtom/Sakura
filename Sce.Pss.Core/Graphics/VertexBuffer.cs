@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Sce.Pss.HighLevel.GameEngine2D.Base;
 using Sce.Pss.HighLevel.GameEngine2D;
 using SirAwesome;
+using PuzzleGameDemo;
 
 namespace Sce.Pss.Core.Graphics
 {
@@ -146,9 +147,9 @@ namespace Sce.Pss.Core.Graphics
 						SetVertices(1, vertices3);
 					}
 				}
-				else if (vertices is Support.TextureTileMapManager.VertexData[])
+				else if (vertices is SirAwesome.Support.TextureTileMapManager.VertexData[])
 				{
-					Support.TextureTileMapManager.VertexData[] vertices_ = (vertices as Support.TextureTileMapManager.VertexData[]); //FIXME:
+					SirAwesome.Support.TextureTileMapManager.VertexData[] vertices_ = (vertices as SirAwesome.Support.TextureTileMapManager.VertexData[]); //FIXME:
 					{
 						float[] vertices2 = new float[count * 2];
 						for (int i = 0; i < count; ++i)
@@ -168,9 +169,42 @@ namespace Sce.Pss.Core.Graphics
 						SetVertices(1, vertices3);
 					}
 				}
-				else if (vertices is Support.ParticleEffectsManager.VertexData[])
+				else if (vertices is SirAwesome.Support.ParticleEffectsManager.VertexData[])
 				{
-					Support.ParticleEffectsManager.VertexData[] vertices_ = (vertices as Support.ParticleEffectsManager.VertexData[]); //FIXME:
+					SirAwesome.Support.ParticleEffectsManager.VertexData[] vertices_ = (vertices as SirAwesome.Support.ParticleEffectsManager.VertexData[]); //FIXME:
+					{
+						float[] vertices2 = new float[count * 2];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices2[i * 2 + 0] = vertices_[i].position.X;
+							vertices2[i * 2 + 1] = vertices_[i].position.Y;
+						}
+						SetVertices(0, vertices2);	
+					}
+					{
+						float[] vertices3 = new float[count * 2];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices3[i * 2 + 0] = vertices_[i].uv.X;
+							vertices3[i * 2 + 1] = vertices_[i].uv.Y;
+						}
+						SetVertices(1, vertices3);
+					}
+					{
+						float[] vertices4 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices4[i * 4 + 0] = vertices_[i].color.X;
+							vertices4[i * 4 + 1] = vertices_[i].color.Y;
+							vertices4[i * 4 + 2] = vertices_[i].color.Z;
+							vertices4[i * 4 + 3] = vertices_[i].color.W;
+						}
+						SetVertices(2, vertices4);
+					}
+				}
+				else if (vertices is PuzzleGameDemo.Support.ParticleEffectsManager.VertexData[])
+				{
+					PuzzleGameDemo.Support.ParticleEffectsManager.VertexData[] vertices_ = (vertices as PuzzleGameDemo.Support.ParticleEffectsManager.VertexData[]); //FIXME:
 					{
 						float[] vertices2 = new float[count * 2];
 						for (int i = 0; i < count; ++i)

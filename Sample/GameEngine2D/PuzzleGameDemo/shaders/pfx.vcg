@@ -1,0 +1,64 @@
+/*
+void main(
+	uniform float4x4 MVP,
+	in float2 iPosition : POSITION,
+	in float2 iUV : TEXCOORD0,
+	in float4 iColor : TEXCOORD1,
+	out float4 oPosition : POSITION,
+	out float2 oUV : TEXCOORD0,
+	out float4 oColor : TEXCOORD1
+)
+{
+	oPosition = mul( float4(iPosition, 0.0f, 1.0f), MVP );
+	oUV = iUV;
+	oColor = iColor;
+}
+*/
+
+// glslv output by Cg compiler
+// cgc version 2.2.0017, build date Jan 29 2010
+// command line args: -profile glslv
+// source file: input.vcg
+//vendor NVIDIA Corporation
+//version 2.2.0.17
+//profile glslv
+//program main
+//semantic main.MVP
+//var float4x4 MVP :  : _MVP1[0], 4 : 0 : 1
+//var float2 iPosition : $vin.POSITION : POSITION : 1 : 1
+//var float2 iUV : $vin.TEXCOORD0 : TEXCOORD0 : 2 : 1
+//var float4 iColor : $vin.TEXCOORD1 : TEXCOORD1 : 3 : 1
+//var float4 oPosition : $vout.POSITION : POSITION : 4 : 1
+//var float2 oUV : $vout.TEXCOORD0 : TEXCOORD0 : 5 : 1
+//var float4 oColor : $vout.TEXCOORD1 : TEXCOORD1 : 6 : 1
+
+attribute vec2 iPosition;
+attribute vec2 iUV;
+attribute vec4 iColor;
+varying vec4 oPosition;
+varying vec2 oUV;
+varying vec4 oColor;
+uniform mat4 MVP;
+vec4 _r0003;
+vec4 _v0003;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _oPosition;
+    vec2 _oUV;
+    vec4 _oColor;
+
+    _v0003 = vec4(iPosition.x, iPosition.y, 0.00000000E+000, 1.00000000E+000);
+    _r0003 = _v0003.x*MVP[0];
+    _r0003 = _r0003 + _v0003.y*MVP[1];
+    _r0003 = _r0003 + _v0003.z*MVP[2];
+    _r0003 = _r0003 + _v0003.w*MVP[3];
+    _oPosition = _r0003;
+    _oUV = iUV.xy;
+    _oColor = iColor;
+    oColor = iColor;
+    gl_Position = _r0003;
+    oUV.xy = iUV.xy;
+} // main end

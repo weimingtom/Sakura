@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-03-23: PuzzleGameDemo done.  
 * 2018-03-22: ActionGameDemo done.  
 * 2018-03-21: FeatureCatalog done.  
 * 2018-03-17: HelloSprite done.  
@@ -54,6 +55,7 @@ https://gitee.com/weimingtom/TriangleSample
 http://developer.download.nvidia.com/cg/cgc.html  
 
 ## Bug / TODO  
+* PuzzleGameDemo: Draw text wrong, bubble not shown.   
 * ActionGameDemo: ColorBuffer and SetColorTarget(ColorBuffer buffer) not implemented  
 * FeatureCatalog: BlendMode.None not work (black bg, not white bg, search '//drawing.Clear(_backColor); //FIXME:???for png file background').  
 * FeatureCatalog: different fonts make some white pixels around the text.   

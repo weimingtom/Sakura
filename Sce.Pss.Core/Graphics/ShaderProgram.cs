@@ -229,6 +229,7 @@ namespace Sce.Pss.Core.Graphics
 				"/Application/Sce.Pss.HighLevel/GameEngine2D/Base/cg/sprite_directional_fade.cgx",	
 				
 				"/Application/Sample/GameEngine2D/ActionGameDemo/assets/",
+				"/Application/Sample/GameEngine2D/PuzzleGameDemo/shaders/",
 				
 				"/Application/Sample/Lib/SampleLib/shaders/Test.cgx",
 			    "/Application/Sample/Graphics/TriangleSample/shaders/VertexColor.cgx",
