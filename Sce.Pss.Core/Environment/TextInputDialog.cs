@@ -218,5 +218,18 @@ namespace Sce.Pss.Core.Environment
 		{ 
 			return new Size((int)(size.Width * x), (int)(size.Height * y));
 		}
+		
+		public TextInputMode Mode 
+		{
+			get 
+			{
+				Debug.Assert(false);
+				return TextInputMode.Normal;
+			}
+			set
+			{
+				Debug.Assert(false);
+			}
+		}
 	}
 }

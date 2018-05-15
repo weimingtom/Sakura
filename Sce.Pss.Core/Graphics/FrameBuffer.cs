@@ -119,5 +119,25 @@ namespace Sce.Pss.Core.Graphics
 //			Debug.Assert(false);
 			Debug.WriteLine("===========================>SetColorTarget(ColorBuffer buffer) not implemented");
 		}
+		
+		
+		public bool Status
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return false;
+////				return this.state.status;
+				//FIXME:
+				return true;
+			}
+		}
+		
+		public RenderTarget GetColorTarget()
+		{
+//			Debug.Assert(false);
+//			return this.state.colorTarget;
+			return new RenderTarget();
+		}
 	}
 }

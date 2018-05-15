@@ -1,5 +1,7 @@
 ﻿using System;
 
+using System.Diagnostics;
+
 namespace Sce.Pss.Core.Graphics
 {
 	public class PixelBuffer : IDisposable
@@ -27,6 +29,15 @@ namespace Sce.Pss.Core.Graphics
 		public virtual void Dispose()
 		{
 			
+		}
+		
+		public bool IsRenderable
+		{
+			get
+			{
+				Debug.Assert(false);
+				return false;
+			}
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using System.Diagnostics;
+
 namespace Sce.Pss.Core.Environment
 {
 	public static class SystemParameters
@@ -28,6 +30,24 @@ namespace Sce.Pss.Core.Environment
 			{
 				//FIXME:
 				return YesNoLayout.YesIsLeft;;
+			}
+		}
+		
+		public static float DisplayDpiX
+		{
+			get
+			{
+//				Debug.Assert(false);
+				return 100f;
+			}
+		}
+		
+		public static float DisplayDpiY
+		{
+			get
+			{
+//				Debug.Assert(false);
+				return 100f;
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 Sakura=OpenTK+PSSSDK  
 
 ## History  
+* 2018-05-15: HelloWorld done.  
 * 2018-03-23: PuzzleGameDemo done.  
 * 2018-03-22: ActionGameDemo done.  
 * 2018-03-21: FeatureCatalog done.  
@@ -55,6 +56,11 @@ https://gitee.com/weimingtom/TriangleSample
 http://developer.download.nvidia.com/cg/cgc.html  
 
 ## Bug / TODO  
+* HelloWorld: USE_SampleDraw  
+* HelloWorld: USE_COLORMASK  
+* HelloWorld: //			if (!UISystem.StoredGraphicsState.ColorMask.Equals(UISystem.GraphicsContext.GetColorMask()))  
+* HelloWorld: //UISystem.RestoreGraphics(); //FIXME:???  
+* HelloWorld: class TextRenderHelper: public ImageAsset DrawText...Image image = new Image(ImageMode.A/*(ImageMode)1*/ //alpha not implemented  
 * PuzzleGameDemo: Draw text wrong, bubble not shown.   
 * ActionGameDemo: ColorBuffer and SetColorTarget(ColorBuffer buffer) not implemented  
 * FeatureCatalog: BlendMode.None not work (black bg, not white bg, search '//drawing.Clear(_backColor); //FIXME:???for png file background').  

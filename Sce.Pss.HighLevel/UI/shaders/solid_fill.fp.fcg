@@ -1,0 +1,28 @@
+/*
+// SCE_COPYRIGHT
+
+void main(
+	float4 in v_Color			: COLOR0,
+	float4 out color			: COLOR
+)
+{
+	color = v_Color;
+}
+*/
+
+//var float4 v_Color : $vin.COLOR0 : COLOR0 : 0 : 1
+//var float4 color : $vout.COLOR : COLOR : 1 : 1
+
+
+ // main procedure, the original name was main
+precision highp float;
+precision highp int;
+varying vec4 v_Color;
+void main()
+{
+
+    vec4 _color;
+
+    _color = v_Color;
+    gl_FragColor = v_Color;
+} // main end

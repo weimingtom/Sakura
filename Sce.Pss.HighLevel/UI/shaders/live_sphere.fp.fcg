@@ -1,0 +1,79 @@
+/*
+// SCE_COPYRIGHT
+
+void main( 
+    float2 in v_TexCoord		: TEXCOORD0,
+    float3 in v_Normal          : TEXCOORD1,
+    float3 in v_Eye             : TEXCOORD2,
+    float4 in v_Color			: COLOR0,
+    float4 out Color            : COLOR,
+    uniform sampler2D s_Texture	: TEXUNIT0,
+    uniform float3 LightDirection,
+    uniform float Specular,
+    uniform float Shininess
+    )
+{
+	float3 L = LightDirection;
+	float3 N = normalize(v_Normal);
+    float3 E = normalize(v_Eye);
+
+	Color = v_Color * tex2D( s_Texture, v_TexCoord );
+    Color.rgb *= dot(N, L) * 0.5 + 0.5;
+
+    float specularL = pow(max(dot(N, normalize(L + E)), 0.0) , Shininess);
+    Color.rgb += specularL * Specular;
+}
+*/
+
+//var sampler2D s_Texture : TEXUNIT0 : _s_Texture1 0 : 5 : 1
+//var float3 LightDirection :  : _LightDirection1 : 6 : 1
+//var float Specular :  : _Specular1 : 7 : 1
+//var float Shininess :  : _Shininess1 : 8 : 1
+//var float2 v_TexCoord : $vin.TEXCOORD0 : TEXCOORD0 : 0 : 1
+//var float3 v_Normal : $vin.TEXCOORD1 : TEXCOORD1 : 1 : 1
+//var float3 v_Eye : $vin.TEXCOORD2 : TEXCOORD2 : 2 : 1
+//var float4 v_Color : $vin.COLOR0 : COLOR0 : 3 : 1
+//var float4 Color : $vout.COLOR : COLOR : 4 : 1
+
+precision highp float;
+precision highp int;
+varying vec2 v_TexCoord;
+varying vec3 v_Normal;
+varying vec3 v_Eye;
+varying vec4 v_Color;
+uniform sampler2D Texture0;/*s_Texture;*/
+uniform vec3 LightDirection;
+uniform float Specular;
+uniform float Shininess;
+vec3 _TMP4;
+float _x0009;
+vec3 _TMP10;
+float _x0015;
+vec3 _TMP20;
+vec3 _v0021;
+float _a0025;
+float _x0027;
+float _x0031;
+
+ // main procedure, the original name was main
+void main()
+{
+
+    vec4 _Color;
+    float _specularL;
+
+    _x0009 = dot(v_Normal.xyz, v_Normal.xyz);
+    _TMP4 = inversesqrt(_x0009)*v_Normal.xyz;
+    _x0015 = dot(v_Eye.xyz, v_Eye.xyz);
+    _TMP10 = inversesqrt(_x0015)*v_Eye.xyz;
+    _Color = v_Color*texture2D(Texture0/*s_Texture*/, v_TexCoord.xy);
+    _Color.xyz = _Color.xyz*vec3(dot(_TMP4, LightDirection)*5.00000000E-001 + 5.00000000E-001, dot(_TMP4, LightDirection)*5.00000000E-001 + 5.00000000E-001, dot(_TMP4, LightDirection)*5.00000000E-001 + 5.00000000E-001);
+    _v0021 = LightDirection + _TMP10;
+    _x0031 = dot(_v0021, _v0021);
+    _TMP20 = inversesqrt(_x0031)*_v0021;
+    _a0025 = dot(_TMP4, _TMP20);
+    _x0027 = max(_a0025, 0.00000000E+000);
+    _specularL = pow(_x0027, Shininess);
+    _Color.xyz = _Color.xyz + vec3(_specularL*Specular, _specularL*Specular, _specularL*Specular);
+    gl_FragColor = _Color;
+} // main end

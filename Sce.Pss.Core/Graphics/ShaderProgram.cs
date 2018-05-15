@@ -34,9 +34,14 @@ namespace Sce.Pss.Core.Graphics
 		public Dictionary<int, OpenTK.Vector3> __uniform3 = new Dictionary<int, OpenTK.Vector3>();
 		public Dictionary<int, OpenTK.Vector2> __uniform2 = new Dictionary<int, OpenTK.Vector2>();
 		public Dictionary<int, float> __uniform1 = new Dictionary<int, float>();
-		public string __filename = null;
-        public int __programObject = 0;
+		public string __filename_vcg = null;
+        public string __filename_fcg = null;
+		public int __programObject = 0;
         public bool __isLinked = false;
+        
+        public bool __begin_GetUniformName = false;
+        public bool __begin_FindAttribute = false;
+        
         private static int __LoadShader ( ShaderType type, string shaderSrc )
 		{
 		   int shader;
@@ -94,21 +99,20 @@ namespace Sce.Pss.Core.Graphics
         
         public void __linkProgram()
         {
-        	if (__filename == null || __isLinked)
+        	if (__filename_vcg == null || __filename_fcg == null || __isLinked)
         	{
         		return;
         	}
         	__isLinked = true;
-			string cgname = __filename.Replace("/Application/", "./");
-			string vShaderStr =  __ReadString(cgname.Replace(".cgx", ".vcg"));
-		   	string fShaderStr =  __ReadString(cgname.Replace(".cgx", ".fcg"));
+			string vShaderStr =  __ReadString(__filename_vcg);
+		   	string fShaderStr =  __ReadString(__filename_fcg);
 			int vertexShader, fragmentShader;
 
 			// Load the vertex/fragment shaders
-			Debug.WriteLine("=============begin load shader : " + cgname);
+			Debug.WriteLine("=============begin load shader : " + __filename_vcg + ", " + __filename_fcg);
 			vertexShader = __LoadShader ( ShaderType.VertexShader, vShaderStr );
 			fragmentShader = __LoadShader ( ShaderType.FragmentShader, fShaderStr );			
-			Debug.WriteLine("=============end load shader : " + cgname);
+			Debug.WriteLine("=============end load shader : " + __filename_vcg + ", " + __filename_fcg);
 			
 			// Create shader program.
 			__programObject = GL.CreateProgram ();
@@ -182,7 +186,7 @@ namespace Sce.Pss.Core.Graphics
 			
 			
 			{
-				Debug.WriteLine(">>>>>compiled summary: " + __filename);
+				Debug.WriteLine(">>>>>compiled summary: " + __filename_vcg + ", " + __filename_fcg);
 				foreach (string v in __attribDic.Values)
             	{
 					int location = GL.GetAttribLocation(__programObject, v);
@@ -217,6 +221,45 @@ namespace Sce.Pss.Core.Graphics
         public ShaderProgram(byte[] fileImage)
 		{
         	Debug.Assert(false);
+		}
+        
+        public ShaderProgram(byte[] fileImage, byte[] fileImage2)
+		{
+        	Debug.Assert(false);
+		}
+
+        public ShaderProgram(String filename1, String filename2)
+		{
+			string[] whiteList = new string[] {
+			    "/Application/Sce.Pss.HighLevel/UI/shaders/"
+			};
+			bool isMatch1 = false;
+			bool isMatch2 = false;
+			foreach (string name in whiteList)
+			{
+				if (filename1.Equals(name) || filename1.StartsWith(name))
+				{
+					isMatch1 = true;
+					break;
+				}
+			}
+			foreach (string name in whiteList)
+			{
+				if (filename2.Equals(name) || filename2.StartsWith(name))
+				{
+					isMatch2 = true;
+					break;
+				}
+			}
+			if (filename1 == null || filename2 == null || !isMatch1 || !isMatch2)
+			{
+				Debug.Assert(false);
+				return;
+			}
+			string cgname1 = filename1.Replace("/Application/", "./");
+			string cgname2 = filename2.Replace("/Application/", "./");
+			__filename_vcg = cgname1.Replace(".cgx", ".vcg");
+		   	__filename_fcg = cgname2.Replace(".cgx", ".fcg");
 		}
         
 		public ShaderProgram(String filename)
@@ -254,7 +297,9 @@ namespace Sce.Pss.Core.Graphics
 				Debug.Assert(false);
 				return;
 			}
-			__filename = filename;
+			string cgname = filename.Replace("/Application/", "./");
+			__filename_vcg = cgname.Replace(".cgx", ".vcg");
+		   	__filename_fcg = cgname.Replace(".cgx", ".fcg");
 		}
 		
 		public void SetUniformBinding (int index, string name)
@@ -263,8 +308,8 @@ namespace Sce.Pss.Core.Graphics
 			
 			if (__programObject != 0)
 			{	
-				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
-				    GraphicsContext.__isUsedProgram[__programObject])
+				if ((GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				     GraphicsContext.__isUsedProgram[__programObject]) || __begin_GetUniformName)
 				{
 					__uniform_data data = __uniformDic[index];
 					data.location = GL.GetUniformLocation(__programObject, data.name);
@@ -278,8 +323,8 @@ namespace Sce.Pss.Core.Graphics
 			__attribDic[index] = name;
 			if (__programObject != 0)
 			{	
-				if (GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
-				    GraphicsContext.__isUsedProgram[__programObject])
+				if ((GraphicsContext.__isUsedProgram.ContainsKey(__programObject) &&
+				     GraphicsContext.__isUsedProgram[__programObject]) || __begin_FindAttribute)
 				{
 					//Debug.Assert(false);
 					string name2 = __attribDic[index];
@@ -294,6 +339,11 @@ namespace Sce.Pss.Core.Graphics
 			
 		}
 		
+		public void SetUniformValue(int index, float[] value)
+		{
+			Debug.Assert(false);
+		}
+		
 		public void SetUniformValue(int index, ref Matrix4 value)
 		{
 			//FIXME:???
@@ -304,6 +354,10 @@ namespace Sce.Pss.Core.Graphics
 				value.M31, value.M32, value.M33, value.M34,
 				value.M41, value.M42, value.M43, value.M44);
 			int location = __uniformDic[index].location;
+			if (location < 0)
+			{
+				Debug.Assert(false);
+			}
 			__uniformMatrix4[location] = v;
 //			if (__filename.Equals("/Application/Sample/Graphics/ShaderCatalogSample/shaders/Simple.cgx"))
 //			{
@@ -430,6 +484,46 @@ namespace Sce.Pss.Core.Graphics
 					GL.Uniform2 (location, v.X, v.Y);	
 				}
 			}
+		}
+		
+		//see https://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
+		public string GetUniformName(int i)
+		{
+//			Debug.Assert(false);
+//			return null;
+			int size = 0;
+			ActiveUniformType type;
+			string name = GL.GetActiveUniform(__programObject, i, out size, out type);
+			this.__begin_GetUniformName = true;
+			SetUniformBinding(i, name); //FIXME:auto bind??? for
+
+			return name;			
+		}
+		
+		//see https://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
+		public int UniformCount
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return 0;
+//				glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &count);
+				
+				this.__linkProgram();
+				int count = 0;
+				GL.GetProgram(__programObject, GetProgramParameterName.ActiveUniforms, out count);
+				return count;
+			}
+		}
+		
+		public int FindAttribute(string name)
+		{
+			this.__linkProgram(); //如果没有编译，__programObject将无效果
+			this.__begin_FindAttribute = true;
+			//FIXME:???
+			return GL.GetAttribLocation(__programObject, name);
+//			Debug.Assert(false);
+//			return 0;
 		}
 	}
 }

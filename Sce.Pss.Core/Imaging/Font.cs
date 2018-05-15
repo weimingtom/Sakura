@@ -137,6 +137,13 @@ namespace Sce.Pss.Core.Imaging
 			this.__font.Dispose();
 		}
 		
+		public int GetTextWidth(string text)
+		{
+//			Debug.Assert(false);
+//			return 0;
+			return GetTextWidth(text, 0, text.Length);
+		}
+		
 		public int GetTextWidth(string text, int offset, int len)
 		{
 			System.Drawing.Image img;
@@ -149,7 +156,7 @@ namespace Sce.Pss.Core.Imaging
 				//textSize = drawing.MeasureString(text, __font); //FIXME: w would be larger 
 				StringFormat sf = StringFormat.GenericTypographic;
     			sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-				textSize = drawing.MeasureString(text, __font, 1000, sf);
+    			textSize = drawing.MeasureString(text.Substring(offset, len), __font, 1000, sf);
 			}
 			int w = (int)textSize.Width;
 			if (w == 0)// || text.Equals(" ")) //if (text.Equals(" "))
@@ -202,6 +209,18 @@ namespace Sce.Pss.Core.Imaging
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetDC(IntPtr hWnd);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static private extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);            
+        static private extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);   
+
+        public CharMetrics[] GetTextMetrics(string text)
+        {
+//        	Debug.Assert(false);
+			CharMetrics[] result = new CharMetrics[text.Length];
+			for (int i = 0; i < text.Length; ++i)
+			{
+				result[i].X = (i == 0 ? 0 : GetTextWidth(text, 0, i)); //FIXME:
+				result[i].HorizontalAdvance = GetTextWidth(text, i, 1);
+			}
+        	return result;
+        }
 	}
 }

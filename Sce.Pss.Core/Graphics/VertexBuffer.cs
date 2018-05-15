@@ -5,6 +5,7 @@ using Sce.Pss.HighLevel.GameEngine2D.Base;
 using Sce.Pss.HighLevel.GameEngine2D;
 using SirAwesome;
 using PuzzleGameDemo;
+using Sce.Pss.HighLevel.UI;
 
 namespace Sce.Pss.Core.Graphics
 {
@@ -78,7 +79,7 @@ namespace Sce.Pss.Core.Graphics
 		{
 			//Debug.Assert(false);
 //			Debug.WriteLine("===================>SetVertices index 0???");
-			if (to == 0 && from == 0)
+			if (to == 0 && from == 0)// && vertices.Length == count)
 			{
 				if (vertices is Vector4[])
 				{
@@ -257,6 +258,53 @@ namespace Sce.Pss.Core.Graphics
 					indices2[i] = indices[i];
 				}
 				SetIndices(indices2);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		public void SetVertices (int stream, float[] vertices, int arg1, int arg2, int arg3)
+		{
+			if (arg1 == 0 && arg2 == 0)// && vertices.Length != arg3)
+			{
+//				if (vertices.Length != arg3)
+//				{
+//					Debug.Assert(false); //size不同 //FIXME:好像没影响 //arg3 * 3(float3) == vertices.Length
+//				}
+				SetVertices(stream, vertices);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		//FIXME:???这个参考上面is UIColor[]
+		public void SetVertices (int stream, UIColor[] vertices, int from, int to, int count)
+		{
+			if (to == 0 && from == 0)// && vertices.Length == count)
+			{
+				if (vertices is UIColor[])
+				{
+					UIColor[] vertices_ = (vertices as UIColor[]); //FIXME:
+					{
+						float[] vertices2 = new float[count * 4];
+						for (int i = 0; i < count; ++i)
+						{
+							vertices2[i * 4 + 0] = vertices_[i].R;
+							vertices2[i * 4 + 1] = vertices_[i].G;
+							vertices2[i * 4 + 2] = vertices_[i].B;
+							vertices2[i * 4 + 3] = vertices_[i].A;
+						}
+						SetVertices(stream, vertices2);
+					}
+				}
+				else
+				{
+					Debug.Assert(false);
+				}
 			}
 			else
 			{

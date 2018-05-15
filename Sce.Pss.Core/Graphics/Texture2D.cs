@@ -2,6 +2,10 @@
 using System.Diagnostics;
 using OpenTK.Graphics.ES20;
 
+using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.InteropServices;
+
 namespace Sce.Pss.Core.Graphics
 {
 	public class Texture2D : Texture
@@ -172,6 +176,11 @@ namespace Sce.Pss.Core.Graphics
 		}
 		
 		
+		public Texture2D(byte[] bytes, bool mipmap)
+		{
+			Debug.Assert(false);
+		}
+			
 		public Texture2D(string fileName, bool mipmap)
 		{
 			string imgname = fileName.Replace("/Application/", "./");
@@ -427,6 +436,7 @@ namespace Sce.Pss.Core.Graphics
 			result.__dy = this.__dy;
 			result.__dw = this.__dw;
 			result.__dh = this.__dh;
+			result.__supportNPOT = this.__supportNPOT; //FIXME:???
 			return result;
 		}
 		
@@ -478,6 +488,23 @@ namespace Sce.Pss.Core.Graphics
 			{
 				Debug.Assert(false);
 			}
+		}
+		
+		public void __saveToFile2(string filename) 
+		{
+			//https://github.com/davidhart/PhotoTunesPrototype/blob/2f8e0ef86f9ac6969637a2c1136723d4542e3bee/PhotoTunesDebugApp/PhotoTunesDebugApp/ImageFilter.cs
+            //Convert byte[] back to Bitmap
+			using (System.Drawing.Bitmap oriBitmap =
+                   new System.Drawing.Bitmap(this.__width, this.__height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            {
+	            System.Drawing.Imaging.BitmapData oriBmData = oriBitmap.LockBits(
+	            	new System.Drawing.Rectangle(0, 0, this.__width, this.__height), 
+	            	System.Drawing.Imaging.ImageLockMode.WriteOnly, 
+	            	System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+	            System.Runtime.InteropServices.Marshal.Copy(this.__pixels, 0, oriBmData.Scan0, this.__pixels.Length);
+	            oriBitmap.UnlockBits(oriBmData);
+	            oriBitmap.Save(filename, ImageFormat.Png);
+            }
 		}
 	}
 }

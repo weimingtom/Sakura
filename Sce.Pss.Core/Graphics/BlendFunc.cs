@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Sce.Pss.Core.Graphics
 {
-	public class BlendFunc
+	public struct BlendFunc
 	{
 		public BlendFuncMode mode;
 		public BlendFuncFactor srcFactor;

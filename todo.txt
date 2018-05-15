@@ -1,4 +1,6 @@
-﻿file:///C:/Documents%20and%20Settings/All%20Users/Documents/Pss/doc/en/sample_list_en.html
+﻿13:07 2018-04-06:Sce.Pss.HighLevel.UI not work, need be stripped
+
+file:///C:/Documents%20and%20Settings/All%20Users/Documents/Pss/doc/en/sample_list_en.html
 
 Package | Sample name | Overview
 Core	MathSample	Math function usage sample.
@@ -355,3 +357,363 @@ not sure, but work----------->					Debug.Assert(false);
 		
 		
 ------------------------------------
+equals
+
+
+private static void RestoreGraphics()
+		{
+			UISystem.GraphicsContext.Enable((EnableMode)4u, UISystem.StoredGraphicsState.EnableModeBlend);
+			UISystem.GraphicsContext.Enable((EnableMode)2u, UISystem.StoredGraphicsState.EnableModeCullFace);
+			UISystem.GraphicsContext.Enable((EnableMode)8u, UISystem.StoredGraphicsState.EnableModeDepthTest);
+			UISystem.GraphicsContext.Enable((EnableMode)1u, UISystem.StoredGraphicsState.EnableModeScissorTest);
+			UISystem.GraphicsContext.Enable((EnableMode)32u, UISystem.StoredGraphicsState.EnableModeStencilTest);
+			if (!UISystem.StoredGraphicsState.BlendFuncRgb.Equals(UISystem.GraphicsContext.GetBlendFuncRgb()))
+			{
+				UISystem.GraphicsContext.SetBlendFuncRgb(UISystem.StoredGraphicsState.BlendFuncRgb);
+			}
+			if (!UISystem.StoredGraphicsState.BlendFuncAlpha.Equals(UISystem.GraphicsContext.GetBlendFuncAlpha()))
+			{
+				UISystem.GraphicsContext.SetBlendFuncAlpha(UISystem.StoredGraphicsState.BlendFuncAlpha);
+			}
+			if (!UISystem.StoredGraphicsState.ClearColor.Equals(UISystem.GraphicsContext.GetClearColor()))
+			{
+				UISystem.GraphicsContext.SetClearColor(UISystem.StoredGraphicsState.ClearColor);
+			}
+			if (!UISystem.StoredGraphicsState.ColorMask.Equals(UISystem.GraphicsContext.GetColorMask()))
+			{
+				UISystem.GraphicsContext.SetColorMask(UISystem.StoredGraphicsState.ColorMask);
+			}
+			if (!UISystem.StoredGraphicsState.CullFace.Equals(UISystem.GraphicsContext.GetCullFace()))
+			{
+				UISystem.GraphicsContext.SetCullFace(UISystem.StoredGraphicsState.CullFace);
+			}
+			UISystem.SetClipRegionFull();
+		}
+		
+-----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------
+
+		public static float DisplayDpiX
+		{
+			get
+			{
+//				Debug.Assert(false);
+				return 100f;
+			}
+		}
+		
+		public static float DisplayDpiY
+		{
+			get
+			{
+//				Debug.Assert(false);
+				return 100f;
+			}
+		}
+
+---
+
+		public int FindAttribute(string name)
+		{
+			//FIXME:???
+			return GL.GetAttribLocation(__programObject, name);
+//			Debug.Assert(false);
+//			return 0;
+		}
+		
+		public int UniformCount
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return 0;
+				return __uniformMatrix4.Count + __uniform1.Count + __uniform2.Count + __uniform3.Count + __uniform4.Count;
+			}
+		}
+
+
+
+----
+
+		
+		public void SetColorMask(int k)
+		{
+			Debug.Assert(false);
+		}
+		
+		public void SetBlendFuncAlpha(BlendFuncMode arg1, BlendFuncFactor arg2, BlendFuncFactor arg3)
+		{
+			Debug.Assert(false);
+		}
+		
+		public void SetBlendFuncRgb(BlendFuncMode arg1, BlendFuncFactor arg2, BlendFuncFactor arg3)
+		{
+			Debug.Assert(false);
+		}
+		
+		public GraphicsCaps Caps
+		{
+			get
+			{
+				Debug.Assert(false);
+				return new GraphicsCaps();
+			}
+		}
+		
+		private BlendFunc __curBlendFuncRgb;
+		public BlendFunc GetBlendFuncRgb()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curBlendFuncRgb;
+		}
+		public void SetBlendFuncRgb(BlendFunc v)
+		{
+//			Debug.Assert(false);
+			__curBlendFuncRgb = v;
+		}
+		private BlendFunc __curBlendFuncAlpha;
+		public BlendFunc GetBlendFuncAlpha()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curBlendFuncAlpha;
+		}
+		public void SetBlendFuncAlpha(BlendFunc v)
+		{
+//			Debug.Assert(false);
+			__curBlendFuncAlpha = v;
+		}
+		
+		public Vector4 GetClearColor()
+		{
+//			Debug.Assert(false);
+//			return new Vector4();
+			return __curClearColor;
+		}
+		
+		private ColorMask __curColorMask;
+		public ColorMask GetColorMask()
+		{
+//			Debug.Assert(false);
+//			return ColorMask.A;
+			return __curColorMask;
+		}
+		public void SetColorMask(ColorMask v)
+		{
+//			Debug.Assert(false);
+			__curColorMask = v;
+		}
+		
+		private CullFace __curCullFace;
+		public CullFace GetCullFace()
+		{
+//			Debug.Assert(false);
+//			return new CullFace();
+			return __curCullFace;
+		}
+		public void SetCullFace(CullFace v)
+		{
+//			Debug.Assert(false);
+			__curCullFace = v;
+		}
+		public ShaderProgram GetShaderProgram()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curProgram;
+		}
+		
+		
+		
+---
+
+		public bool Status
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return false;
+////				return this.state.status;
+				//FIXME:
+				return true;
+			}
+		}
+		
+		public RenderTarget GetColorTarget()
+		{
+			Debug.Assert(false);
+//			return this.state.colorTarget;
+			return new RenderTarget();
+		}
+		
+		
+		
+		
+---
+
+//see public CharMetrics[] GetTextMetrics(string text)
+	public struct CharMetrics
+	{
+		public CharMetrics()
+		{
+//			Debug.Assert(false);
+		}
+		
+		private float __x;
+		public float X
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return 0;
+				return __x;
+			}
+			set
+			{
+				__x = value;
+			}
+		}
+		
+		private float __horizontalAdvance;
+		public float HorizontalAdvance
+		{
+			get
+			{
+//				Debug.Assert(false);
+//				return 0;
+				return __horizontalAdvance;
+			}
+			set
+			{
+				__horizontalAdvance = value;
+			}
+		}
+	}
+	
+
+---
+
+        public CharMetrics[] GetTextMetrics(string text)
+        {
+//        	Debug.Assert(false);
+			CharMetrics[] result = new CharMetrics[text.Length];
+			float total = 0; 
+			for (int i = 0; i < text.Length; ++i)
+			{
+				result[i].X = GetTextWidth(text, 0, i); //FIXME:
+				result[i].HorizontalAdvance = GetTextWidth(text, i, 1);
+			}
+        	return result;
+        }
+        
+----
+
+check count(here not check)
+
+		public void SetIndices(ushort[] indices, int to, int from, int count)
+		{
+			//Debug.Assert(false);
+			if (to == 0 && from == 0)
+			{
+				ushort[] indices2 = new ushort[count];
+				for (int i = 0; i < count; ++i)
+				{
+					indices2[i] = indices[i];
+				}
+				SetIndices(indices2);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		public void SetVertices (int stream, float[] vertices, int arg1, int arg2, int arg3)
+		{
+			if (arg1 == 0 && arg2 == 0)// && vertices.Length != arg3)
+			{
+				SetVertices(stream, vertices);
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		//FIXME:???
+		public void SetVertices (int stream, UIColor[] vertices, int from, int to, int count)
+		{
+check length == count -------------------->			if (to == 0 && from == 0)// && vertices.Length == count)
+			{
+				if (vertices is UIColor[])
+				{
+					float[] vertices2 = new float[count * 4];
+					for (int i = 0; i < count; ++i)
+					{
+						vertices2[i * 4 + 0] = ((Vector4)vertices[i]).X;
+						vertices2[i * 4 + 1] = ((Vector4)vertices[i]).Y;
+						vertices2[i * 4 + 2] = ((Vector4)vertices[i]).Z;
+						vertices2[i * 4 + 3] = ((Vector4)vertices[i]).W;
+					}
+					SetVertices(stream, vertices2);
+				}
+				else
+				{
+					Debug.Assert(false);
+				}
+			}
+			else
+			{
+				Debug.Assert(false);
+			}
+		}
+		
+		
+----
+
+		//see https://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
+		public string GetUniformName(int i)
+		{
+//			Debug.Assert(false);
+//			return null;
+			int size = 0;
+			ActiveUniformType type;
+			string name = GL.GetActiveUniform(__programObject, i, out size, out type);
+			
+i don't know why, Sce.Pss.HighLevel.UI no SetUniformBinding() function called ---->			SetUniformBinding(i, name); //FIXME:auto bind??? for
+
+			return name;			
+		}
+		
+		
+----
+
+		public ImageAsset DrawText(ref string text, int width, int height)
+		{
+		

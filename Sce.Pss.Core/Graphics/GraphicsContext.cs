@@ -122,14 +122,17 @@ namespace Sce.Pss.Core.Graphics
 			GL.Viewport(0, 0, w, h);
         }
 		
+		private Vector4 __curClearColor;
 		public void SetClearColor(float r, float g, float b, float a)
 		{
 			GL.ClearColor(r, g, b, a);
+			__curClearColor = new Vector4(r, g, b, a);
 		}
 		
 		public void SetClearColor(Vector4 color)
 		{
 			GL.ClearColor(color.X, color.Y, color.Z, color.W);
+			__curClearColor = color;
 		}
 		
 		public void Clear()
@@ -363,6 +366,12 @@ namespace Sce.Pss.Core.Graphics
 //			{
 //				Debug.WriteLine("====================1");
 //			}
+//			if (texture is Texture2D)
+//			{
+//				Texture2D t2 = (Texture2D)texture;
+//				t2.__saveToFile2("xxx.png");
+//				t2.__supportNPOT = true;
+//			}
 			__textureDic[index] = texture;
 		}
 
@@ -487,6 +496,14 @@ namespace Sce.Pss.Core.Graphics
 //					}
 					break;
 				
+				case EnableMode.ScissorTest:
+					mode_ = EnableCap.ScissorTest;
+					break;
+					
+				case EnableMode.StencilTest:
+					mode_ = EnableCap.StencilTest;
+					break;
+					
 				default:
 					Debug.Assert(false);
 					break;
@@ -623,6 +640,7 @@ namespace Sce.Pss.Core.Graphics
 			GL.CullFace(mode_);
 			GL.FrontFace(mode2_);
 			//Debug.Assert(false);
+			__curCullFace = new CullFace(mode, direction);
 		}
 		
 		public bool IsEnabled(EnableMode mode)
@@ -642,6 +660,14 @@ namespace Sce.Pss.Core.Graphics
 					mode_ = EnableCap.Blend;
 					break;
 				
+				case EnableMode.ScissorTest:
+					mode_ = EnableCap.ScissorTest;
+					break;
+					
+				case EnableMode.StencilTest:
+					mode_ = EnableCap.StencilTest;
+					break;
+					
 				default:
 					Debug.Assert(false);
 					break;
@@ -670,18 +696,21 @@ namespace Sce.Pss.Core.Graphics
 			Enable(mode, false);
 		}
 		
+		private BlendFunc __curBlendFunc;
 		public void SetBlendFunc(BlendFunc func)
 		{
 			//Debug.Assert(false);
 //			Debug.WriteLine("======================>SetBlendFunc not implemented");
-			if (func != null)
-			{
-				this.SetBlendFunc(func.mode, func.srcFactor, func.dstFactor);
-			}
-			else
-			{
-				Debug.Assert(false);
-			}
+//			if (func != null)
+//			{
+//				this.SetBlendFunc(func.mode, func.srcFactor, func.dstFactor);
+//			}
+//			else
+//			{
+//				Debug.Assert(false);
+//			}
+			this.SetBlendFunc(func.mode, func.srcFactor, func.dstFactor);
+			__curBlendFunc = func;
 		}
 		
 		private DepthFunc __depthFunc = new DepthFunc();
@@ -744,6 +773,100 @@ namespace Sce.Pss.Core.Graphics
 		{
 //			Debug.Assert(false);
 			this.SetViewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+		}
+		
+		public void SetBlendFuncAlpha(BlendFuncMode arg1, BlendFuncFactor arg2, BlendFuncFactor arg3)
+		{
+//			Debug.Assert(false);
+			SetBlendFuncAlpha(new BlendFunc(arg1, arg2, arg3));
+		}
+		
+		public void SetBlendFuncRgb(BlendFuncMode arg1, BlendFuncFactor arg2, BlendFuncFactor arg3)
+		{
+//			Debug.Assert(false);
+			SetBlendFuncRgb(new BlendFunc(arg1, arg2, arg3));
+		}
+		
+		public GraphicsCaps Caps
+		{
+			get
+			{
+//				Debug.Assert(false);
+				GraphicsCaps caps = new GraphicsCaps();
+				//GL_MAX_TEXTURE_SIZE 
+				caps.MaxTextureSize = GL.GetInteger(GetPName.MaxTextureSize);
+				return caps;
+			}
+		}
+		
+		private BlendFunc __curBlendFuncRgb;
+		public BlendFunc GetBlendFuncRgb()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curBlendFuncRgb;
+		}
+		public void SetBlendFuncRgb(BlendFunc v)
+		{
+//			Debug.Assert(false);
+			__curBlendFuncRgb = v;
+		}
+		private BlendFunc __curBlendFuncAlpha;
+		public BlendFunc GetBlendFuncAlpha()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curBlendFuncAlpha;
+		}
+		public void SetBlendFuncAlpha(BlendFunc v)
+		{
+//			Debug.Assert(false);
+			__curBlendFuncAlpha = v;
+		}
+		
+		public Vector4 GetClearColor()
+		{
+//			Debug.Assert(false);
+//			return new Vector4();
+			return __curClearColor;
+		}
+		
+		private ColorMask __curColorMask;
+		public ColorMask GetColorMask()
+		{
+//			Debug.Assert(false);
+//			return ColorMask.A;
+			return __curColorMask;
+		}
+		public void SetColorMask(ColorMask v)
+		{
+//			Debug.Assert(false);
+			GL.ColorMask(
+				(v & ColorMask.R)!=0,
+				(v & ColorMask.G)!=0,
+				(v & ColorMask.B)!=0,
+				(v & ColorMask.A)!=0);
+			__curColorMask = v;
+		}
+		
+		private CullFace __curCullFace;
+		public CullFace GetCullFace()
+		{
+//			Debug.Assert(false);
+//			return new CullFace();
+			return __curCullFace;
+		}
+		public void SetCullFace(CullFace v)
+		{
+//			Debug.Assert(false);
+			SetCullFace(v.Mode, v.Direction);
+			__curCullFace = v;
+		}
+		public ShaderProgram GetShaderProgram()
+		{
+//			Debug.Assert(false);
+//			return null;
+			return __curProgram;
 		}
 	}
 }

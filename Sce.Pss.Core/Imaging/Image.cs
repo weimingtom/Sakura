@@ -12,6 +12,11 @@ namespace Sce.Pss.Core.Imaging
 		private string __filename = null;
 		public System.Drawing.Bitmap __img;
 		
+		public Image(byte[] bytes)
+		{
+			Debug.Assert(false);
+		}
+		
 		private Image(System.Drawing.Bitmap img)
 		{
 			this.__img = img;
@@ -156,6 +161,12 @@ namespace Sce.Pss.Core.Imaging
 				drawing.Save();
 			}
 			return new Image(img);
+		}
+		
+		public void __saveToFile(string filename) 
+		{
+//			Debug.Assert(false);
+			this.__img.Save(filename, ImageFormat.Png);
 		}
 	}
 }

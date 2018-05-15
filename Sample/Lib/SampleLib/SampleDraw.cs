@@ -203,6 +203,14 @@ public static class SampleDraw
             DrawSprite(spriteDict[key]);
         }
     }
+    
+    public static Texture2D __DrawSprite(string key, Matrix4 worldViewProj, bool notdraw)
+    {
+        if (spriteDict.ContainsKey(key)) {
+            return __DrawSprite(spriteDict[key], worldViewProj, notdraw);
+        }
+    	return null;
+    }
 
     public static void DrawSprite(SampleSprite sprite)
     {
@@ -225,6 +233,26 @@ public static class SampleDraw
 #endif
     }
 
+    
+    public static Texture2D __DrawSprite(SampleSprite sprite, Matrix4 worldViewProj, bool notdraw)
+    {
+    	if (!notdraw)
+    	{
+	        textureShaderProgram.SetUniformValue(0, ref worldViewProj);
+	
+	        graphics.SetShaderProgram(textureShaderProgram);
+	        graphics.SetVertexBuffer(0, sprite.Vertices);
+	        graphics.SetTexture(0, sprite.Texture);
+	
+	        graphics.Enable(EnableMode.Blend);
+	        graphics.SetBlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);
+	
+	        graphics.DrawArrays(DrawMode.TriangleFan, 0, 4);
+    	}
+    	
+    	return sprite.Texture;
+    }    
+    
     public static void __DrawTest1()
     {
     	graphics.SetShaderProgram(__testShaderProgram1);
@@ -271,6 +299,12 @@ public static class SampleDraw
         DrawSprite(text);
     }
 
+    public static Texture2D __DrawText(string text, uint argb, int positionX, int positionY, Matrix4 worldViewProj, bool notdraw)
+    {
+        AddSprite(text, text, argb, currentFont, positionX, positionY);
+        return __DrawSprite(text, worldViewProj, notdraw);
+    }    
+    
     public static void FillRect(uint argb, int positionX, int positionY, int rectW, int rectH)
     {
         FillVertices(rectVertices, argb, positionX, positionY, rectW, rectH);

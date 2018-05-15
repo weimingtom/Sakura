@@ -1,0 +1,171 @@
+﻿enum
+	Anchors
+	BlendMode
+	ButtonStyle
+	DialogBackgroundStyle
+	EffectUpdateResponse
+	FadeInEffectInterpolator
+	FadeOutEffectInterpolator
+	GestureDetectorResponse
+	HorizontalAlignment
+	ImageScaleType
+	InternalShaderType
+	KeyEventType
+	KeyType
+	LineBreak
+	MoveEffectInterpolator
+	PivotType
+	ShaderType
+	SystemImageAsset
+	TextTrimming
+	TouchEventType
+	TransitionDrawOrder
+	TransitionUpdateResponse
+	VerticalAlignment
+
+delegate
+	AnimationInterpolator
+	
+static class
+	AnimationUtility
+	AssetManager
+	MathUtility
+	ShaderProgramManager
+	UIPrimitiveUtility
+	UISpriteUtility
+	UISystem
+
+Effect
+	BunjeeJumpEffect
+	Effect
+	FadeInEffect
+	FadeOutEffect
+	MoveEffect
+	TiltDropEffect
+
+Widget
+	Button
+	ContainerWidget
+	Dialog
+	ImageBox
+	Label
+	Panel
+	RootWidget
+	Widget
+	
+Scene
+	NavigationScene
+	Scene
+
+uielement
+	RootUIElement
+
+etc
+	CustomButtonImageSettings
+	GestureDetector
+	ImageAsset
+	LinkedTree
+	NinePatchMargin
+	TextRenderHelper
+	TextShadowSettings
+	TouchEventCollection
+	UIColor
+	UIElement
+	UIPrimitive
+	UIPrimitiveVertex
+	UISprite
+	UISpriteUnit
+
+Transition
+	DefaultNavigationTransition
+	Transition
+
+event
+	KeyEvent
+	KeyEventArgs
+	MotionEvent
+	MotionEventArgs
+	TouchEvent
+	TouchEventArgs
+	UpdateEventArgs
+
+----------------------
+
+remove dialog
+remove Touch,Motion,Key Event
+remove Effect
+remove Transition
+remove Button,Panel,ImageBox
+
+
+=====================base.Render
+=====================Render 
+=====================UISystem.Render
+rootWidget
+Label
+
+-------------------------------------
+Attr:点属性vertexBuffer
+varing:?
+uniform:UniformValue
+
+UISprite
+
+			if (true)
+			{
+				graphicsContext.DrawArrays((DrawMode)4, 0, this.UnitCount * 6 - 2);
+			}
+			else
+			{
+				graphicsContext.DrawArrays(DrawMode.TriangleFan, 0, this.UnitCount * 6 - 2);
+			}
+			
+Important ------------------>			Sample.SampleDraw.__DrawText("UISprite test", 0xffffffff, 0, 0, matrix); //FIXME:
+
+
+Important ------------------>if (__USE_SampleDraw)
+			
+
+-------------------------------------
+(1)
+NavigationScene默认不显示
+
+internal static void SetSceneInternal(Scene newScene, Transition transition, bool withNavigationAnimation)
+		{
+			if (newScene == null)
+			{
+				newScene = UISystem.blankScene;
+			}
+			UISystem.CurrentScene.OnHiding();
+			newScene.OnShowing();
+			UISystem.currentTransition = transition;
+			if (UISystem.currentTransition == null)
+			{
+				UISystem.SetSceneInternal(newScene);
+			}
+			else
+			{
+				UISystem.NextScene = newScene;
+				UISystem.currentTransition.Start();
+				UISystem.currentTransition.startedTime = UISystem.stopwatch.Elapsed;
+			}
+			//FIXME:
+//			if (!newScene.ShowNavigationBar)
+//			{
+//				UISystem.NavigationScene.Hide(true);  <-------------------运行到这里就退出，而Hide(true)里面是不做任何东西，因为Visible==false
+//				return;
+//			}
+//			if (withNavigationAnimation)
+//			{
+//				UISystem.NavigationScene.Show(true, null);
+//				return;
+//			}
+//			UISystem.NavigationScene.Show(true, newScene.Title);
+		}
+		
+		
+		
+-------------------------------------
+
+
+
