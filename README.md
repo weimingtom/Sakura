@@ -40,9 +40,11 @@ PSSuiteSDK_098.exe
 opentk-2014-07-23  
 https://github.com/opentk/opentk  
 https://sourceforge.net/projects/opentk/files/opentk/opentk-1.1/stable-5/opentk-2014-07-23.exe/download  
+
+* OpenTK GLES generated source    
 https://raw.githubusercontent.com/weimingtom/gwen-dotnet/master/GwenCS/lib/OpenTK/OpenTK.dll  
 https://github.com/weimingtom/gwen-dotnet/tree/master/GwenCS/lib/OpenTK  
-OpenTK.dll: OpenTK.Graphics.ES20.GL  
+Use ILSpy to decomple OpenTK.dll: see OpenTK.Graphics.ES20.GL  
 
 * ANGLE  
 https://github.com/CoherentLabs/angle  
