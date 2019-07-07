@@ -35,6 +35,7 @@ Sakura=OpenTK+PSSSDK
 * PSSSDK  
 PlayStation Suite SDK ver 0.98  
 PSSuiteSDK_098.exe (search 115)    
+PSM_SDK_1.21.02.exe (search 115)  
 
 * OpenTK  
 opentk-2014-07-23  
